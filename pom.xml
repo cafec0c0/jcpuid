@@ -7,47 +7,83 @@
     <groupId>net.adambruce</groupId>
     <artifactId>jcpuid</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>jcpuid-lib</module>
+        <module>jcpuid-native</module>
+    </modules>
 
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Plugin versions -->
+        <exec-maven-plugin.version>3.5.0</exec-maven-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
+        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+
+        <!-- Test dependency versions -->
+        <junit.version>5.12.0</junit.version>
+        <mockito.version>5.14.2</mockito.version>
     </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-            </plugin>
+    <dependencyManagement>
+        <!-- For testing -->
+        <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <manifestEntries>
-                                        <Main-Class>net.adambruce.Main</Main-Class>
-                                    </manifestEntries>
-                                </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                                    <resource>libcpuid.so</resource>
-                                    <file>build/libjcpuid.so</file>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>${exec-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${maven-antrun-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>
