@@ -37,12 +37,12 @@
         <dependency>
             <groupId>net.adambruce</groupId>
             <artifactId>jcpuid-native-linux</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.adambruce</groupId>
             <artifactId>jcpuid-native-win32</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -68,7 +68,7 @@
                                     <manifestEntries>
                                         <Created-By>Adam Bruce</Created-By>
                                         <Implementation-Copyright>Copyright (C) 2025 Adam Bruce</Implementation-Copyright>
-                                        <Implementation-Version>${version}</Implementation-Version>
+                                        <Implementation-Version>${project.version}</Implementation-Version>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>
@@ -76,7 +76,7 @@
                                 <filter>
                                     <artifact>*:*</artifact>
                                     <excludes>
-                                        <exclude>META-INF/maven/**/*</exclude>
+                                        <exclude>META-INF/</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
