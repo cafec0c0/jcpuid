@@ -9,4 +9,4 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: make
+      - run: mvn clean package -Dgcc_linux=$(which cc) -Djava_home_linux=$JAVA_HOME -Pnative-linux
