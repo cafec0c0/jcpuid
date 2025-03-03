@@ -17,8 +17,8 @@
                 <extensions>true</extensions>
                 <version>3.5.2</version>
                 <configuration>
-                    <gnuUseOnWindows>true</gnuUseOnWindows>
-                    <gnuSourceDirectory>${project.basedir}/src/main/c</gnuSourceDirectory>
+<!--                    <gnuUseOnWindows>true</gnuUseOnWindows>-->
+<!--                    <gnuSourceDirectory>${project.basedir}/src/main/c</gnuSourceDirectory>-->
                     <c>
                         <name>gcc</name>
                         <includePaths>
