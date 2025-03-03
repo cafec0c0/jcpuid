@@ -1,11 +1,11 @@
 #include <cpuid.h>
 
-#include "net_adambruce_bridge_Amd64CPUIDBridgeImpl.h"
+#include "net_adambruce_jcpuid_bridge_Amd64CPUIDBridgeImpl.h"
 
-JNIEXPORT jobject JNICALL Java_net_adambruce_bridge_Amd64CPUIDBridgeImpl_getCPUIDNative
+JNIEXPORT jobject JNICALL Java_net_adambruce_jcpuid_bridge_Amd64CPUIDBridgeImpl_getCPUIDNative
   (JNIEnv *env, jobject jobj, jint leaf) {
     // Class of return object
-    jclass clazz = (*env)->FindClass(env, "net/adambruce/type/Result");
+    jclass clazz = (*env)->FindClass(env, "net/adambruce/jcpuid/type/Result");
 
     // Constructor ID
     jmethodID cid = (*env)->GetMethodID(env, clazz, "<init>", "(IIIII)V");
