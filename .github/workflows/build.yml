@@ -24,7 +24,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/
+      - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/ -X
       - run: ls jcpuid-native/jcpuid-native-windows/target
 #
 #  build-jcpuid-native-macos:
