@@ -15,8 +15,8 @@ jobs:
       - run: ls jcpuid-native/jcpuid-native-linux/target
       - uses: actions/upload-artifact@v4
         with:
-          name: 'jcpuid-native-linux.nar'
-          path: 'jcpuid-native/jcpuid-native-linux/target/jcpuid-native-*-noarch.nar'
+          name: 'jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-jni.nar'
+          path: 'jcpuid-native/jcpuid-native-linux/target/jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-jni.nar'
           if-no-files-found: 'error'
 
   build-jcpuid-native-windows:
@@ -34,6 +34,7 @@ jobs:
         with:
           name: 'jcpuid-native-windows.nar'
           path: 'jcpuid-native/jcpuid-native-windows/target/jcpuid-native-*-noarch.nar'
+          if-no-files-found: 'error'
 
 
   build-jcpuid-native-macos:
@@ -50,7 +51,31 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: 'jcpuid-native-macos.nar'
-          path: 'jcpuid-native/jcpuid-native-macos/target/jcpuid-native-*-noarch.nar'
+          path: 'jcpuid-native/jcpuid-native-macos/target/jcpuid-native-amd64-*.nar'
+          if-no-files-found: 'error'
+
+  build-jcpuid-jar:
+    name: Build and package JAR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+      - uses: actions/download-artifact@v4
+        with:
+          name: 'jcpuid-native-linux.nar'
+          path: jcpuid-native/jcpuid-native-linux/target/
+      - uses: actions/download-artifact@v4
+        with:
+          name: 'jcpuid-native-windows.nar'
+          path: jcpuid-native/jcpuid-native-windows/target/
+      - uses: actions/download-artifact@v4
+        with:
+          name: 'jcpuid-native-macos.nar'
+          path: jcpuid-native/jcpuid-native-macos/target/
+
 
   cleanup:
     name: Cleanup artifacts
