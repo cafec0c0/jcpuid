@@ -11,6 +11,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
+      - run: echo $JAVA_HOME
       - run: mvn clean package -f jcpuid-native/jcpuid-native-linux/
       - run: ls jcpuid-native/jcpuid-native-linux/target
       - uses: actions/upload-artifact@v4
