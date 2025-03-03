@@ -3,6 +3,7 @@ on: [push]
 
 jobs:
   build-jcpuid-native-linux:
+    name: Build linux native library
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -12,8 +13,14 @@ jobs:
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-linux/
       - run: ls jcpuid-native/jcpuid-native-linux/target
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 'jcpuid-native-linux.nar'
+          path: 'jcpuid-native/jcpuid-native-linux/target/jcpuid-native-*-noarch.nar'
+          if-no-files-found: 'error'
 
   build-jcpuid-native-windows:
+    name: Build windows native library
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,8 +30,14 @@ jobs:
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/
       - run: ls jcpuid-native/jcpuid-native-windows/target
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 'jcpuid-native-windows.nar'
+          path: 'jcpuid-native/jcpuid-native-windows/target/jcpuid-native-*-noarch.nar'
+
 
   build-jcpuid-native-macos:
+    name: Build macos native library
     runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
@@ -34,3 +47,7 @@ jobs:
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-macos/
       - run: ls jcpuid-native/jcpuid-native-macos/target
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 'jcpuid-native-macos.nar'
+          path: 'jcpuid-native/jcpuid-native-macos/target/jcpuid-native-*-noarch.nar'
