@@ -33,7 +33,7 @@
                             </includePath>
                         </includePaths>
                         <includes>
-                            <include>${project.basedir}/src/main/c/jcpuid.c</include>
+                            <include>**/*.c</include>
                         </includes>
                     </c>
                     <library>
@@ -42,6 +42,8 @@
                     <linker>
                         <name>gcc</name>
                     </linker>
+
+<!--                    // TODO: fix (search actions for "nothing to compile") -->
                 </configuration>
             </plugin>
         </plugins>
