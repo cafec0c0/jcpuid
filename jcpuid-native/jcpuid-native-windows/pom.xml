@@ -15,6 +15,7 @@
                 <groupId>com.github.maven-nar</groupId>
                 <artifactId>nar-maven-plugin</artifactId>
                 <extensions>true</extensions>
+                <version>3.5.2</version>
                 <configuration>
                     <c>
                         <name>gcc</name>
@@ -35,9 +36,6 @@
                             <type>jni</type>
                         </library>
                     </libraries>
-                    <linker>
-                        <name>gcc</name>
-                    </linker>
                 </configuration>
             </plugin>
         </plugins>

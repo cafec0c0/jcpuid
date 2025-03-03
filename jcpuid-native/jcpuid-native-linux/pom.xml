@@ -30,9 +30,6 @@
                                 <path>${env.JAVA_HOME}/include/linux</path>
                             </includePath>
                         </includePaths>
-<!--                        <includes>-->
-<!--                            <include>**/*.c</include>-->
-<!--                        </includes>-->
                     </c>
                     <libraries>
                         <library>
