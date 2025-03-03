@@ -1,12 +1,35 @@
 name: build-jcpuid
 on: [push]
+
 jobs:
-  build-jcpuid:
+  build-jcpuid-native-linux:
     runs-on: ubuntu-latest
+    env:
+      JAVA_HOME: "$JAVA_HOME_8_amd64"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -Dgcc_linux=$(which cc) -Djava_home_linux=$JAVA_HOME -Pnative-linux
+      - run: mvn clean package -f jcpuid-native/jcpuid-native-linux/
+#
+#  build-jcpuid-native-windows:
+#    runs-on: windows-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-java@v4
+#        with:
+#          distribution: 'temurin'
+#          java-version: '8'
+#      - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/
+#
+#  build-jcpuid-native-macos:
+#    runs-on: macos-13
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-java@v4
+#        with:
+#          distribution: 'temurin'
+#          java-version: '8'
+#      - run: mvn clean package -f jcpuid-native/jcpuid-native-macos/

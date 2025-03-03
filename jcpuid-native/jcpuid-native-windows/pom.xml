@@ -10,7 +10,7 @@
     </parent>
 
     <packaging>nar</packaging>
-    <artifactId>jcpuid-native-linux</artifactId>
+    <artifactId>jcpuid-native-windows</artifactId>
 
     <build>
         <plugins>
@@ -27,10 +27,10 @@
                                 <path>${project.basedir}/src/main/include</path>
                             </includePath>
                             <includePath>
-                                <path>${env.JAVA_HOME}/include</path>
+                                <path>${java.home}/include</path>
                             </includePath>
                             <includePath>
-                                <path>${env.JAVA_HOME}/include/linux</path>
+                                <path>${java.home}/include/linux</path>
                             </includePath>
                         </includePaths>
                     </c>

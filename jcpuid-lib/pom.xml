@@ -72,26 +72,27 @@
                 </executions>
             </plugin>
 
-
-            <!-- Copy LICENSE file from repository root -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
+                <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <target>
-                                <copy todir="${project.build.outputDirectory}/META-INF">
-                                    <fileset dir="${project.basedir}/..">
-                                        <include name="LICENSE"/>
-                                    </fileset>
-                                </copy>
-                            </target>
-                        </configuration>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>copy-resources</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/META-INF</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/..</directory>
+                                    <includes>
+                                        <include>LICENSE</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
