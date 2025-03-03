@@ -35,6 +35,9 @@
                             <type>jni</type>
                         </library>
                     </libraries>
+                    <linker>
+                        <name>gcc</name>
+                    </linker>
                 </configuration>
             </plugin>
         </plugins>
