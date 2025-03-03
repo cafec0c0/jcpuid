@@ -32,6 +32,9 @@
                                 <path>${env.JAVA_HOME}/include/win32</path>
                             </includePath>
                         </includePaths>
+                        <includes>
+                            <include>${project.basedir}/src/main/c/jcpuid.c</include>
+                        </includes>
                     </c>
                     <linker>
                         <name>gcc</name>
