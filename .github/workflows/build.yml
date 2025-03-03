@@ -30,7 +30,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvnclean package  -Dorg.slf4j.simpleLogger.defaultLogLevel=debug  -f jcpuid-native/jcpuid-native-windows/
+      - run: mvn clean package  -Dorg.slf4j.simpleLogger.defaultLogLevel=debug  -f jcpuid-native/jcpuid-native-windows/
       - run: ls jcpuid-native/jcpuid-native-windows/target
       - uses: actions/upload-artifact@v4
         with:
@@ -48,12 +48,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn  clean package -Dorg.slf4j.simpleLogger.defaultLogLevel=debug -f jcpuid-native/jcpuid-native-macos/
+      - run: mvn clean package -Dorg.slf4j.simpleLogger.defaultLogLevel=debug -f jcpuid-native/jcpuid-native-macos/
       - run: ls jcpuid-native/jcpuid-native-macos/target
       - uses: actions/upload-artifact@v4
         with:
-          name: 'jcpuid-native-macos.nar'
-          path: 'jcpuid-native/jcpuid-native-macos/target/jcpuid-native-amd64-*.nar'
+          name: 'jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-jni.nar'
+          path: 'jcpuid-native/jcpuid-native-macos/target/jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-jni.nar'
           if-no-files-found: 'error'
 
   build-jcpuid-jar:
