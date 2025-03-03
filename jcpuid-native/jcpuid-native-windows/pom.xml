@@ -32,15 +32,12 @@
                             </includePath>
                         </includePaths>
                         <includes>
-                            <include>**/*.c</include>
+                            <include>${project.basedir}/src/main/c/jcpuid.c</include>
                         </includes>
                     </c>
                     <library>
                         <type>jni</type>
                     </library>
-                    <linker>
-                        <name>gcc</name>
-                    </linker>
                 </configuration>
             </plugin>
         </plugins>
