@@ -17,6 +17,7 @@
                 <extensions>true</extensions>
                 <version>3.5.2</version>
                 <configuration>
+                    <gnuUseOnWindows>true</gnuUseOnWindows>
                     <c>
                         <name>gcc</name>
                         <includePaths>
@@ -30,12 +31,17 @@
                                 <path>${env.JAVA_HOME}/include/win32</path>
                             </includePath>
                         </includePaths>
-                    </c>
-                    <libraries>
+                        <includes>
+                            <include>**/*.c</include>
+                        </includes>
                         <library>
                             <type>jni</type>
                         </library>
-                    </libraries>
+                    </c>
+
+                    <linker>
+                        <name>gcc</name>
+                    </linker>
                 </configuration>
             </plugin>
         </plugins>
