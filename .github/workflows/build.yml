@@ -31,7 +31,7 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/ -D "org.slf4j.simpleLogger.defaultLogLevel=debug"
-      - run: ls jcpuid-native/jcpuid-native-windows/target
+      - run: Get-ChildItem -Recurse jcpuid-native/jcpuid-native-windows/target
       - uses: actions/upload-artifact@v4
         with:
           name: 'jcpuid-native-windows.nar'
