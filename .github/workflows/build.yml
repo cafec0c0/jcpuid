@@ -13,8 +13,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: echo $JAVA_HOME
-      - run: echo $(which gcc)
       - run: mvn clean package -f jcpuid-native/jcpuid-native-linux/
       - run: ls jcpuid-native/jcpuid-native-linux/target
       - uses: actions/upload-artifact@v4
@@ -26,15 +24,13 @@ jobs:
   build-jcpuid-native-windows:
     name: Build windows native library
     runs-on: windows-latest
-    env:
-      MAVEN_OPTS: '-Dorg.slf4j.simpleLogger.defaultLogLevel=debug'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/
+      - run: mvn -Dorg.slf4j.simpleLogger.defaultLogLevel=debug clean package -f jcpuid-native/jcpuid-native-windows/
       - run: ls jcpuid-native/jcpuid-native-windows/target
       - uses: actions/upload-artifact@v4
         with:
@@ -46,15 +42,13 @@ jobs:
   build-jcpuid-native-macos:
     name: Build macos native library
     runs-on: macos-13
-    env:
-      MAVEN_OPTS: '-Dorg.slf4j.simpleLogger.defaultLogLevel=debug'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -f jcpuid-native/jcpuid-native-macos/
+      - run: mvn -Dorg.slf4j.simpleLogger.defaultLogLevel=debug clean package -f jcpuid-native/jcpuid-native-macos/
       - run: ls jcpuid-native/jcpuid-native-macos/target
       - uses: actions/upload-artifact@v4
         with:
