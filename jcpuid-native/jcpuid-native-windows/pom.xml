@@ -34,11 +34,10 @@
                         <includes>
                             <include>**/*.c</include>
                         </includes>
-                        <library>
-                            <type>jni</type>
-                        </library>
                     </c>
-
+                    <library>
+                        <type>jni</type>
+                    </library>
                     <linker>
                         <name>gcc</name>
                     </linker>
