@@ -18,6 +18,7 @@
                 <version>3.5.2</version>
                 <configuration>
                     <gnuUseOnWindows>true</gnuUseOnWindows>
+                    <gnuSourceDirectory>${project.basedir}/src/main/c</gnuSourceDirectory>
                     <c>
                         <name>gcc</name>
                         <includePaths>
@@ -31,25 +32,9 @@
                                 <path>${env.JAVA_HOME}/include/win32</path>
                             </includePath>
                         </includePaths>
-                        <includes>
-                            <include>${project.basedir}/src/main/c/jcpuid.c</include>
-                        </includes>
                     </c>
-                    <options>
-                        <option>${java.os.include}</option>
-                        <option>${stack.protector.option}</option>
-                        <option>${architecture.option}</option>
-                        <option>${subsystem.option}</option>
-                        <option>-shared</option>
-                        <option>-fexceptions</option>
-                        <option>-lstdc++</option>
-                    </options>
                     <linker>
                         <name>gcc</name>
-                        <options>
-                            <option>${architecture.option}</option>
-                            <option>${subsystem.option}</option>
-                        </options>
                     </linker>
                 </configuration>
             </plugin>
