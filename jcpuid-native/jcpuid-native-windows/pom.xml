@@ -39,9 +39,9 @@
                     <library>
                         <type>jni</type>
                     </library>
-                    <linker>
-                        <name>gcc</name>
-                    </linker>
+<!--                    <linker>-->
+<!--                        <name>gcc</name>-->
+<!--                    </linker>-->
 
 <!--                    // TODO: fix (search actions for "nothing to compile") -->
                 </configuration>
