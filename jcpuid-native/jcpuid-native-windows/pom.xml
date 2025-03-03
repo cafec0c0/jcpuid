@@ -27,10 +27,10 @@
                                 <path>${project.basedir}/src/main/include</path>
                             </includePath>
                             <includePath>
-                                <path>${java.home}/include</path>
+                                <path>${env.JAVA_HOME}/include</path>
                             </includePath>
                             <includePath>
-                                <path>${java.home}/include/linux</path>
+                                <path>${env.JAVA_HOME}/include/win32</path>
                             </includePath>
                         </includePaths>
                     </c>
