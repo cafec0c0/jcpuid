@@ -39,13 +39,9 @@
                             <include>**/*.c</include>
                         </includes>
                     </c>
-<!--                    <linker>-->
-<!--                        <name>gcc</name>-->
-<!--                        <options>-->
-<!--                            <option>${architecture.option}</option>-->
-<!--                            <option>${subsystem.option}</option>-->
-<!--                        </options>-->
-<!--                    </linker>-->
+                    <linker>
+                        <name>gcc</name>
+                    </linker>
 
 <!--                    // TODO: fix (search actions for "nothing to compile") -->
                 </configuration>
