@@ -25,6 +25,7 @@ jobs:
     name: Build windows native library
     runs-on: windows-latest
     steps:
+      - run: gcc
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
