@@ -17,8 +17,11 @@
                 <extensions>true</extensions>
                 <version>3.5.2</version>
                 <configuration>
-<!--                    <gnuUseOnWindows>true</gnuUseOnWindows>-->
-<!--                    <gnuSourceDirectory>${project.basedir}/src/main/c</gnuSourceDirectory>-->
+                    <gnuUseOnWindows>true</gnuUseOnWindows>
+                    <gnuSourceDirectory>${project.basedir}/src/main/c</gnuSourceDirectory>
+                    <gnuAutogenSkip>true</gnuAutogenSkip>
+                    <gnuConfigureSkip>true</gnuConfigureSkip>
+                    <gnuMakeSkip>true</gnuMakeSkip>
                     <c>
                         <name>gcc</name>
                         <includePaths>
@@ -41,6 +44,10 @@
                     </library>
                     <linker>
                         <name>gcc</name>
+                        <options>
+                            <option>${architecture.option}</option>
+                            <option>${subsystem.option}</option>
+                        </options>
                     </linker>
 
 <!--                    // TODO: fix (search actions for "nothing to compile") -->
