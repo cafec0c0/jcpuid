@@ -1,4 +1,4 @@
-package net.adambruce;
+package net.adambruce.jcpuid;
 
 public class CPUIDBitMasks {
 

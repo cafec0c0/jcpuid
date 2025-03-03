@@ -1,4 +1,4 @@
-package net.adambruce.type;
+package net.adambruce.jcpuid.type;
 
 public enum Status {
     SUCCESS,

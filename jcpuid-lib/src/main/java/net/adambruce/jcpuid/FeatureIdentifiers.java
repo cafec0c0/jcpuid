@@ -1,4 +1,4 @@
-package net.adambruce;
+package net.adambruce.jcpuid;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
-package net.adambruce.bridge;
+package net.adambruce.jcpuid.bridge;
 
-import net.adambruce.CPUIDImpl;
-import net.adambruce.type.Result;
+import net.adambruce.jcpuid.CPUIDImpl;
+import net.adambruce.jcpuid.type.Result;
 
 import java.io.File;
 import java.io.IOException;

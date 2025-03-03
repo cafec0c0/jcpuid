@@ -1,7 +1,7 @@
-package net.adambruce.bridge;
+package net.adambruce.jcpuid.bridge;
 
-import net.adambruce.exception.PlatformNotSupportedException;
-import net.adambruce.type.Result;
+import net.adambruce.jcpuid.exception.PlatformNotSupportedException;
+import net.adambruce.jcpuid.type.Result;
 
 public interface CPUIDBridge {
 

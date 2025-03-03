@@ -1,8 +1,8 @@
-package net.adambruce;
+package net.adambruce.jcpuid;
 
-import net.adambruce.exception.CPUIDException;
-import net.adambruce.exception.PlatformNotSupportedException;
-import net.adambruce.type.Result;
+import net.adambruce.jcpuid.exception.CPUIDException;
+import net.adambruce.jcpuid.exception.PlatformNotSupportedException;
+import net.adambruce.jcpuid.type.Result;
 
 /**
  * Interface for native CPUID instructions.
