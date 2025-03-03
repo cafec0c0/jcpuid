@@ -39,9 +39,6 @@
                             <include>**/*.c</include>
                         </includes>
                     </c>
-                    <library>
-                        <type>jni</type>
-                    </library>
                     <linker>
                         <name>gcc</name>
                         <options>
