@@ -27,7 +27,7 @@
                                 <path>${env.JAVA_HOME}/include</path>
                             </includePath>
                             <includePath>
-                                <path>${env.JAVA_HOME}/include/macos</path>
+                                <path>${env.JAVA_HOME}/include/osx</path>
                             </includePath>
                         </includePaths>
                     </c>

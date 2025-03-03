@@ -17,6 +17,7 @@
                 <extensions>true</extensions>
                 <version>3.5.2</version>
                 <configuration>
+                    <gnuUseOnWindows>true</gnuUseOnWindows>
                     <c>
                         <name>gcc</name>
                         <includePaths>
