@@ -16,7 +16,6 @@
                 <artifactId>nar-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <gnuUseOnWindows>true</gnuUseOnWindows>
                     <c>
                         <name>gcc</name>
                         <includePaths>

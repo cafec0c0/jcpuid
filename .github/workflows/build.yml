@@ -13,6 +13,7 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-linux/
+      - run: ls jcpuid-native/jcpuid-native-linux/target
 #
 #  build-jcpuid-native-windows:
 #    runs-on: windows-latest
