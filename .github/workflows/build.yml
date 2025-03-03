@@ -2,7 +2,7 @@ name: build-jcpuid
 on: [push]
 
 env:
-  JAVA_HOME: "$JAVA_HOME_8_amd64"
+  JAVA_HOME: "$JAVA_HOME_8_X64"
 
 jobs:
   build-jcpuid-native-linux:
