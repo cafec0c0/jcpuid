@@ -9,6 +9,14 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>nar</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/cafec0c0/jcpuid</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
