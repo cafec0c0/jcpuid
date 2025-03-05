@@ -5,8 +5,6 @@ jobs:
   build-jcpuid-native-linux:
     name: Build linux native library
     runs-on: ubuntu-latest
-    env:
-        MAVEN_OPTS: '-Dorg.slf4j.simpleLogger.defaultLogLevel=debug'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -14,11 +12,10 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-linux/
-      - run: ls jcpuid-native/jcpuid-native-linux/target
       - uses: actions/upload-artifact@v4
         with:
-          name: 'jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-jni.nar'
-          path: 'jcpuid-native/jcpuid-native-linux/target/jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-jni.nar'
+          name: 'jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-shared.nar'
+          path: 'jcpuid-native/jcpuid-native-linux/target/jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-shared.nar'
           if-no-files-found: 'error'
 
   build-jcpuid-native-windows:
@@ -30,12 +27,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/ -D "org.slf4j.simpleLogger.defaultLogLevel=debug"
-      - run: Get-ChildItem -Recurse jcpuid-native/jcpuid-native-windows/target
+      - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/ 
       - uses: actions/upload-artifact@v4
         with:
-          name: 'jcpuid-native-windows.nar'
-          path: 'jcpuid-native/jcpuid-native-windows/target/jcpuid-native-*-noarch.nar'
+          name: 'jcpuid-native-windows-1.0-SNAPSHOT-amd64-Windows-gcc-shared.nar'
+          path: 'jcpuid-native/jcpuid-native-windows/target/jcpuid-native-windows-1.0-SNAPSHOT-amd64-Windows-gcc-shared.nar'
           if-no-files-found: 'error'
 
 
@@ -48,8 +44,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -Dorg.slf4j.simpleLogger.defaultLogLevel=debug -f jcpuid-native/jcpuid-native-macos/
-      - run: ls jcpuid-native/jcpuid-native-macos/target
+      - run: mvn clean package -f jcpuid-native/jcpuid-native-macos/
       - uses: actions/upload-artifact@v4
         with:
           name: 'jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-jni.nar'
@@ -67,15 +62,15 @@ jobs:
           java-version: '8'
       - uses: actions/download-artifact@v4
         with:
-          name: 'jcpuid-native-linux.nar'
+          name: 'jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-shared.nar'
           path: jcpuid-native/jcpuid-native-linux/target/
       - uses: actions/download-artifact@v4
         with:
-          name: 'jcpuid-native-windows.nar'
+          name: 'jcpuid-native-windows-1.0-SNAPSHOT-amd64-Windows-gcc-shared.nar'
           path: jcpuid-native/jcpuid-native-windows/target/
       - uses: actions/download-artifact@v4
         with:
-          name: 'jcpuid-native-macos.nar'
+          name: 'jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-jni.nar'
           path: jcpuid-native/jcpuid-native-macos/target/
 
 
