@@ -12,11 +12,9 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-linux/
-      - uses: actions/upload-artifact@v4
-        with:
-          name: 'jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-shared.nar'
-          path: 'jcpuid-native/jcpuid-native-linux/target/jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-shared.nar'
-          if-no-files-found: 'error'
+      - run: mvn deploy -f jcpuid-native/jcpuid-native-linux/
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
   build-jcpuid-native-windows:
     name: Build windows native library
@@ -31,11 +29,6 @@ jobs:
       - run: mvn deploy -f jcpuid-native/jcpuid-native-windows/
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - uses: actions/upload-artifact@v4
-        with:
-          name: 'jcpuid-native-windows-1.0-SNAPSHOT-amd64-Windows-gcc-shared.nar'
-          path: 'jcpuid-native/jcpuid-native-windows/target/jcpuid-native-windows-1.0-SNAPSHOT-amd64-Windows-gcc-shared.nar'
-          if-no-files-found: 'error'
 
 
   build-jcpuid-native-macos:
@@ -48,11 +41,9 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-macos/
-      - uses: actions/upload-artifact@v4
-        with:
-          name: 'jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-shared.nar'
-          path: 'jcpuid-native/jcpuid-native-macos/target/jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-shared.nar'
-          if-no-files-found: 'error'
+      - run: mvn deploy -f jcpuid-native/jcpuid-native-macos/
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
   build-jcpuid-jar:
     name: Build and package JAR
@@ -67,26 +58,4 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - uses: actions/download-artifact@v4
-        with:
-          name: 'jcpuid-native-linux-1.0-SNAPSHOT-amd64-Linux-gpp-shared.nar'
-          path: jcpuid-native/jcpuid-native-linux/target/
-      - uses: actions/download-artifact@v4
-        with:
-          name: 'jcpuid-native-windows-1.0-SNAPSHOT-amd64-Windows-gcc-shared.nar'
-          path: jcpuid-native/jcpuid-native-windows/target/
-      - uses: actions/download-artifact@v4
-        with:
-          name: 'jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-shared.nar'
-          path: jcpuid-native/jcpuid-native-macos/target/
-
-
-  cleanup:
-    name: Cleanup artifacts
-    runs-on: ubuntu-latest
-    needs:
-      - build-jcpuid-jar
-    steps:
-      - uses: geekyeggo/delete-artifact@v5
-        with:
-          name: jcpuid-native-*.nar
+      - run: mvn clean package -f jcpuid-lib
