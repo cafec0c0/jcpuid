@@ -17,12 +17,6 @@
                 <extensions>true</extensions>
                 <version>3.5.2</version>
                 <configuration>
-                    <gnuUseOnWindows>true</gnuUseOnWindows>
-                    <gnuSourceDirectory>${project.basedir}/src/main/c</gnuSourceDirectory>
-                    <gnuTargetDirectory>${project.build.outputDirectory}/testout</gnuTargetDirectory>
-                    <gnuAutogenSkip>true</gnuAutogenSkip>
-                    <gnuConfigureSkip>true</gnuConfigureSkip>
-                    <gnuMakeSkip>true</gnuMakeSkip>
                     <c>
                         <name>gcc</name>
                         <includePaths>
@@ -43,11 +37,11 @@
                     <linker>
                         <name>gcc</name>
                     </linker>
-                    <library>
-                        <type>shared</type>
-                    </library>
-
-<!--                    // TODO: fix (search actions for "nothing to compile") -->
+                    <libraries>
+                        <library>
+                            <type>shared</type>
+                        </library>
+                    </libraries>
                 </configuration>
             </plugin>
         </plugins>
