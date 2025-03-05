@@ -28,6 +28,7 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/
+      - run: mvn deploy
       - uses: actions/upload-artifact@v4
         with:
           name: 'jcpuid-native-windows-1.0-SNAPSHOT-amd64-Windows-gcc-shared.nar'
