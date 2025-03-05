@@ -48,7 +48,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: 'jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-shared.nar'
-          path: 'jcpuid-native/jcpuid-native-macos/target/jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-jni.nar'
+          path: 'jcpuid-native/jcpuid-native-macos/target/jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-shared.nar'
           if-no-files-found: 'error'
 
   build-jcpuid-jar:
