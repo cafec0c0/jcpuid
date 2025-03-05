@@ -74,7 +74,7 @@ jobs:
           path: jcpuid-native/jcpuid-native-windows/target/
       - uses: actions/download-artifact@v4
         with:
-          name: 'jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-jni.nar'
+          name: 'jcpuid-native-macos-1.0-SNAPSHOT-x86_64-MacOSX-gpp-shared.nar'
           path: jcpuid-native/jcpuid-native-macos/target/
 
 
