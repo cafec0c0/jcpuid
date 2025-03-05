@@ -29,6 +29,8 @@ jobs:
           java-version: '8'
       - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/
       - run: mvn deploy -f jcpuid-native/jcpuid-native-windows/
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/upload-artifact@v4
         with:
           name: 'jcpuid-native-windows-1.0-SNAPSHOT-amd64-Windows-gcc-shared.nar'
