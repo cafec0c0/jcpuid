@@ -33,7 +33,7 @@
                     </c>
                     <libraries>
                         <library>
-                            <type>jni</type>
+                            <type>shared</type>
                         </library>
                     </libraries>
                 </configuration>
