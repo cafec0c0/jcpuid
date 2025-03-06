@@ -35,9 +35,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: cat ~/.m2/settings.xml
-      - uses: s4u/maven-settings-action@v3.1.0
-      - run: cat ~/.m2/settings.xml
-      - run: mvn deploy -f jcpuid-lib -X
+      - run: mvn deploy -f jcpuid-lib
         env:
           GITHUB_TOKEN: ${{ github.token }}
