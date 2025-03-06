@@ -105,7 +105,7 @@
                         <configuration>
                             <artifacts>
                                 <artifact>
-                                    <file>${project.build.directory}/lib/*</file>
+                                    <file>${project.build.directory}/lib/jcpuid-native-windows-${project.version}.so</file>
                                     <type>jar</type>
                                 </artifact>
                             </artifacts>
