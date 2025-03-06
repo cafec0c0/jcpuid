@@ -3,6 +3,7 @@ on: [push]
 
 jobs:
   build-all-platforms:
+    name: Build native libs
     strategy:
       matrix:
         platform:
@@ -24,7 +25,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
   build-jcpuid-jar:
-    name: Build and package JAR
+    name: Build Shaded Jar
     runs-on: ubuntu-latest
     needs:
       - build-all-platforms
@@ -34,4 +35,4 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -f jcpuid-lib
+      - run: mvn clean package
