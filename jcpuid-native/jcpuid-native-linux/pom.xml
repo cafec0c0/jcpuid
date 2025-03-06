@@ -6,13 +6,17 @@
 
     <groupId>net.adambruce</groupId>
     <artifactId>jcpuid-native-linux</artifactId>
-    <version>0.0.1</version>
-    <packaging>nar</packaging>
+    <version>0.0.4</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <distributionManagement>
         <repository>
             <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
+            <name>jcpuid maven repo</name>
             <url>https://maven.pkg.github.com/cafec0c0/jcpuid</url>
         </repository>
     </distributionManagement>
@@ -20,31 +24,94 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.github.maven-nar</groupId>
-                <artifactId>nar-maven-plugin</artifactId>
-                <version>3.5.2</version>
-                <extensions>true</extensions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${project.build.directory}/lib" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <c>
-                        <name>gcc</name>
-                        <includePaths>
-                            <includePath>
-                                <path>${project.basedir}/src/main/include</path>
-                            </includePath>
-                            <includePath>
-                                <path>${env.JAVA_HOME}/include</path>
-                            </includePath>
-                            <includePath>
-                                <path>${env.JAVA_HOME}/include/linux</path>
-                            </includePath>
-                        </includePaths>
-                    </c>
-                    <libraries>
-                        <library>
-                            <type>shared</type>
-                        </library>
-                    </libraries>
+                    <executable>gcc</executable>
+                    <arguments>
+                        <argument>-I${project.basedir}/src/main/include</argument>
+                        <argument>-I${env.JAVA_HOME}/include</argument>
+                        <argument>-I${env.JAVA_HOME}/include/linux</argument>
+                        <argument>-shared</argument>
+                        <argument>-o${project.build.directory}/lib/jcpuid-native-linux-${project.version}.so</argument>
+                        <argument>${project.basedir}/src/main/c/jcpuid.c</argument>
+                    </arguments>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classesDirectory>${project.build.directory}</classesDirectory>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <includes>
+                                <include>**/lib/*</include>
+                            </includes>
+                            <archive>
+                                <addMavenDescriptor>false</addMavenDescriptor>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/lib/*</file>
+                                    <type>jar</type>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
