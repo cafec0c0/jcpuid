@@ -9,6 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <packaging>pom</packaging>
+
     <artifactId>jcpuid-lib</artifactId>
 
     <properties>
@@ -38,11 +40,19 @@
             <groupId>net.adambruce</groupId>
             <artifactId>jcpuid-native-linux</artifactId>
             <version>${project.version}</version>
+            <type>nar</type>
         </dependency>
         <dependency>
             <groupId>net.adambruce</groupId>
-            <artifactId>jcpuid-native-win32</artifactId>
+            <artifactId>jcpuid-native-windows</artifactId>
             <version>${project.version}</version>
+            <type>nar</type>
+        </dependency>
+        <dependency>
+            <groupId>net.adambruce</groupId>
+            <artifactId>jcpuid-native-macos</artifactId>
+            <version>${project.version}</version>
+            <type>nar</type>
         </dependency>
     </dependencies>
 
@@ -72,69 +82,136 @@
                 </executions>
             </plugin>
 
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-resources-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>copy-resources</id>-->
+<!--                        <phase>validate</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>copy-resources</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>${project.build.outputDirectory}/META-INF</outputDirectory>-->
+<!--                            <resources>-->
+<!--                                <resource>-->
+<!--                                    <directory>${project.basedir}/..</directory>-->
+<!--                                    <includes>-->
+<!--                                        <include>LICENSE</include>-->
+<!--                                    </includes>-->
+<!--                                </resource>-->
+<!--                            </resources>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+<!--            <plugin>-->
+<!--                <artifactId>maven-assembly-plugin</artifactId>-->
+<!--                <version>2.0.1</version>-->
+<!--                <configuration>-->
+<!--                    <descriptors>-->
+<!--                        <descriptor>assembly/amd64-Linux-gpp.xml</descriptor>-->
+<!--                        <descriptor>assembly/amd64-Windows-gcc.xml</descriptor>-->
+<!--                        <descriptor>assembly/x86_64-MacOSX-gpp.xml</descriptor>-->
+<!--                    </descriptors>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
+                <groupId>com.github.maven-nar</groupId>
+                <artifactId>nar-maven-plugin</artifactId>
+                <version>3.5.2</version>
                 <executions>
                     <execution>
-                        <id>copy-resources</id>
-                        <phase>validate</phase>
                         <goals>
-                            <goal>copy-resources</goal>
+                            <goal>nar-download</goal>
+                            <goal>nar-unpack</goal>
+                            <goal>nar-assembly</goal>
                         </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.outputDirectory}/META-INF</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/..</directory>
-                                    <includes>
-                                        <include>LICENSE</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <manifestEntries>
-                                        <Created-By>Adam Bruce</Created-By>
-                                        <Implementation-Copyright>Copyright (C) 2025-${date.year} Adam Bruce</Implementation-Copyright>
-                                        <Implementation-Version>${project.version}</Implementation-Version>
-                                    </manifestEntries>
-                                </transformer>
-                            </transformers>
-                            <filters>
-                                <filter>
-                                    <artifact>net.adambruce:jcpuid-native-*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/**</exclude>
-                                    </excludes>
-                                </filter>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/maven/**</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-shade-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>shade</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <transformers>-->
+<!--                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+<!--                                    <manifestEntries>-->
+<!--                                        <Created-By>Adam Bruce</Created-By>-->
+<!--                                        <Implementation-Copyright>Copyright (C) 2025-${date.year} Adam Bruce</Implementation-Copyright>-->
+<!--                                        <Implementation-Version>${project.version}</Implementation-Version>-->
+<!--                                    </manifestEntries>-->
+<!--                                </transformer>-->
+<!--                            </transformers>-->
+<!--                            <filters>-->
+<!--                                <filter>-->
+<!--                                    <artifact>net.adambruce:jcpuid-native-*</artifact>-->
+<!--                                    <excludes>-->
+<!--                                        <exclude>META-INF/**</exclude>-->
+<!--                                    </excludes>-->
+<!--                                </filter>-->
+<!--                                <filter>-->
+<!--                                    <artifact>*:*</artifact>-->
+<!--                                    <excludes>-->
+<!--                                        <exclude>META-INF/maven/**</exclude>-->
+<!--                                    </excludes>-->
+<!--                                </filter>-->
+<!--                            </filters>-->
+<!--                            <createDependencyReducedPom>false</createDependencyReducedPom>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+<!--                        <plugin>-->
+<!--                            <groupId>org.apache.maven.plugins</groupId>-->
+<!--                            <artifactId>maven-shade-plugin</artifactId>-->
+<!--                            <executions>-->
+<!--                                <execution>-->
+<!--                                    <phase>package</phase>-->
+<!--                                    <goals>-->
+<!--                                        <goal>shade</goal>-->
+<!--                                    </goals>-->
+<!--                                    <configuration>-->
+<!--                                        <transformers>-->
+<!--                                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+<!--                                                <manifestEntries>-->
+<!--                                                    <Created-By>Adam Bruce</Created-By>-->
+<!--                                                    <Implementation-Copyright>Copyright (C) 2025-${date.year} Adam Bruce</Implementation-Copyright>-->
+<!--                                                    <Implementation-Version>${project.version}</Implementation-Version>-->
+<!--                                                </manifestEntries>-->
+<!--                                            </transformer>-->
+<!--                                        </transformers>-->
+<!--&lt;!&ndash;                                        <filters>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <filter>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <artifact>net.adambruce:jcpuid-native-*</artifact>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <excludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    <exclude>META-INF/**</exclude>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                </excludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            </filter>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <filter>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <artifact>*:*</artifact>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <excludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    <exclude>META-INF/maven/**</exclude>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                </excludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            </filter>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </filters>&ndash;&gt;-->
+<!--                                        <createDependencyReducedPom>false</createDependencyReducedPom>-->
+<!--                                    </configuration>-->
+<!--                                </execution>-->
+<!--                            </executions>-->
+<!--                        </plugin>-->
         </plugins>
     </build>
 
