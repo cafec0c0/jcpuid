@@ -11,7 +11,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -f jcpuid-native/jcpuid-native-linux/
+      - run: mvn clean package -Dnative-linux
       - run: mvn deploy -f jcpuid-native/jcpuid-native-linux/
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -25,7 +25,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -f jcpuid-native/jcpuid-native-windows/
+      - run: mvn clean package -Dnative-windows
       - run: mvn deploy -f jcpuid-native/jcpuid-native-windows/
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -40,7 +40,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -f jcpuid-native/jcpuid-native-macos/
+      - run: mvn clean package -Dnative-macos
       - run: mvn deploy -f jcpuid-native/jcpuid-native-macos/
         env:
           GITHUB_TOKEN: ${{ github.token }}
