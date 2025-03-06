@@ -19,7 +19,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn -f jcpuid-native/jcpuid-native-${{ matrix.platform.lib }} -Pnative-${{ matrix.platform.lib }}
+      - run: mvn deploy -f jcpuid-native/jcpuid-native-${{ matrix.platform.lib }} -Pnative-${{ matrix.platform.lib }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
