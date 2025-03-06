@@ -11,17 +11,17 @@ import java.nio.file.StandardCopyOption;
 
 public class Amd64CPUIDBridgeImpl implements CPUIDBridge {
 
-    private static final String LIB_PATH = "/net/adambruce/cpuid/natives/jcpuid-linux-x86_64.so";
+    private static final String LIB_PATH = "net/adambruce/jcpuid/lib/jcpuid-native-linux-1.0-SNAPSHOT.so";
     private static boolean libLoaded = false;
 
     public Amd64CPUIDBridgeImpl() {
         init();
     }
 
-    private static void init() {
+    private void init() {
         if (!libLoaded) {
-            try (InputStream libStream = CPUIDImpl.class.getResourceAsStream(LIB_PATH)) {
-                File out = File.createTempFile("jcpuid-", ".so");
+            try (InputStream libStream = getClass().getClassLoader().getResourceAsStream(LIB_PATH)) {
+                File out = File.createTempFile("jcpuid-native-linux-", ".so");
                 Files.copy(libStream, out.getAbsoluteFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
                 System.load(out.getAbsolutePath());
                 libLoaded = true;

@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>net.adambruce</groupId>
-            <artifactId>jcpuid-lib</artifactId>
+            <artifactId>jcpuid</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
