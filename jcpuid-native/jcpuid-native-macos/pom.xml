@@ -6,8 +6,8 @@
 
     <groupId>net.adambruce</groupId>
     <artifactId>jcpuid-native-macos</artifactId>
-    <version>0.0.1</version>
-    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,99 +21,41 @@
         </repository>
     </distributionManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <mkdir dir="${project.build.directory}/lib" />
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+    <profiles>
+        <profile>
+            <id>native-macos</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <mkdir dir="${project.build.outputDirectory}/net/adambruce/jcpuid/lib" />
+                                        <exec executable="gcc">
+                                            <arg value="-I${project.basedir}/src/main/include"/>
+                                            <arg value="-I${env.JAVA_HOME}/include"/>
+                                            <arg value="-I${env.JAVA_HOME}/include/darwin"/>
+                                            <arg value="-shared"/>
+                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-macos-${project.version}.dylib"/>
+                                            <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
+                                        </exec>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.0</version>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <executable>gcc</executable>
-                    <arguments>
-                        <argument>-I${project.basedir}/src/main/include</argument>
-                        <argument>-I${env.JAVA_HOME}/include</argument>
-                        <argument>-I${env.JAVA_HOME}/include/darwin</argument>
-                        <argument>-shared</argument>
-                        <argument>-o${project.build.directory}/lib/jcpuid-native-macos-${project.version}.dylib</argument>
-                        <argument>${project.basedir}/src/main/c/jcpuid.c</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.2</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classesDirectory>${project.build.directory}</classesDirectory>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                            <includes>
-                                <include>**/lib/*</include>
-                            </includes>
-                            <archive>
-                                <addMavenDescriptor>false</addMavenDescriptor>
-                            </archive>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>attach-artifacts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attach-artifact</goal>
-                        </goals>
-                        <configuration>
-                            <artifacts>
-                                <artifact>
-                                    <file>${project.build.directory}/lib/jcpuid-native-macos-${project.version}.so</file>
-                                    <type>jar</type>
-                                </artifact>
-                            </artifacts>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
