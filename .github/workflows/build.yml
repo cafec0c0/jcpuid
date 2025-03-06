@@ -35,6 +35,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn clean package -f jcpuid-lib
+      - run: mvn deploy -f jcpuid-lib -X
         env:
           GITHUB_TOKEN: ${{ github.token }}
