@@ -1,4 +1,4 @@
-name: build-jcpuid
+name: Build
 on: push
 
 jobs:
