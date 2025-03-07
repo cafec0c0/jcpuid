@@ -8,10 +8,9 @@
         <artifactId>jcpuid-parent</artifactId>
         <version>0.0.2</version>
     </parent>
+    <packaging>pom</packaging>
 
     <artifactId>jcpuid-native</artifactId>
-    <version>0.0.2</version>
-    <packaging>pom</packaging>
 
     <modules>
         <module>jcpuid-native-linux</module>
