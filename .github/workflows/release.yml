@@ -19,6 +19,7 @@ jobs:
     runs-on: ${{ matrix.platform.name }}
     steps:
       - name: Remove tag prefix
+        shell: bash
         run: |
           VERSION=${GITHUB_REF_NAME#v}
           echo "VERSION=$VERSION" >> $GITHUB_ENV
