@@ -19,7 +19,7 @@ jobs:
       - name: Commit new POM versions
         uses: EndBug/add-and-commit@v9
         with:
-          add: '[":./\*pom.xml", ":\!./\*.flattened-pom.xml"]'
+          add: ':./\*pom.xml :\!./\*.flattened-pom.xml'
           message: Bump POM versions for release
           new_branch: main
           push: true
@@ -71,7 +71,7 @@ jobs:
         run: mvn -B versions:set -DnextSnapshot=true -DgenerateBackupPoms=false -DprocessDependencies=false -DprocessPlugins=false
       - uses: EndBug/add-and-commit@v9
         with:
-          add: '[":./\*pom.xml", ":\!./\*.flattened-pom.xml"]'
+          add: ':./\*pom.xml :\!./\*.flattened-pom.xml'
           message: Bump POM versions for snapshot
           new_branch: main
           push: true
