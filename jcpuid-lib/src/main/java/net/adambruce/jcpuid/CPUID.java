@@ -1,21 +1,30 @@
 package net.adambruce.jcpuid;
 
 import net.adambruce.jcpuid.exception.CPUIDException;
-import net.adambruce.jcpuid.exception.PlatformNotSupportedException;
+import net.adambruce.jcpuid.exception.InitialisationException;
 import net.adambruce.jcpuid.type.Result;
 
 /**
  * Interface for native CPUID instructions.
- *
- * @see <a href="https://www.amd.com/content/dam/amd/en/documents/archived-tech-docs/design-guides/25481.pdf">AMD CPUID Book</a>
  */
 public interface CPUID {
 
-    static CPUID getPlatformCPUID() throws PlatformNotSupportedException {
+    /**
+     * Gets the CPUID implementation for the current platform, loading the
+     * native library if it has not already been loaded into the current JVM.
+     * The native library to be loaded will be determined based on the values
+     * returned in the <code>os.arch</code> and <code>os.name</code> JVM
+     * properties.
+     *
+     * @return the CPUID implementation for the current platform
+     * @throws InitialisationException the platform CPUID implementation failed
+     * to initialise.
+     */
+    static CPUID getPlatformCPUID() throws InitialisationException {
         if (System.getProperty("os.arch").equals("amd64")) {
-            return new CPUIDImpl();
+            return new DefaultCPUID();
         }
-        throw new PlatformNotSupportedException("this platform is not supported");
+        throw new InitialisationException("this platform is not supported");
     }
 
     /**
@@ -75,7 +84,8 @@ public interface CPUID {
     int getLogicalProcessorCount() throws CPUIDException;
 
     /**
-     * Obtains the size of a cache line in quadwords flushed by the CLFLUSH instruction.
+     * Obtains the size of a cache line in quadwords flushed by the CLFLUSH
+     * instruction.
      *
      * @return the size of the cache line in quadwords
      * @throws CPUIDException the native cpuid execution failed

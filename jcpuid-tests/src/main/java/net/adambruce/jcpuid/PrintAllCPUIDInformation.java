@@ -2,17 +2,17 @@ package net.adambruce.jcpuid;
 
 
 import net.adambruce.jcpuid.exception.CPUIDException;
-import net.adambruce.jcpuid.exception.PlatformNotSupportedException;
+import net.adambruce.jcpuid.exception.InitialisationException;
 
 public class PrintAllCPUIDInformation {
 
     private final CPUID cpuid;
 
-    public static void main(String[] args) throws PlatformNotSupportedException {
+    public static void main(String[] args) throws InitialisationException {
         new PrintAllCPUIDInformation().run();
     }
 
-    private PrintAllCPUIDInformation() throws PlatformNotSupportedException {
+    private PrintAllCPUIDInformation() throws InitialisationException {
         cpuid = CPUID.getPlatformCPUID();
     }
 
