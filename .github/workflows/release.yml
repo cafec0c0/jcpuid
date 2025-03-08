@@ -5,27 +5,8 @@ on:
       - 'v*'
 
 jobs:
-  bump-pom-version-release:
-    name: Bump POMs for release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Remove tag prefix
-        run: |
-          VERSION=${GITHUB_REF_NAME#v}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-      - uses: actions/checkout@v4
-      - name: Set pom.xml version for this release
-        run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false -DprocessDependencies=false -DprocessPlugins=false
-      - name: Commit new POM versions
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: Bump POM versions for release
-          new_branch: main
-          push: true
-
   build-all-platforms:
     name: Build and deploy native libs
-    needs: bump-pom-version-release
     strategy:
       matrix:
         platform:
@@ -42,7 +23,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn deploy -f jcpuid-native/jcpuid-native-${{ matrix.platform.lib }} -Pnative-${{ matrix.platform.lib }}
+      - name: Set pom.xml version for this release
+        run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
+      - run: mvn -B deploy -f jcpuid-native/jcpuid-native-${{ matrix.platform.lib }} -Pnative-${{ matrix.platform.lib }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
@@ -56,7 +39,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn deploy -f jcpuid-lib
+      - name: Set pom.xml version for this release
+        run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
+      - run: mvn -B deploy -f jcpuid-lib
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
@@ -66,8 +51,10 @@ jobs:
     needs: build-jcpuid-jar
     steps:
       - uses: actions/checkout@v4
+      - name: Set pom.xml version for this release
+        run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
       - name: Set pom.xml snapshot version
-        run: mvn -B versions:set -DnextSnapshot=true -DgenerateBackupPoms=false -DprocessDependencies=false -DprocessPlugins=false
+        run: mvn -B versions:set -DnextSnapshot=true -DgenerateBackupPoms=false
       - uses: EndBug/add-and-commit@v9
         with:
           message: Bump POM versions for snapshot
