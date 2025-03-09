@@ -16,7 +16,6 @@
         <module>jcpuid-native-linux-amd64</module>
         <module>jcpuid-native-linux-i386</module>
         <module>jcpuid-native-macos-amd64</module>
-        <module>jcpuid-native-macos-i386</module>
         <module>jcpuid-native-windows-amd64</module>
         <module>jcpuid-native-windows-i386</module>
     </modules>

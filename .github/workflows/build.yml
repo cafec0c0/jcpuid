@@ -38,6 +38,7 @@ jobs:
     name: Build Linux i386 library
     runs-on: ubuntu-latest
     steps:
+      - run: apt install gcc-multilib
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
@@ -90,20 +91,5 @@ jobs:
           java-version: '8'
           architecture: 'x64'
       - run: mvn clean install -f jcpuid-native/jcpuid-native-macos-amd64 -Pmacos-amd64
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
-  build-native-macos-i386:
-    needs: build-jcpuid-jars
-    name: Build MacOS i386 library
-    runs-on: macos-13
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '8'
-          architecture: 'x86'
-      - run: mvn clean install -f jcpuid-native/jcpuid-native-macos-i386 -Pmacos-i386
         env:
           GITHUB_TOKEN: ${{ github.token }}
