@@ -42,7 +42,7 @@
                                 <configuration>
                                     <target>
                                         <mkdir dir="${project.build.outputDirectory}/net/adambruce/jcpuid/lib" />
-                                        <exec executable="gcc">
+                                        <exec executable="gcc" failonerror="true">
                                             <arg value="-I${project.basedir}/src/main/include"/>
                                             <arg value="-I${env.JAVA_HOME_64}/include"/>
                                             <arg value="-I${env.JAVA_HOME_64}/include/win32"/>
@@ -51,7 +51,7 @@
                                             <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-windows-amd64-${project.version}.dll"/>
                                             <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
                                         </exec>
-                                        <exec executable="gcc">
+                                        <exec executable="gcc" failonerror="true">
                                             <arg value="-I${project.basedir}/src/main/include"/>
                                             <arg value="-I${env.JAVA_HOME_32}/include"/>
                                             <arg value="-I${env.JAVA_HOME_32}/include/win32"/>
