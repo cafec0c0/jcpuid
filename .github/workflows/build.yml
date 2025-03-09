@@ -84,8 +84,7 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
           architecture: 'x86'
-      - run: $env:Path = ' ${{ steps.msys2.outputs.msys2-location }}\mingw32\bin;' + $env:Path
-      - run: mvn clean install -f jcpuid-native/jcpuid-native-windows-x86 -Pwindows-x86
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-windows-x86 -Dgcc='${{ steps.msys2.outputs.msys2-location }}\mingw32\bin\gcc.exe' -Pwindows-x86
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
