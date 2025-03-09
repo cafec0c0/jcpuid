@@ -72,11 +72,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: msys2/setup-msys2@v2
+        id: msys2
         with:
-          msystem: MINGW32
           update: true
           install: >-
-            mingw-w64-i686-toolchain
+            mingw-w64-i686-toolchain          
             
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -84,8 +84,8 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
           architecture: 'x86'
+      - run: $env:Path = '${{ steps.msys2.outputs.msys2-location }}\mingw32\bin' + $env:Path 
       - run: mvn clean install -f jcpuid-native/jcpuid-native-windows-x86 -Pwindows-x86
-        shell: msys2 {0}
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
