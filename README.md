@@ -20,7 +20,7 @@ groupId:     net.adambruce
 artifactId:  jcpuid
 ```
 
-The above dependency will also bring native libraries for the supported 
+The above dependency depends on native libraries for the supported 
 operating systems. If you do not wish to depend on some of these libraries, 
 they can be individually excluded by excluding the following coordinates:
 - `jcpuid-native-linux`
