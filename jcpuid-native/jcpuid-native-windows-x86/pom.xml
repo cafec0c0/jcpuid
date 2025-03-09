@@ -42,7 +42,7 @@
                                 <configuration>
                                     <target>
                                         <mkdir dir="${project.build.outputDirectory}/net/adambruce/jcpuid/lib" />
-                                        <exec executable="gcc" failonerror="true">
+                                        <exec executable="${gcc}" failonerror="true">
                                             <arg value="-I${project.basedir}/src/main/include"/>
                                             <arg value="-I${env.JAVA_HOME}/include"/>
                                             <arg value="-I${env.JAVA_HOME}/include/win32"/>
