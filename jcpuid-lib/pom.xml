@@ -45,27 +45,27 @@
         </dependency>
         <dependency>
             <groupId>net.adambruce</groupId>
-            <artifactId>jcpuid-native-linux-amd64</artifactId>
+            <artifactId>jcpuid-native-linux-x86_64</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.adambruce</groupId>
-            <artifactId>jcpuid-native-linux-i386</artifactId>
+            <artifactId>jcpuid-native-linux-x86</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.adambruce</groupId>
-            <artifactId>jcpuid-native-windows-amd64</artifactId>
+            <artifactId>jcpuid-native-windows-x86_64</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.adambruce</groupId>
-            <artifactId>jcpuid-native-windows-i386</artifactId>
+            <artifactId>jcpuid-native-windows-x86</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.adambruce</groupId>
-            <artifactId>jcpuid-native-macos-amd64</artifactId>
+            <artifactId>jcpuid-native-macos-x86_64</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

@@ -11,7 +11,7 @@
     </parent>
     <packaging>jar</packaging>
 
-    <artifactId>jcpuid-native-macos-amd64</artifactId>
+    <artifactId>jcpuid-native-macos-x86_64</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +27,7 @@
 
     <profiles>
         <profile>
-            <id>macos-amd64</id>
+            <id>macos-x86_64</id>
             <build>
                 <plugins>
                     <plugin>
@@ -48,7 +48,7 @@
                                             <arg value="-I${env.JAVA_HOME}/include/darwin"/>
                                             <arg value="-shared"/>
                                             <arg value="-fPIC"/>
-                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-macos-amd64-${project.version}.dylib"/>
+                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-macos-x86_64-${project.version}.dylib"/>
                                             <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
                                         </exec>
                                     </target>

@@ -22,10 +22,10 @@ package net.adambruce.jcpuid.loader;
 public enum Architecture {
 
     /** 64-bit x86 Intel and AMD processors. */
-    AMD64("amd64"),
+    AMD64("x86_64"),
 
     /** 32-bit x86 Intel and AMD processors. */
-    I386("i386");
+    I386("x86");
 
     /** The name of the architecture (used for locating native library). */
     private final String name;

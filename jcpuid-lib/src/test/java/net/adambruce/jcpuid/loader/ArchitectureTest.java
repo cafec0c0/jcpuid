@@ -30,8 +30,8 @@ public class ArchitectureTest {
     @ValueSource
     private static Stream<Arguments> getEnumsAndNames() {
         return Stream.of(
-                Arguments.of(Architecture.AMD64, "amd64"),
-                Arguments.of(Architecture.I386, "i386")
+                Arguments.of(Architecture.AMD64, "x86_64"),
+                Arguments.of(Architecture.I386, "x86")
         );
     }
 

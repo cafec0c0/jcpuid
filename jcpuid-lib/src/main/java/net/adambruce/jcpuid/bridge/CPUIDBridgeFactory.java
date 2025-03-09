@@ -58,7 +58,7 @@ public final class CPUIDBridgeFactory {
             throws InitialisationException {
 
         String osArch = System.getProperty("os.arch");
-        if (osArch.equals("amd64")) {
+        if (osArch.equals("x86_64")) {
             return Architecture.AMD64;
         }
 
