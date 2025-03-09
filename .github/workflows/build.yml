@@ -18,19 +18,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-  build-all-platforms:
+  build-native-linux-amd64:
     needs: build-jcpuid-jars
-    name: Build native libs
-    strategy:
-      matrix:
-        platform:
-          - name: ubuntu-latest
-            lib: linux
-          - name: windows-latest
-            lib: windows
-          - name: macos-13
-            lib: macos
-    runs-on: ${{ matrix.platform.name }}
+    name: Build Linux amd64 library
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -38,13 +29,81 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
           architecture: 'x64'
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-linux-amd64 -Plinux-amd64
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-native-linux-i386:
+    needs: build-jcpuid-jars
+    name: Build Linux i386 library
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '8'
           architecture: 'x86'
-      - run: mvn clean install -f jcpuid-native/jcpuid-native-${{ matrix.platform.lib }} -Pnative-${{ matrix.platform.lib }}
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-linux-i386 -Plinux-i386
         env:
-          JAVA_HOME_64: ${{ env.JAVA_HOME_8_X64 }}
-          JAVA_HOME_32: ${{ env.JAVA_HOME_8_X86 }}
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-native-windows-amd64:
+    needs: build-jcpuid-jars
+    name: Build Windows amd64 library
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          architecture: 'x64'
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-windows-amd64 -Pwindows-amd64
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-native-windows-i386:
+    needs: build-jcpuid-jars
+    name: Build Windows i386 library
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          architecture: 'x86'
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-windows-i386 -Pwindows-i386
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-native-macos-amd64:
+    needs: build-jcpuid-jars
+    name: Build MacOS amd64 library
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          architecture: 'x64'
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-macos-amd64 -Pmacos-amd64
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-native-macos-i386:
+    needs: build-jcpuid-jars
+    name: Build MacOS i386 library
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          architecture: 'x86'
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-macos-i386 -Pmacos-i386
+        env:
           GITHUB_TOKEN: ${{ github.token }}

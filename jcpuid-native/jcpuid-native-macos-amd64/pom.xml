@@ -11,7 +11,7 @@
     </parent>
     <packaging>jar</packaging>
 
-    <artifactId>jcpuid-native-windows</artifactId>
+    <artifactId>jcpuid-native-macos-amd64</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +27,7 @@
 
     <profiles>
         <profile>
-            <id>native-windows</id>
+            <id>macos-amd64</id>
             <build>
                 <plugins>
                     <plugin>
@@ -44,21 +44,11 @@
                                         <mkdir dir="${project.build.outputDirectory}/net/adambruce/jcpuid/lib" />
                                         <exec executable="gcc" failonerror="true">
                                             <arg value="-I${project.basedir}/src/main/include"/>
-                                            <arg value="-I${env.JAVA_HOME_64}/include"/>
-                                            <arg value="-I${env.JAVA_HOME_64}/include/win32"/>
+                                            <arg value="-I${env.JAVA_HOME}/include"/>
+                                            <arg value="-I${env.JAVA_HOME}/include/darwin"/>
                                             <arg value="-shared"/>
                                             <arg value="-fPIC"/>
-                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-windows-amd64-${project.version}.dll"/>
-                                            <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
-                                        </exec>
-                                        <exec executable="gcc" failonerror="true">
-                                            <arg value="-I${project.basedir}/src/main/include"/>
-                                            <arg value="-I${env.JAVA_HOME_32}/include"/>
-                                            <arg value="-I${env.JAVA_HOME_32}/include/win32"/>
-                                            <arg value="-shared"/>
-                                            <arg value="-fPIC"/>
-                                            <arg value="-m32"/>
-                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-windows-i386-${project.version}.dll"/>
+                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-macos-amd64-${project.version}.dylib"/>
                                             <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
                                         </exec>
                                     </target>
@@ -104,5 +94,7 @@
             </build>
         </profile>
     </profiles>
+
+
 
 </project>

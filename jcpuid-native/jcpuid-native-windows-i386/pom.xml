@@ -11,7 +11,7 @@
     </parent>
     <packaging>jar</packaging>
 
-    <artifactId>jcpuid-native-linux</artifactId>
+    <artifactId>jcpuid-native-windows-i386</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +27,7 @@
 
     <profiles>
         <profile>
-            <id>native-linux</id>
+            <id>windows-i386</id>
             <build>
                 <plugins>
                     <plugin>
@@ -41,24 +41,15 @@
                                 </goals>
                                 <configuration>
                                     <target>
-                                        <mkdir dir="${project.build.outputDirectory}/net/adambruce/jcpuid/lib"/>
+                                        <mkdir dir="${project.build.outputDirectory}/net/adambruce/jcpuid/lib" />
                                         <exec executable="gcc" failonerror="true">
                                             <arg value="-I${project.basedir}/src/main/include"/>
-                                            <arg value="-I${env.JAVA_HOME_64}/include"/>
-                                            <arg value="-I${env.JAVA_HOME_64}/include/linux"/>
-                                            <arg value="-shared"/>
-                                            <arg value="-fPIC"/>
-                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-linux-amd64-${project.version}.so"/>
-                                            <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
-                                        </exec>
-                                        <exec executable="gcc" failonerror="true">
-                                            <arg value="-I${project.basedir}/src/main/include"/>
-                                            <arg value="-I${env.JAVA_HOME_32}/include"/>
-                                            <arg value="-I${env.JAVA_HOME_32}/include/linux"/>
+                                            <arg value="-I${env.JAVA_HOME}/include"/>
+                                            <arg value="-I${env.JAVA_HOME}/include/win32"/>
                                             <arg value="-shared"/>
                                             <arg value="-fPIC"/>
                                             <arg value="-m32"/>
-                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-linux-i386-${project.version}.so"/>
+                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-windows-amd64-${project.version}.dll"/>
                                             <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
                                         </exec>
                                     </target>
@@ -104,7 +95,5 @@
             </build>
         </profile>
     </profiles>
-
-
 
 </project>
