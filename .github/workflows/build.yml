@@ -84,6 +84,7 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
           architecture: 'x86'
+      - run: echo ${{ steps.msys2.outputs.msys2-location }}\mingw32\bin
       - run: mvn clean install -f jcpuid-native/jcpuid-native-windows-x86 '-Dorg.slf4j.simpleLogger.defaultLogLevel=debug' '-Dgcc=${{ steps.msys2.outputs.msys2-location }}\mingw32\bin\gcc.exe' -Pwindows-x86
         env:
           GITHUB_TOKEN: ${{ github.token }}
