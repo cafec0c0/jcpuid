@@ -1,13 +1,17 @@
 package net.adambruce.jcpuid.bridge;
 
-import net.adambruce.jcpuid.exception.PlatformNotSupportedException;
 import net.adambruce.jcpuid.type.Result;
 
+/**
+ * Defines the required methods that a bridge must implement.
+ */
 public interface CPUIDBridge {
 
-    static CPUIDBridge getPlatformBridge() throws PlatformNotSupportedException {
-        return new Amd64CPUIDBridgeImpl();
-    }
-
-    Result getCPUID(int leaf);
+    /**
+     * Executes the CPUID instruction with the given leaf node.
+     *
+     * @param leaf the leaf
+     * @return the result containing register values and return value
+     */
+    Result executeCPUID(int leaf);
 }
