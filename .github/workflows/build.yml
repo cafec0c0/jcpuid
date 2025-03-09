@@ -73,9 +73,11 @@ jobs:
     steps:
       - uses: msys2/setup-msys2@v2
         with:
+          msystem: MINGW32
           update: true
           install: >-
             mingw-w64-i686-toolchain
+            
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
@@ -83,6 +85,7 @@ jobs:
           java-version: '8'
           architecture: 'x86'
       - run: mvn clean install -f jcpuid-native/jcpuid-native-windows-x86 -Pwindows-x86
+        shell: msys2 {0}
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
