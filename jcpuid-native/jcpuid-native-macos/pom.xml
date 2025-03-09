@@ -46,8 +46,23 @@
                                             <arg value="-I${project.basedir}/src/main/include"/>
                                             <arg value="-I${env.JAVA_HOME}/include"/>
                                             <arg value="-I${env.JAVA_HOME}/include/darwin"/>
+                                            <arg value="-fstack-protector"/>
                                             <arg value="-shared"/>
-                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-macos-${project.version}.dylib"/>
+                                            <arg value="-nostdlib"/>
+                                            <arg value="-fPIC"/>
+                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-macos-amd64-${project.version}.dylib"/>
+                                            <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
+                                        </exec>
+                                        <exec executable="gcc">
+                                            <arg value="-I${project.basedir}/src/main/include"/>
+                                            <arg value="-I${env.JAVA_HOME}/include"/>
+                                            <arg value="-I${env.JAVA_HOME}/include/darwin"/>
+                                            <arg value="-fstack-protector"/>
+                                            <arg value="-shared"/>
+                                            <arg value="-nostdlib"/>
+                                            <arg value="-fPIC"/>
+                                            <arg value="-m32"/>
+                                            <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-macos-i386-${project.version}.dylib"/>
                                             <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
                                         </exec>
                                     </target>

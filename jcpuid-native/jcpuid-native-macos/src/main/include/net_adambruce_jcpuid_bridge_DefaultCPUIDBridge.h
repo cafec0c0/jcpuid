@@ -12,7 +12,7 @@ extern "C" {
  * Method:    getCPUIDNative
  * Signature: (I)Lnet/adambruce/jcpuid/type/Result;
  */
-JNIEXPORT jobject JNICALL Java_net_adambruce_jcpuid_bridge_DefaultCPUIDBridge_getCPUIDNative
+JNIEXPORT jobject JNICALL Java_net_adambruce_jcpuid_bridge_DefaultCPUIDBridge_executeCPUIDNative
   (JNIEnv *, jobject, jint);
 
 #ifdef __cplusplus

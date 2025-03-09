@@ -40,17 +40,20 @@ public class NativeLibraryLoader {
      * Loads the library for the specified operating system.
      *
      * @param operatingSystem the operating system to load the library for
+     * @param architecture the architecture to load the library for
      * @throws InitialisationException the loader failed to load the library
      */
-    public void loadLibraryForOperatingSystem(
-            final OperatingSystem operatingSystem)
+    public void loadLibrary(
+            final OperatingSystem operatingSystem,
+            final Architecture architecture)
             throws InitialisationException {
 
-        loadNativeLibrary(operatingSystem);
+        loadNativeLibrary(operatingSystem, architecture);
     }
 
-    private Path getLibraryPathForOperatingSystem(
-            final OperatingSystem operatingSystem)
+    private Path getLibraryPath(
+            final OperatingSystem operatingSystem,
+            final Architecture architecture)
             throws InitialisationException {
 
         try (InputStream mappings = getClass().getClassLoader()
@@ -59,8 +62,10 @@ public class NativeLibraryLoader {
             Properties properties = new Properties();
             properties.load(mappings);
 
-            return Paths.get(
-                    properties.getProperty(operatingSystem.getLookupName()));
+            String key = operatingSystem.getLookupName() + "_"
+                    + architecture.getLookupName();
+
+            return Paths.get(properties.getProperty(key));
 
         } catch (IOException ex) {
             throw new InitialisationException("unable to load library "
@@ -68,9 +73,12 @@ public class NativeLibraryLoader {
         }
     }
 
-    private void loadNativeLibrary(final OperatingSystem operatingSystem)
+    private void loadNativeLibrary(final OperatingSystem operatingSystem,
+                                   final Architecture architecture)
             throws InitialisationException {
-        Path path = getLibraryPathForOperatingSystem(operatingSystem);
+
+        Path path = getLibraryPath(operatingSystem, architecture);
+
         String[] parts = path.getFileName().toString().split("\\.");
 
         try {
