@@ -23,9 +23,19 @@ artifactId:  jcpuid
 The above dependency depends on native libraries for the supported 
 operating systems. If you do not wish to depend on some of these libraries, 
 they can be individually excluded by excluding the following coordinates:
-- `jcpuid-native-linux`
-- `jcpuid-native-windows`
-- `jcpuid-native-macos`
+```
+groupId:     net.adambruce
+artifactId:  jcpuid-native-linux
+```
+```
+groupId:     net.adambruce
+artifactId:  jcpuid-native-windows
+```
+```
+groupId:     net.adambruce
+artifactId:  jcpuid-native-macos
+```
+
 
 ## Building and Installing
 
