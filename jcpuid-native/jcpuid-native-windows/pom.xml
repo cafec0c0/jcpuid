@@ -44,8 +44,8 @@
                                         <mkdir dir="${project.build.outputDirectory}/net/adambruce/jcpuid/lib" />
                                         <exec executable="gcc">
                                             <arg value="-I${project.basedir}/src/main/include"/>
-                                            <arg value="-I${env.JAVA_HOME}/include"/>
-                                            <arg value="-I${env.JAVA_HOME}/include/win32"/>
+                                            <arg value="-I${env.JAVA_HOME_64}/include"/>
+                                            <arg value="-I${env.JAVA_HOME_64}/include/win32"/>
                                             <arg value="-shared"/>
                                             <arg value="-fPIC"/>
                                             <arg value="-o${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-windows-amd64-${project.version}.dll"/>
@@ -53,8 +53,8 @@
                                         </exec>
                                         <exec executable="gcc">
                                             <arg value="-I${project.basedir}/src/main/include"/>
-                                            <arg value="-I${env.JAVA_HOME}/include"/>
-                                            <arg value="-I${env.JAVA_HOME}/include/win32"/>
+                                            <arg value="-I${env.JAVA_HOME_32}/include"/>
+                                            <arg value="-I${env.JAVA_HOME_32}/include/win32"/>
                                             <arg value="-shared"/>
                                             <arg value="-fPIC"/>
                                             <arg value="-m32"/>
