@@ -14,7 +14,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn package
+      - run: mvn clean install
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
@@ -37,6 +37,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - run: mvn package -f jcpuid-native/jcpuid-native-${{ matrix.platform.lib }} -Pnative-${{ matrix.platform.lib }}
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-${{ matrix.platform.lib }} -Pnative-${{ matrix.platform.lib }}
         env:
           GITHUB_TOKEN: ${{ github.token }}

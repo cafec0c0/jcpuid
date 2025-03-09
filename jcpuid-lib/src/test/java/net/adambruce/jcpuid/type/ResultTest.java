@@ -81,7 +81,7 @@ public class ResultTest {
     public void testNotEqualDifferentClass() {
         Result result = new Result(Status.SUCCESS.getIntValue(), 1, 2, 3, 4);
         String other = "other";
-        assertNotEquals(other, result);
+        assertNotEquals(result, other);
     }
 
     @Test

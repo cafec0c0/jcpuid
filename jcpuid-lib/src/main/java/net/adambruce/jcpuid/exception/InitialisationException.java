@@ -1,5 +1,8 @@
 package net.adambruce.jcpuid.exception;
 
+/**
+ * Exception for capturing failures in the JCPUID library initialisation.
+ */
 public class InitialisationException extends Exception {
 
     /**

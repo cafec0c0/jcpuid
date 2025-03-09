@@ -13,7 +13,7 @@ public class PrintAllCPUIDInformation {
     }
 
     private PrintAllCPUIDInformation() throws InitialisationException {
-        cpuid = CPUID.getPlatformCPUID();
+        cpuid = CPUIDFactory.getPlatformCPUID();
     }
 
     private void run() {

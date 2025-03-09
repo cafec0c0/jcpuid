@@ -1,5 +1,9 @@
 package net.adambruce.jcpuid.type;
 
+/**
+ * The status of the native CPUID instruction execution as returned from the
+ * GCC <code>get_cpuid</code> wrapper.
+ */
 public enum Status {
 
     /** The CPUID instruction executed successfully. */

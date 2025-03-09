@@ -2,10 +2,12 @@ package net.adambruce.jcpuid;
 
 import net.adambruce.jcpuid.bridge.CPUIDBridge;
 import net.adambruce.jcpuid.exception.CPUIDException;
-import net.adambruce.jcpuid.exception.InitialisationException;
 import net.adambruce.jcpuid.type.Result;
 import net.adambruce.jcpuid.type.Status;
 
+/**
+ * The default implementation of the CPUID interface.
+ */
 public class DefaultCPUID implements CPUID {
 
     /** Bit shift constant for 4 bits. */
@@ -46,15 +48,6 @@ public class DefaultCPUID implements CPUID {
 
     /** The bridge used to execute native CPUID instructions. */
     private final CPUIDBridge bridgeImpl;
-
-    /**
-     * Create a new CPUID instance for the current platform.
-     *
-     * @throws InitialisationException the platform CPUID implementation failed
-     */
-    public DefaultCPUID() throws InitialisationException {
-        this(CPUIDBridge.getPlatformBridge());
-    }
 
     /**
      * Create a new CPUID instance for using the provided bridge.
@@ -209,7 +202,6 @@ public class DefaultCPUID implements CPUID {
      * Obtains the processor name string.
      *
      * @return the processor name string
-     * @throws CPUIDException the native cpuid execution failed
      */
     @Override
     public String getProcessorNameString() {

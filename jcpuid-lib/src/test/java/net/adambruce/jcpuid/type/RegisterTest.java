@@ -73,7 +73,7 @@ public class RegisterTest {
     public void testNotEqualDifferentClass() {
         Register register = new Register(3452);
         String other = "other";
-        assertNotEquals(other, register);
+        assertNotEquals(register, other);
     }
 
     @Test

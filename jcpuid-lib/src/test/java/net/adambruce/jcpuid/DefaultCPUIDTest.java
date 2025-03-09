@@ -1,6 +1,7 @@
 package net.adambruce.jcpuid;
 
 import net.adambruce.jcpuid.bridge.CPUIDBridge;
+import net.adambruce.jcpuid.exception.CPUIDException;
 import net.adambruce.jcpuid.type.Register;
 import net.adambruce.jcpuid.type.Result;
 import net.adambruce.jcpuid.type.Status;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -143,5 +145,15 @@ public class DefaultCPUIDTest {
         when(bridge.executeCPUID(0x0000_0001)).thenReturn(result);
 
         assertEquals(0x13, cpuid.getCLFLUSHCacheLineSize());
+    }
+
+    @Test
+    public void testExceptionThrownIfStatusIsNotSuccess() {
+        Result result = mock(Result.class);
+        when(result.getStatus()).thenReturn(Status.FAILURE);
+
+        when(bridge.executeCPUID(0x0000_0000)).thenReturn(result);
+
+        assertThrows(CPUIDException.class, () -> cpuid.getProcessorVendor());
     }
 }

@@ -2,6 +2,9 @@ package net.adambruce.jcpuid.type;
 
 import java.util.Objects;
 
+/**
+ * Holds a register value and provides utility methods for accessing that data.
+ */
 public class Register {
 
     /** Width of a short in bits. */

@@ -2,6 +2,10 @@ package net.adambruce.jcpuid.type;
 
 import java.util.Objects;
 
+/**
+ * Holds the result of a CPUID instruction execution, including the status and
+ * registers (EAX, EBX, ECX, EDX).
+ */
 public class Result {
     /** The status returned by the GCC <code>get_cpuid</code> wrapper. */
     private final Status status;
