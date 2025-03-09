@@ -38,7 +38,9 @@ jobs:
     name: Build Linux i386 library
     runs-on: ubuntu-latest
     steps:
-      - run: apt install gcc-multilib
+      - run: |
+          sudo apt update
+          sudo apt install gcc-multilib -y
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
