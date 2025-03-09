@@ -68,11 +68,6 @@
             <artifactId>jcpuid-native-macos-amd64</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>net.adambruce</groupId>
-            <artifactId>jcpuid-native-macos-i386</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
