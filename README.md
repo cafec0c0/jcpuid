@@ -49,8 +49,8 @@ mvn clean install -Pnative-{os}
 ```
 
 ### Building only the Java classes
-You can also omit the `native-*` profile entirely, which will only build the 
-Java library.
+You can also omit the `native-*` profile entirely, which will not compile
+any native code.
 ```
 mvn clean install -Pnative-{os}
 ```
