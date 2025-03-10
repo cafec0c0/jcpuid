@@ -22,7 +22,7 @@
 
     <groupId>net.adambruce</groupId>
     <artifactId>jcpuid-parent</artifactId>
-    <version>0.0.14-SNAPSHOT</version>
+    <version>0.0.18-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
