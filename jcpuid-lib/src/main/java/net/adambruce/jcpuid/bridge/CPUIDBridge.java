@@ -30,4 +30,13 @@ public interface CPUIDBridge {
      * @return the result containing register values and return value
      */
     Result executeCPUID(int leaf);
+
+    /**
+     * Executes the CPUID instruction with the given leaf and sub-leaf nodes.
+     *
+     * @param leaf the leaf
+     * @param subleaf the sub-leaf
+     * @return the result containing register values and return value
+     */
+    Result executeCPUID(int leaf, int subleaf);
 }

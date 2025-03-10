@@ -34,5 +34,19 @@ public class DefaultCPUIDBridge implements CPUIDBridge {
         return executeCPUIDNative(leaf);
     }
 
+    /**
+     * Executes the CPUID instruction with the given leaf and sub-leaf nodes.
+     *
+     * @param leaf the leaf
+     * @param subleaf the sub-leaf
+     * @return the result containing register values and return value
+     */
+    @Override
+    public Result executeCPUID(final int leaf, final int subleaf) {
+        return executeCPUIDNative(leaf, subleaf);
+    }
+
     private native Result executeCPUIDNative(int leaf);
+
+    private native Result executeCPUIDNative(int leaf, int subleaf);
 }
