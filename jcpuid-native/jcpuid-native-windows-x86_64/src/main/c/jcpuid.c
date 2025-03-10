@@ -26,14 +26,10 @@ JNIEXPORT jobject JNICALL Java_net_adambruce_jcpuid_bridge_DefaultCPUIDBridge_ex
     // Constructor ID
     jmethodID cid = (*env)->GetMethodID(env, clazz, "<init>", "(IIIII)V");
 
-    unsigned int status;
-    unsigned int eax;
-    unsigned int ebx;
-    unsigned int ecx;
-    unsigned int edx;
-    status = __get_cpuid(leaf, &eax, &ebx, &ecx, &edx);
+    int registers[4];
+    __cpuid(registers, leaf);
 
     // Create new CPUIDResult
-    jobject newobj = (*env)->NewObject(env, clazz, cid, status, eax, ebx, ecx, edx);
+    jobject newobj = (*env)->NewObject(env, clazz, cid, 1, registers[0], registers[1], registers[2], registers[3]);
     return newobj;
 }

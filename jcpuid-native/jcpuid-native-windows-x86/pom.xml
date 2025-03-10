@@ -43,15 +43,11 @@
                                     <target>
                                         <mkdir dir="${project.build.outputDirectory}/net/adambruce/jcpuid/lib" />
                                         <exec executable="cl" failonerror="true">
-                                            <arg value="/I"/>
-                                            <arg value="${project.basedir}/src/main/include"/>
-                                            <arg value="/I"/>
-                                            <arg value="${env.JAVA_HOME}/include"/>
-                                            <arg value="/I"/>
-                                            <arg value="${env.JAVA_HOME}/include/win32"/>
+                                            <arg value="/I${project.basedir}/src/main/include"/>
+                                            <arg value="/I${env.JAVA_HOME}/include"/>
+                                            <arg value="/I${env.JAVA_HOME}/include/win32"/>
+                                            <arg value="/Fe${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-windows-x86-${project.version}.dll"/>
                                             <arg value="/LD"/>
-                                            <arg value="/Fe"/>
-                                            <arg value="${project.build.outputDirectory}/net/adambruce/jcpuid/lib/jcpuid-native-windows-x86-${project.version}.dll"/>
                                             <arg value="${project.basedir}/src/main/c/jcpuid.c"/>
                                         </exec>
                                     </target>
