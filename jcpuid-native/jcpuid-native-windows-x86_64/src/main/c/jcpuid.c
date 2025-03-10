@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <cpuid.h>
+#include <intrin.h>
 
 #include "net_adambruce_jcpuid_bridge_DefaultCPUIDBridge.h"
 
