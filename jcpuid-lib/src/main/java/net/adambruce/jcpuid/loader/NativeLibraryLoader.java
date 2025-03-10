@@ -22,8 +22,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
@@ -51,7 +49,7 @@ public class NativeLibraryLoader {
         loadNativeLibrary(operatingSystem, architecture);
     }
 
-    private Path getLibraryPath(
+    private String getLibraryPath(
             final OperatingSystem operatingSystem,
             final Architecture architecture)
             throws InitialisationException {
@@ -65,7 +63,7 @@ public class NativeLibraryLoader {
             String key = operatingSystem.getLookupName() + "_"
                     + architecture.getLookupName();
 
-            return Paths.get(properties.getProperty(key));
+            return properties.getProperty(key);
 
         } catch (IOException ex) {
             throw new InitialisationException("unable to load library "
@@ -77,16 +75,15 @@ public class NativeLibraryLoader {
                                    final Architecture architecture)
             throws InitialisationException {
 
-        Path path = getLibraryPath(operatingSystem, architecture);
+        String path = getLibraryPath(operatingSystem, architecture);
 
-        String[] parts = path.getFileName().toString().split("\\.");
+        String[] parts = path.split("\\.");
 
         try {
             String fileSuffix = "." + parts[parts.length - 1];
             File out = File.createTempFile("jcpuid-native-", fileSuffix);
 
-            InputStream libStream = getClass()
-                    .getResourceAsStream(path.toString());
+            InputStream libStream = getClass().getResourceAsStream(path);
 
             if (libStream == null) {
                 throw new InitialisationException("unable to locate the "
