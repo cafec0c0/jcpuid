@@ -17,6 +17,7 @@
 package net.adambruce.jcpuid.bridge;
 
 import net.adambruce.jcpuid.exception.InitialisationException;
+import net.adambruce.jcpuid.loader.Architecture;
 import net.adambruce.jcpuid.loader.NativeLibraryLoader;
 import net.adambruce.jcpuid.loader.OperatingSystem;
 
@@ -46,20 +47,46 @@ public final class CPUIDBridgeFactory {
             throws InitialisationException {
 
         if (!hasLoadedPlatformLibrary) {
-            String osName = System.getProperty("os.name");
-            if (osName.toLowerCase().contains("linux")) {
-                LOADER.loadLibraryForOperatingSystem(OperatingSystem.LINUX);
-                hasLoadedPlatformLibrary = true;
-            } else if (osName.toLowerCase().contains("windows")) {
-                LOADER.loadLibraryForOperatingSystem(OperatingSystem.WINDOWS);
-                hasLoadedPlatformLibrary = true;
-            } else if (osName.toLowerCase().contains("mac os x")) {
-                LOADER.loadLibraryForOperatingSystem(OperatingSystem.MACOS);
-                hasLoadedPlatformLibrary = true;
-            }
+            LOADER.loadLibrary(getOperatingSystem(), getArchitecture());
+            hasLoadedPlatformLibrary = true;
         }
 
         return new DefaultCPUIDBridge();
     }
 
+    private static Architecture getArchitecture()
+            throws InitialisationException {
+
+        String osArch = System.getProperty("os.arch");
+        if (osArch.equals("x86_64")) {
+            return Architecture.AMD64;
+        }
+
+        if (osArch.equals("x86")) {
+            return Architecture.I386;
+        }
+
+        throw new InitialisationException(
+                "unsupported architecture: " + osArch);
+    }
+
+    private static OperatingSystem getOperatingSystem()
+            throws InitialisationException {
+
+        String osName = System.getProperty("os.name");
+        if (osName.toLowerCase().contains("linux")) {
+            return OperatingSystem.LINUX;
+        }
+
+        if (osName.toLowerCase().contains("windows")) {
+            return OperatingSystem.WINDOWS;
+        }
+
+        if (osName.toLowerCase().contains("mac os x")) {
+            return OperatingSystem.MACOS;
+        }
+
+        throw new InitialisationException(
+                "unsupported operating system: " + osName);
+    }
 }

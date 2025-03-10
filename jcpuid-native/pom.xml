@@ -13,9 +13,11 @@
     <artifactId>jcpuid-native</artifactId>
 
     <modules>
-        <module>jcpuid-native-linux</module>
-        <module>jcpuid-native-macos</module>
-        <module>jcpuid-native-windows</module>
+        <module>jcpuid-native-linux-x86_64</module>
+        <module>jcpuid-native-linux-x86</module>
+        <module>jcpuid-native-macos-x86_64</module>
+        <module>jcpuid-native-windows-x86_64</module>
+        <module>jcpuid-native-windows-x86</module>
     </modules>
 
     <properties>

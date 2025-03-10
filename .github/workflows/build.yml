@@ -12,31 +12,92 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '8'
       - run: mvn clean install
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-  build-all-platforms:
+  build-native-linux-x86_64:
     needs: build-jcpuid-jars
-    name: Build native libs
-    strategy:
-      matrix:
-        platform:
-          - name: ubuntu-latest
-            lib: linux
-          - name: windows-latest
-            lib: windows
-          - name: macos-13
-            lib: macos
-    runs-on: ${{ matrix.platform.name }}
+    name: Build Linux x86_64 library
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '8'
-      - run: mvn clean install -f jcpuid-native/jcpuid-native-${{ matrix.platform.lib }} -Pnative-${{ matrix.platform.lib }}
+          architecture: 'x64'
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-linux-x86_64 -Plinux-x86_64
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-native-linux-x86:
+    needs: build-jcpuid-jars
+    name: Build Linux x86 library
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          sudo apt update
+          sudo apt install gcc-multilib -y
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          architecture: 'x86'
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-linux-x86 -Plinux-x86
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-native-windows-x86_64:
+    needs: build-jcpuid-jars
+    name: Build Windows x86_64 library
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          architecture: 'x64'
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-windows-x86_64 -Pwindows-x86_64
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-native-windows-x86:
+    needs: build-jcpuid-jars
+    name: Build Windows x86 library
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          architecture: 'x86'
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-windows-x86 -Pwindows-x86
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-native-macos-x86_64:
+    needs: build-jcpuid-jars
+    name: Build MacOS x86_64 library
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          architecture: 'x64'
+      - run: mvn clean install -f jcpuid-native/jcpuid-native-macos-x86_64 -Pmacos-x86_64
         env:
           GITHUB_TOKEN: ${{ github.token }}

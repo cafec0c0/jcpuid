@@ -36,7 +36,6 @@ groupId:     net.adambruce
 artifactId:  jcpuid-native-macos
 ```
 
-
 ## Building and Installing
 
 ### Building with support for a single OS
