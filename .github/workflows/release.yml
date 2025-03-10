@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '8'
           architecture: 'x64'
       - name: Set pom.xml version for this release
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '8'
           architecture: 'x86'
       - name: Set pom.xml version for this release
@@ -62,7 +62,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '8'
           architecture: 'x64'
       - uses: ilammy/msvc-dev-cmd@v1
@@ -86,7 +86,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '8'
           architecture: 'x86'
       - uses: ilammy/msvc-dev-cmd@v1
@@ -110,7 +110,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '8'
           architecture: 'x64'
       - uses: ilammy/msvc-dev-cmd@v1
@@ -140,7 +140,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '8'
       - name: Set pom.xml version for this release
         run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
