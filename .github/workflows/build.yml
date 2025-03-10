@@ -17,6 +17,13 @@ jobs:
       - run: mvn clean install
         env:
           GITHUB_TOKEN: ${{ github.token }}
+      - run: mvn clean source:jar package
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - run: mvn clean javadoc:jar package
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
 
   build-native-linux-x86_64:
     needs: build-jcpuid-jars

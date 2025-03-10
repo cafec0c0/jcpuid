@@ -151,6 +151,12 @@ jobs:
         run: mvn -B deploy -f jcpuid-lib
         env:
           GITHUB_TOKEN: ${{ github.token }}
+      - run: mvn clean source:jar deploy
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - run: mvn clean javadoc:jar deploy
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
   bump-pom-version-snapshot:
     name: Bump POMs for snapshot
