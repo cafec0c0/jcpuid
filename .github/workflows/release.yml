@@ -9,18 +9,9 @@ defaults:
     shell: bash
 
 jobs:
-  build-all-platforms:
-    name: Build and deploy native libs
-    strategy:
-      matrix:
-        platform:
-          - name: ubuntu-latest
-            lib: linux
-          - name: windows-latest
-            lib: windows
-          - name: macos-13
-            lib: macos
-    runs-on: ${{ matrix.platform.name }}
+  build-and-deploy-native-linux-x86_64:
+    name: Build and Deploy Linux x86_64 library
+    runs-on: ubuntu-latest
     steps:
       - name: Remove tag prefix
         run: |
@@ -31,17 +22,116 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
+          architecture: 'x64'
       - name: Set pom.xml version for this release
         run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
       - name: Build and deploy native lib
-        run: mvn -B deploy -f jcpuid-native/jcpuid-native-${{ matrix.platform.lib }} -Pnative-${{ matrix.platform.lib }}
+        run: mvn -B deploy -f jcpuid-native/jcpuid-native-linux-x86_64 -Plinux-x86_64
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-and-deploy-native-linux-x86:
+    name: Build and Deploy Linux x86 library
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove tag prefix
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+          architecture: 'x86'
+      - name: Set pom.xml version for this release
+        run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
+      - name: Build and deploy native lib
+        run: mvn -B deploy -f jcpuid-native/jcpuid-native-linux-x86 -Plinux-x86
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-and-deploy-native-windows-x86_64:
+    name: Build and Deploy Windows x86_64 library
+    runs-on: windows-latest
+    steps:
+      - name: Remove tag prefix
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+          architecture: 'x64'
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Set pom.xml version for this release
+        run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
+      - name: Build and deploy native lib
+        run: mvn -B deploy -f jcpuid-native/jcpuid-native-windows-x86_64 -Pwindows-x86_64
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-and-deploy-native-windows-x86:
+    name: Build and Deploy Windows x86 library
+    runs-on: windows-latest
+    steps:
+      - name: Remove tag prefix
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+          architecture: 'x86'
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86
+      - name: Set pom.xml version for this release
+        run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
+      - name: Build and deploy native lib
+        run: mvn -B deploy -f jcpuid-native/jcpuid-native-windows-x86 -Pwindows-x86
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build-and-deploy-native-macos-x86_64:
+    name: Build and Deploy MacOS x86_64 library
+    runs-on: macos-13
+    steps:
+      - name: Remove tag prefix
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+          architecture: 'x64'
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Set pom.xml version for this release
+        run: mvn -B versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false
+      - name: Build and deploy native lib
+        run: mvn -B deploy -f jcpuid-native/jcpuid-native-macos-x86_64 -Pmacos-x86_64
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
   build-jcpuid-jar:
     name: Build and deploy Jar
     runs-on: ubuntu-latest
-    needs: build-all-platforms
+    needs:
+      - build-and-deploy-native-linux-x86_64
+      - build-and-deploy-native-linux-x86
+      - build-and-deploy-native-windows-x86_64
+      - build-and-deploy-native-windows-x86
+      - build-and-deploy-native-macos-x86_64
     steps:
       - name: Remove tag prefix
         run: |
