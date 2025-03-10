@@ -33,7 +33,7 @@ public final class CPUIDFactory {
      * @throws InitialisationException the platform CPUID implementation failed
      * to initialise.
      */
-    static CPUID getPlatformCPUID() throws InitialisationException {
+    public static CPUID getPlatformCPUID() throws InitialisationException {
         return new DefaultCPUID(CPUIDBridgeFactory.getPlatformBridge());
     }
 
