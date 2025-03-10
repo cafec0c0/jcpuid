@@ -87,6 +87,9 @@
                                 </manifest>
                                 <addMavenDescriptor>false</addMavenDescriptor>
                             </archive>
+                            <includes>
+                                <include>**/*.dll</include>
+                            </includes>
                         </configuration>
                     </plugin>
                 </plugins>
