@@ -263,25 +263,26 @@ public class DefaultCPUID implements CPUID {
         return getRawCPUID(leaf, subleaf);
     }
 
-    private void assertLeaf(final int leaf)
-            throws CPUIDException {
-
-        // Extended leaf
+    private void assertLeaf(final int leaf) throws CPUIDException {
         if ((leaf & Leaf.LEAF_80000000H) != 0) {
-            int highest = getRawCPUID(Leaf.LEAF_80000000H)
-                    .getEax().getIntValue();
-
-            if (Integer.compareUnsigned(leaf, highest) > 0) {
-                throw new CPUIDException("leaf is not supported");
-            }
-            return;
+            assertExtendedLeaf(leaf);
+        } else {
+            assertStandardLeaf(leaf);
         }
+    }
 
-        // Standard leaf
-        int highest = getRawCPUID(Leaf.LEAF_0H)
-                .getEax().getIntValue();
+    private void assertExtendedLeaf(final int leaf) throws CPUIDException {
+        int largest = getRawCPUID(Leaf.LEAF_80000000H).getEax().getIntValue();
 
-        if (Integer.compareUnsigned(leaf, highest) > 0) {
+        if (Integer.compareUnsigned(leaf, largest) > 0) {
+            throw new CPUIDException("leaf is not supported");
+        }
+    }
+
+    private void assertStandardLeaf(final int leaf) throws CPUIDException {
+        int largest = getRawCPUID(Leaf.LEAF_0H).getEax().getIntValue();
+
+        if (Integer.compareUnsigned(leaf, largest) > 0) {
             throw new CPUIDException("leaf is not supported");
         }
     }
