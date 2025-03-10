@@ -16,7 +16,6 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.exception.CPUIDException;
 import net.adambruce.jcpuid.exception.InitialisationException;
 
 public class PrintAllCPUIDInformation {
@@ -37,20 +36,13 @@ public class PrintAllCPUIDInformation {
     }
 
     private void printLargestStandardFunctionNumber() {
-        try {
-            int largestInstructionNum = cpuid.getLargestStandardFunctionNumber();
-            System.out.println("Largest Standard Function Number: " + largestInstructionNum);
-        } catch (CPUIDException ex) {
-            printException("getLargestStandardFunctionNumber", ex);
-        }
+        int largestInstructionNum = cpuid.getLargestStandardFunctionNumber();
+        System.out.println("Largest Standard Function Number: " + largestInstructionNum);
     }
 
     private void printProcessorVendor() {
-        try {
-            System.out.println("Vendor: " + cpuid.getProcessorVendor());
-        } catch (CPUIDException ex) {
-            printException("getProcessorVendor", ex);
-        }
+        String vendor = cpuid.getProcessorVendor();
+        System.out.println("Vendor: " + vendor);
     }
 
     private static void printException(String func, Exception ex) {

@@ -20,7 +20,6 @@ import net.adambruce.jcpuid.bridge.CPUIDBridge;
 import net.adambruce.jcpuid.exception.CPUIDException;
 import net.adambruce.jcpuid.type.Register;
 import net.adambruce.jcpuid.type.Result;
-import net.adambruce.jcpuid.type.Status;
 import net.adambruce.jcpuid.util.RegisterUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,133 +42,147 @@ public class DefaultCPUIDTest {
     private DefaultCPUID cpuid;
 
     @Test
-    public void testGetLargestStandardFunctionNumber() throws Exception {
+    public void testGetLargestStandardFunctionNumber() {
         Result result = mock(Result.class);
         Register eax = RegisterUtils.intRegister(123);
 
-        when(result.getStatus()).thenReturn(Status.SUCCESS);
         when(result.getEax()).thenReturn(eax);
 
-        when(bridge.executeCPUID(0x0000_0000)).thenReturn(result);
+        when(bridge.executeCPUID(0x0)).thenReturn(result);
 
         assertEquals(123, cpuid.getLargestStandardFunctionNumber());
     }
 
     @Test
-    public void testGetProcessorVendor() throws Exception {
+    public void testGetProcessorVendor() {
         Result result = mock(Result.class);
         Register ebx = RegisterUtils.stringRegister("Genu");
         Register ecx = RegisterUtils.stringRegister("ntel");
         Register edx = RegisterUtils.stringRegister("ineI");
 
-        when(result.getStatus()).thenReturn(Status.SUCCESS);
         when(result.getEbx()).thenReturn(ebx);
         when(result.getEcx()).thenReturn(ecx);
         when(result.getEdx()).thenReturn(edx);
 
-        when(bridge.executeCPUID(0x0000_0000)).thenReturn(result);
+        when(bridge.executeCPUID(0x0)).thenReturn(result);
 
         assertEquals("GenuineIntel", cpuid.getProcessorVendor());
     }
 
     @Test
     public void testGetProcessorFamily() throws Exception {
+        Result standardFunctionResult = mockValidStandardFunction();
         Result result = mock(Result.class);
         Register eax = RegisterUtils.intRegister((0x2 << 8) | (0x8 << 20));
 
-        when(result.getStatus()).thenReturn(Status.SUCCESS);
         when(result.getEax()).thenReturn(eax);
 
-        when(bridge.executeCPUID(0x0000_0001)).thenReturn(result);
+        when(bridge.executeCPUID(0x0)).thenReturn(standardFunctionResult);
+        when(bridge.executeCPUID(0x1)).thenReturn(result);
 
         assertEquals(0x2, cpuid.getProcessorFamily());
     }
 
     @Test
     public void testGetProcessorFamilyWithExtendedFamily() throws Exception {
+        Result standardFunctionResult = mockValidStandardFunction();
         Result result = mock(Result.class);
         Register eax = RegisterUtils.intRegister((0xF << 8) | (0x8 << 20));
 
-        when(result.getStatus()).thenReturn(Status.SUCCESS);
         when(result.getEax()).thenReturn(eax);
 
-        when(bridge.executeCPUID(0x0000_0001)).thenReturn(result);
+        when(bridge.executeCPUID(0x0)).thenReturn(standardFunctionResult);
+        when(bridge.executeCPUID(0x1)).thenReturn(result);
 
         assertEquals(0xF + 0x8, cpuid.getProcessorFamily());
     }
 
     @Test
     public void testGetProcessorStepping() throws Exception {
+        Result standardFunctionResult = mockValidStandardFunction();
         Result result = mock(Result.class);
         Register eax = RegisterUtils.intRegister(0x5);
 
-        when(result.getStatus()).thenReturn(Status.SUCCESS);
         when(result.getEax()).thenReturn(eax);
 
-        when(bridge.executeCPUID(0x0000_0001)).thenReturn(result);
+        when(bridge.executeCPUID(0x0)).thenReturn(standardFunctionResult);
+        when(bridge.executeCPUID(0x1)).thenReturn(result);
 
         assertEquals(0x5, cpuid.getProcessorStepping());
     }
 
     @Test
     public void testGetProcessorModel() throws Exception {
+        Result standardFunctionResult = mockValidStandardFunction();
         Result result = mock(Result.class);
         Register eax = RegisterUtils.intRegister((0x3 << 4) | (0x9 << 16));
 
-        when(result.getStatus()).thenReturn(Status.SUCCESS);
         when(result.getEax()).thenReturn(eax);
 
-        when(bridge.executeCPUID(0x0000_0001)).thenReturn(result);
+        when(bridge.executeCPUID(0x0)).thenReturn(standardFunctionResult);
+        when(bridge.executeCPUID(0x1)).thenReturn(result);
 
         assertEquals(0x3, cpuid.getProcessorModel());
     }
 
     @Test
     public void testGetProcessorModelWithExtendedModel() throws Exception {
+        Result standardFunctionResult = mockValidStandardFunction();
         Result result = mock(Result.class);
         Register eax = RegisterUtils.intRegister((0xF << 4) | (0x9 << 16));
 
-        when(result.getStatus()).thenReturn(Status.SUCCESS);
         when(result.getEax()).thenReturn(eax);
 
-        when(bridge.executeCPUID(0x0000_0001)).thenReturn(result);
+        when(bridge.executeCPUID(0x0)).thenReturn(standardFunctionResult);
+        when(bridge.executeCPUID(0x1)).thenReturn(result);
 
         assertEquals((0x9 << 4) | 0xF, cpuid.getProcessorModel());
     }
 
     @Test
-    public void testGetLocalApicId() throws Exception {
+    public void testGetInitialApicId() throws Exception {
+        Result standardFunctionResult = mockValidStandardFunction();
         Result result = mock(Result.class);
         Register ebx = RegisterUtils.intRegister(0x23 << 24);
 
-        when(result.getStatus()).thenReturn(Status.SUCCESS);
         when(result.getEbx()).thenReturn(ebx);
 
-        when(bridge.executeCPUID(0x0000_0001)).thenReturn(result);
+        when(bridge.executeCPUID(0x0)).thenReturn(standardFunctionResult);
+        when(bridge.executeCPUID(0x1)).thenReturn(result);
 
-        assertEquals(0x23, cpuid.getLocalApicId());
+        assertEquals(0x23, cpuid.getInitialApicId());
     }
 
     @Test
     public void testGetCLFLUSHCacheLineSize() throws Exception {
+        Result standardFunctionResult = mockValidStandardFunction();
         Result result = mock(Result.class);
         Register ebx = RegisterUtils.intRegister(0x13 << 8);
 
-        when(result.getStatus()).thenReturn(Status.SUCCESS);
         when(result.getEbx()).thenReturn(ebx);
 
-        when(bridge.executeCPUID(0x0000_0001)).thenReturn(result);
+        when(bridge.executeCPUID(0x0)).thenReturn(standardFunctionResult);
+        when(bridge.executeCPUID(0x1)).thenReturn(result);
 
         assertEquals(0x13, cpuid.getCLFLUSHCacheLineSize());
     }
 
     @Test
     public void testExceptionThrownIfStatusIsNotSuccess() {
+        Result standardFunctionResult = mock(Result.class);
+        Register eax = RegisterUtils.intRegister(0);
+
+        when(standardFunctionResult.getEax()).thenReturn(eax);
+        when(bridge.executeCPUID(0x0)).thenReturn(standardFunctionResult);
+
+        assertThrows(CPUIDException.class, () -> cpuid.getProcessorModel());
+    }
+
+    private static Result mockValidStandardFunction() {
         Result result = mock(Result.class);
-        when(result.getStatus()).thenReturn(Status.FAILURE);
+        Register register = RegisterUtils.intRegister(0x80000000);
+        when(result.getEax()).thenReturn(register);
 
-        when(bridge.executeCPUID(0x0000_0000)).thenReturn(result);
-
-        assertThrows(CPUIDException.class, () -> cpuid.getProcessorVendor());
+        return result;
     }
 }

@@ -19,7 +19,6 @@ package net.adambruce.jcpuid;
 import net.adambruce.jcpuid.bridge.CPUIDBridge;
 import net.adambruce.jcpuid.exception.CPUIDException;
 import net.adambruce.jcpuid.type.Result;
-import net.adambruce.jcpuid.type.Status;
 
 /**
  * The default implementation of the CPUID interface.
@@ -78,12 +77,10 @@ public class DefaultCPUID implements CPUID {
      * Obtains the largest standard function number supported by the processor.
      *
      * @return the largest standard function number
-     * @throws CPUIDException the native cpuid execution failed
      */
     @Override
-    public int getLargestStandardFunctionNumber() throws CPUIDException {
-        Result result = getRawCPUID(0x0000_0000);
-        assertStatus(result);
+    public int getLargestStandardFunctionNumber() {
+        Result result = getRawCPUID(Leaf.LEAF_0H);
 
         return result.getEax().getIntValue();
     }
@@ -92,12 +89,10 @@ public class DefaultCPUID implements CPUID {
      * Obtains the processor vendor string.
      *
      * @return the processor vendor string
-     * @throws CPUIDException the native cpuid execution failed
      */
     @Override
-    public String getProcessorVendor() throws CPUIDException {
-        Result result = getRawCPUID(0x0000_0000);
-        assertStatus(result);
+    public String getProcessorVendor() {
+        Result result = getRawCPUID(Leaf.LEAF_0H);
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(result.getEbx().getStringValue());
@@ -115,8 +110,7 @@ public class DefaultCPUID implements CPUID {
      */
     @Override
     public int getProcessorFamily() throws CPUIDException {
-        Result result = getRawCPUID(0x0000_0001);
-        assertStatus(result);
+        Result result = getRawCPUIDChecked(Leaf.LEAF_01H);
 
         int base = (result.getEax().getIntValue() >> EIGHT_BITS) & NIBBLE_MASK;
         int ext = (result.getEax().getIntValue() >> TWENTY_BITS) & BYTE_MASK;
@@ -136,8 +130,7 @@ public class DefaultCPUID implements CPUID {
      */
     @Override
     public int getProcessorStepping() throws CPUIDException {
-        Result result = getRawCPUID(0x0000_0001);
-        assertStatus(result);
+        Result result = getRawCPUIDChecked(Leaf.LEAF_01H);
 
         return result.getEax().getIntValue() & NIBBLE_MASK;
     }
@@ -150,8 +143,7 @@ public class DefaultCPUID implements CPUID {
      */
     @Override
     public int getProcessorModel() throws CPUIDException {
-        Result result = getRawCPUID(0x0000_0001);
-        assertStatus(result);
+        Result result = getRawCPUIDChecked(Leaf.LEAF_01H);
 
         int base = (result.getEax().getIntValue() >> FOUR_BITS) & NIBBLE_MASK;
         int ext = (result.getEax().getIntValue() >> SIXTEEN_BITS) & NIBBLE_MASK;
@@ -164,15 +156,14 @@ public class DefaultCPUID implements CPUID {
     }
 
     /**
-     * Obtains the local APIC ID.
+     * Obtains the initial APIC ID.
      *
-     * @return the local APIC ID
+     * @return the initial APIC ID
      * @throws CPUIDException the native cpuid execution failed
      */
     @Override
-    public int getLocalApicId() throws CPUIDException {
-        Result result = getRawCPUID(0x0000_0001);
-        assertStatus(result);
+    public int getInitialApicId() throws CPUIDException {
+        Result result = getRawCPUIDChecked(Leaf.LEAF_01H);
 
         return (result.getEbx().getIntValue() >> TWENTY_FOUR_BITS) & BYTE_MASK;
     }
@@ -185,8 +176,7 @@ public class DefaultCPUID implements CPUID {
      */
     @Override
     public int getLogicalProcessorCount() throws CPUIDException {
-        Result result = getRawCPUID(0x0000_0001);
-        assertStatus(result);
+        Result result = getRawCPUIDChecked(Leaf.LEAF_01H);
 
         // TODO come back to this once 8000* functions are implemented, as this
 //        if (!FeatureIdentifiers.BitMasks.HTT.isBitSet(result.getEdx())) {
@@ -208,8 +198,7 @@ public class DefaultCPUID implements CPUID {
      */
     @Override
     public int getCLFLUSHCacheLineSize() throws CPUIDException {
-        Result result = getRawCPUID(0x0000_0001);
-        assertStatus(result);
+        Result result = getRawCPUIDChecked(Leaf.LEAF_01H);
 
         return (result.getEbx().getIntValue() >> EIGHT_BITS) & BYTE_MASK;
     }
@@ -233,8 +222,8 @@ public class DefaultCPUID implements CPUID {
      */
     @Override
     public FeatureIdentifiers getFeatureIdentifiers() throws CPUIDException {
-        Result result = getRawCPUID(0x0000_0001);
-        assertStatus(result);
+        Result result = getRawCPUIDChecked(Leaf.LEAF_01H);
+
         return FeatureIdentifiers.fromRegister(result.getEcx());
     }
 
@@ -250,12 +239,50 @@ public class DefaultCPUID implements CPUID {
         return bridgeImpl.executeCPUID(leaf);
     }
 
-    private static void assertStatus(final Result result)
+    /**
+     * Executes the CPUID instruction with the given leaf and sub-leaf.
+     * You should avoid using this function if possible.
+     *
+     * @param leaf the leaf of the CPUID instruction
+     * @param subleaf the sub-leaf of the CPUID instruction
+     * @return the result of the CPUID execution
+     */
+    @Override
+    public Result getRawCPUID(final int leaf, final int subleaf) {
+        return bridgeImpl.executeCPUID(leaf);
+    }
+
+    private Result getRawCPUIDChecked(final int leaf) throws CPUIDException {
+        assertLeaf(leaf);
+        return getRawCPUID(leaf);
+    }
+
+    private Result getRawCPUIDChecked(final int leaf, final int subleaf)
             throws CPUIDException {
-        // GCC will return 1 on success
-        if (result.getStatus() != Status.SUCCESS) {
-            throw new CPUIDException("the CPUID instruction failed with status "
-                    + result.getStatus().getIntValue());
+        assertLeaf(leaf);
+        return getRawCPUID(leaf, subleaf);
+    }
+
+    private void assertLeaf(final int leaf)
+            throws CPUIDException {
+
+        // Extended leaf
+        if ((leaf & Leaf.LEAF_80000000H) != 0) {
+            int highest = getRawCPUID(Leaf.LEAF_80000000H)
+                    .getEax().getIntValue();
+
+            if (Integer.compareUnsigned(leaf, highest) > 0) {
+                throw new CPUIDException("leaf is not supported");
+            }
+            return;
+        }
+
+        // Standard leaf
+        int highest = getRawCPUID(Leaf.LEAF_0H)
+                .getEax().getIntValue();
+
+        if (Integer.compareUnsigned(leaf, highest) > 0) {
+            throw new CPUIDException("leaf is not supported");
         }
     }
 

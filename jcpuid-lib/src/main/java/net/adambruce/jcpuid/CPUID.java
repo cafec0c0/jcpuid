@@ -28,17 +28,15 @@ public interface CPUID {
      * Obtains the largest standard function number supported by the processor.
      *
      * @return the largest standard function number
-     * @throws CPUIDException the native cpuid execution failed
      */
-    int getLargestStandardFunctionNumber() throws CPUIDException;
+    int getLargestStandardFunctionNumber();
 
     /**
      * Obtains the processor vendor string.
      *
      * @return the processor vendor string
-     * @throws CPUIDException the native cpuid execution failed
      */
-    String getProcessorVendor() throws CPUIDException;
+    String getProcessorVendor();
 
     /**
      * Obtains the processor family.
@@ -65,12 +63,12 @@ public interface CPUID {
     int getProcessorStepping() throws CPUIDException;
 
     /**
-     * Obtains the local APIC ID.
+     * Obtains the initial APIC ID.
      *
-     * @return the local APIC ID
+     * @return the initial APIC ID
      * @throws CPUIDException the native cpuid execution failed
      */
-    int getLocalApicId() throws CPUIDException;
+    int getInitialApicId() throws CPUIDException;
 
     /**
      * Obtains the logical processor count.
@@ -113,4 +111,14 @@ public interface CPUID {
      * @return the result of the CPUID execution
      */
     Result getRawCPUID(int leaf);
+
+    /**
+     * Executes the CPUID instruction with the given leaf and sub-leaf.
+     * You should avoid using this function if possible.
+     *
+     * @param leaf the leaf of the CPUID instruction
+     * @param subleaf the sub-leaf of the CPUID instruction
+     * @return the result of the CPUID execution
+     */
+    Result getRawCPUID(int leaf, int subleaf);
 }
