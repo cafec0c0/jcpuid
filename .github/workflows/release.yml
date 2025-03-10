@@ -151,10 +151,10 @@ jobs:
         run: mvn -B deploy -f jcpuid-lib
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - run: mvn clean source:jar deploy
+      - run: mvn clean source:jar deploy -f jcpuid-lib
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - run: mvn clean javadoc:jar deploy
+      - run: mvn clean javadoc:jar deploy -f jcpuid-lib
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
