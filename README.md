@@ -20,12 +20,21 @@ groupId:     net.adambruce
 artifactId:  jcpuid
 ```
 
-The above dependency will also bring native libraries for the supported 
+The above dependency depends on native libraries for the supported 
 operating systems. If you do not wish to depend on some of these libraries, 
 they can be individually excluded by excluding the following coordinates:
-- `jcpuid-native-linux`
-- `jcpuid-native-windows`
-- `jcpuid-native-macos`
+```
+groupId:     net.adambruce
+artifactId:  jcpuid-native-linux
+```
+```
+groupId:     net.adambruce
+artifactId:  jcpuid-native-windows
+```
+```
+groupId:     net.adambruce
+artifactId:  jcpuid-native-macos
+```
 
 ## Building and Installing
 
@@ -39,8 +48,8 @@ mvn clean install -Pnative-{os}
 ```
 
 ### Building only the Java classes
-You can also omit the `native-*` profile entirely, which will only build the 
-Java library.
+You can also omit the `native-*` profile entirely, which will not compile
+any native code.
 ```
 mvn clean install -Pnative-{os}
 ```
