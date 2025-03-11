@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.adambruce.jcpuid;
+package net.adambruce.jcpuid.vendor.intel;
 
 import net.adambruce.jcpuid.type.Register;
 
@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * The feature identifiers returned by the processor.
  */
-public class FeatureIdentifiers {
+public class IntelFeatureIdentifiers {
 
     /** Bit position for the RAZ feature. */
     private static final int RAZ_BIT = 31;
@@ -123,9 +123,12 @@ public class FeatureIdentifiers {
      * @param register the register to use for determining supported features
      * @return the supported feature identifiers
      */
-    public static FeatureIdentifiers fromRegister(final Register register) {
+    public static IntelFeatureIdentifiers fromRegister(
+            final Register register) {
         int value = register.getIntValue();
-        FeatureIdentifiers featureIdentifiers = new FeatureIdentifiers();
+        IntelFeatureIdentifiers featureIdentifiers =
+                new IntelFeatureIdentifiers();
+
         featureIdentifiers.raz = (value & (0b1 << RAZ_BIT)) != 0;
         featureIdentifiers.avx = (value & (0b1 << AVX_BIT)) != 0;
         featureIdentifiers.f16c = (value & (0b1 << F16C_BIT)) != 0;
@@ -318,11 +321,11 @@ public class FeatureIdentifiers {
             return true;
         }
 
-        if (!(obj instanceof FeatureIdentifiers)) {
+        if (!(obj instanceof IntelFeatureIdentifiers)) {
             return false;
         }
 
-        FeatureIdentifiers that = (FeatureIdentifiers) obj;
+        IntelFeatureIdentifiers that = (IntelFeatureIdentifiers) obj;
 
         return this.raz == that.raz
                 && this.f16c == that.f16c

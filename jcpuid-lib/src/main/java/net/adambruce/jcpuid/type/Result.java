@@ -19,13 +19,10 @@ package net.adambruce.jcpuid.type;
 import java.util.Objects;
 
 /**
- * Holds the result of a CPUID instruction execution, including the status and
- * registers (EAX, EBX, ECX, EDX).
+ * Holds the result of a CPUID instruction execution the EAX, EBX, ECX and EDX
+ * registers.
  */
 public class Result {
-    /** The status returned by the GCC <code>get_cpuid</code> wrapper. */
-    private final Status status;
-
     /** The value returned in the EAX register. */
     private final Register eaxRegister;
 
@@ -41,28 +38,16 @@ public class Result {
     /**
      * Create a new Result to store CPUID data.
      *
-     * @param statusInt the status returned by the GCC's <code>get_cpuid</code>
      * @param eax the value returned in the EAX register
      * @param ebx the value returned in the EBX register
      * @param ecx the value returned in the ECX register
      * @param edx the value returned in the EDX register
      */
-    public Result(final int statusInt, final int eax, final int ebx,
-                  final int ecx, final int edx) {
-        this.status = Status.fromIntValue(statusInt);
+    public Result(final int eax, final int ebx, final int ecx, final int edx) {
         this.eaxRegister = new Register(eax);
         this.ebxRegister = new Register(ebx);
         this.ecxRegister = new Register(ecx);
         this.edxRegister = new Register(edx);
-    }
-
-    /**
-     * Get the status of the CPUID instruction execution.
-     *
-     * @return the status
-     */
-    public Status getStatus() {
-        return status;
     }
 
     /**
@@ -109,7 +94,6 @@ public class Result {
     @Override
     public String toString() {
         return "CpuidResult{"
-                + "status=" + status + ","
                 + "eax=" + eaxRegister + ","
                 + "ebx=" + ebxRegister + ","
                 + "ecx=" + ecxRegister + ","
@@ -136,8 +120,7 @@ public class Result {
 
         Result other = (Result) obj;
 
-        return Objects.equals(this.status, other.status)
-                && Objects.equals(this.eaxRegister, other.eaxRegister)
+        return Objects.equals(this.eaxRegister, other.eaxRegister)
                 && Objects.equals(this.ebxRegister, other.ebxRegister)
                 && Objects.equals(this.ecxRegister, other.ecxRegister)
                 && Objects.equals(this.edxRegister, other.edxRegister);
@@ -150,7 +133,6 @@ public class Result {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(status, eaxRegister, ebxRegister, ecxRegister,
-                edxRegister);
+        return Objects.hash(eaxRegister, ebxRegister, ecxRegister, edxRegister);
     }
 }

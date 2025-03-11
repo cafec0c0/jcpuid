@@ -14,7 +14,21 @@
  * limitations under the License.
  */
 
+package net.adambruce.jcpuid.exception;
+
 /**
- * Contains types for encapsulating CPUID data.
+ * Exception for when the platform CPUID has been requested, but we do not
+ * have an appropriate CPUID instance for the system's processor vendor.
  */
-package net.adambruce.jcpuid.type;
+public class VendorNotSupportedException extends Exception {
+
+    /**
+     * Create a new checked exception to capture exceptions that may get thrown
+     * due to the library missing support for the system's processor vendor.
+     *
+     * @param message the detail message
+     */
+    public VendorNotSupportedException(final String message) {
+        super(message);
+    }
+}

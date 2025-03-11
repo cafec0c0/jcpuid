@@ -14,7 +14,24 @@
  * limitations under the License.
  */
 
+package net.adambruce.jcpuid;
+
 /**
- * Contains types for encapsulating CPUID data.
+ * CPUID leaf constants.
  */
-package net.adambruce.jcpuid.type;
+public final class Leaf {
+
+    /** Leaf 0h (Basic CPUID function information). */
+    public static final int LEAF_0H = 0x0;
+
+    /** Leaf 01h (Basic CPUID information). */
+    public static final int LEAF_01H = 0x1;
+
+    /** Leaf 80000000h (Extended CPUID function information). */
+    public static final int LEAF_80000000H = 0x80000000;
+
+    private Leaf() {
+
+    }
+
+}

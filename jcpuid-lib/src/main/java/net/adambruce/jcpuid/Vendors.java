@@ -14,7 +14,22 @@
  * limitations under the License.
  */
 
+package net.adambruce.jcpuid;
+
 /**
- * Contains types for encapsulating CPUID data.
+ * A list of supported vendor identifier strings.
+ * These values are returned from all processors using leaf 0h.
  */
-package net.adambruce.jcpuid.type;
+public final class Vendors {
+
+    /** Vendor string for identifying Intel processors. */
+    public static final String INTEL = "GenuineIntel";
+
+    /** Vendor string for identifying AMD processors. */
+    public static final String AMD = "AuthenticAMD";
+
+    private Vendors() {
+
+    }
+
+}
