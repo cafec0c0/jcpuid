@@ -25,7 +25,7 @@
         <version>0.0.18-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jcpuid-tests</artifactId>
+    <artifactId>jcpuid-examples</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

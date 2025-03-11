@@ -28,7 +28,7 @@
     <modules>
         <module>jcpuid-lib</module>
         <module>jcpuid-native</module>
-        <module>jcpuid-tests</module>
+        <module>jcpuid-examples</module>
     </modules>
 
     <organization>
