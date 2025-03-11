@@ -41,7 +41,20 @@ public final class CPUIDFactory {
      */
     public static CPUID getPlatformCPUID() throws InitialisationException,
             VendorNotSupportedException {
-        CPUIDBridge bridge = CPUIDBridgeFactory.getPlatformBridge();
+        return getPlatformCPUID(CPUIDBridgeFactory.getPlatformBridge());
+    }
+
+    /**
+     * Gets the CPUID implementation for the current platform, using the
+     * provided bridge. This method will not load any native libraries.
+     *
+     * @param bridge the CPUID bridge to use
+     * @return the CPUID implementation for the current platform
+     * @throws VendorNotSupportedException the processor vendor is not supported
+     * to initialise.
+     */
+    public static CPUID getPlatformCPUID(final CPUIDBridge bridge)
+            throws VendorNotSupportedException {
         Result result = bridge.executeCPUID(Leaf.LEAF_0H);
         String vendor = getVendorString(result);
 
