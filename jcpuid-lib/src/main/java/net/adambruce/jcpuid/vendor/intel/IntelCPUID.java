@@ -22,7 +22,7 @@ import net.adambruce.jcpuid.bridge.CPUIDBridge;
 import net.adambruce.jcpuid.type.Result;
 
 /**
- * CPUID implementation to expose AMD CPUID functions.
+ * CPUID implementation to expose Intel CPUID functions.
  */
 public class IntelCPUID implements CPUID {
 
