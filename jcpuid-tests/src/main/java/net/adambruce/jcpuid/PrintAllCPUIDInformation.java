@@ -17,39 +17,52 @@
 package net.adambruce.jcpuid;
 
 import net.adambruce.jcpuid.exception.InitialisationException;
+import net.adambruce.jcpuid.exception.VendorNotSupportedException;
+import net.adambruce.jcpuid.vendor.amd.AmdCPUID;
+import net.adambruce.jcpuid.vendor.intel.IntelCPUID;
 
 public class PrintAllCPUIDInformation {
 
-    private final CPUID cpuid;
+    public static void main(String[] args) {
+        try {
+            CPUID cpuid = CPUIDFactory.getPlatformCPUID();
+            printLargestStandardFunctionNumber(cpuid);
+            printProcessorVendor(cpuid);
 
-    public static void main(String[] args) throws InitialisationException {
-        new PrintAllCPUIDInformation().run();
+            if (cpuid instanceof IntelCPUID) {
+                IntelCPUIDPrinter.print((IntelCPUID) cpuid);
+            }
+
+            if (cpuid instanceof AmdCPUID) {
+                AmdCPUIDPrinter.print((AmdCPUID) cpuid);
+            }
+
+        } catch (InitialisationException ex) {
+            System.err.println("Error initialising the CPUID library for the current platform: " + ex);
+        } catch (VendorNotSupportedException ex) {
+            System.err.println("The system's processor vendor is not supported: " + ex);
+        }
     }
 
-    private PrintAllCPUIDInformation() throws InitialisationException {
-        cpuid = CPUIDFactory.getPlatformCPUID();
-    }
-
-    private void run() {
-        printLargestStandardFunctionNumber();
-        printProcessorVendor();
-    }
-
-    private void printLargestStandardFunctionNumber() {
+    private static void printLargestStandardFunctionNumber(CPUID cpuid) {
         int largestInstructionNum = cpuid.getLargestStandardFunctionNumber();
         System.out.println("Largest Standard Function Number: " + largestInstructionNum);
     }
 
-    private void printProcessorVendor() {
+    private static void printProcessorVendor(CPUID cpuid) {
         String vendor = cpuid.getProcessorVendor();
         System.out.println("Vendor: " + vendor);
     }
 
-    private static void printException(String func, Exception ex) {
-        System.out.println("====== Error executing CPUID instruction ======");
-        System.out.println("Function: " + func);
-        System.out.println("Stack Trace:");
-        ex.printStackTrace(System.err);
-        System.out.println("===============================================");
+    private static class IntelCPUIDPrinter {
+        public static void print(IntelCPUID cpuid) {
+
+        }
+    }
+
+    private static class AmdCPUIDPrinter {
+        public static void print(AmdCPUID cpuid) {
+
+        }
     }
 }

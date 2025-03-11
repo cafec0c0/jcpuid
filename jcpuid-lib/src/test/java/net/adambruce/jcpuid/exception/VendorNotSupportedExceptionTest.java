@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-/**
- * Contains types for encapsulating CPUID data.
- */
-package net.adambruce.jcpuid.type;
+package net.adambruce.jcpuid.exception;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class VendorNotSupportedExceptionTest {
+
+    @Test
+    public void testVendorNotSupportedException() {
+        assertEquals("message", new VendorNotSupportedException("message").getMessage());
+    }
+
+}

@@ -14,29 +14,55 @@
  * limitations under the License.
  */
 
-package net.adambruce.jcpuid;
+package net.adambruce.jcpuid.vendor.amd;
 
+import net.adambruce.jcpuid.CPUID;
+import net.adambruce.jcpuid.bridge.CPUIDBridge;
 import net.adambruce.jcpuid.type.Result;
 
 /**
- * Interface for basic CPUID instructions supported by both Intel and AMD
- * processors.
+ * CPUID implementation to expose AMD CPUID functions.
  */
-public interface CPUID {
+public class AmdCPUID implements CPUID {
+
+    /** The bridge used to execute native CPUID instructions. */
+    private final CPUIDBridge bridgeImpl;
+
+    /**
+     * Create a new AMD CPUID instance using the provided bridge.
+     *
+     * @param bridge the bridge to use
+     */
+    public AmdCPUID(final CPUIDBridge bridge) {
+        this.bridgeImpl = bridge;
+    }
 
     /**
      * Obtains the largest standard function number supported by the processor.
      *
      * @return the largest standard function number
      */
-    int getLargestStandardFunctionNumber();
+    @Override
+    public int getLargestStandardFunctionNumber() {
+        Result result = getRawCPUID(0x0000_0000);
+
+        return result.getEax().getIntValue();
+    }
 
     /**
      * Obtains the processor vendor string.
      *
      * @return the processor vendor string
      */
-    String getProcessorVendor();
+    @Override
+    public String getProcessorVendor() {
+        Result result = getRawCPUID(0x0000_0000);
+
+        return result.getEbx().getStringValue()
+                + result.getEdx().getStringValue()
+                + result.getEcx().getStringValue();
+    }
+
 
     /**
      * Executes the CPUID instruction with the given leaf.
@@ -45,7 +71,10 @@ public interface CPUID {
      * @param leaf the leaf of the CPUID instruction
      * @return the result of the CPUID execution
      */
-    Result getRawCPUID(int leaf);
+    @Override
+    public Result getRawCPUID(final int leaf) {
+        return bridgeImpl.executeCPUID(leaf);
+    }
 
     /**
      * Executes the CPUID instruction with the given leaf and sub-leaf.
@@ -55,5 +84,8 @@ public interface CPUID {
      * @param subleaf the sub-leaf of the CPUID instruction
      * @return the result of the CPUID execution
      */
-    Result getRawCPUID(int leaf, int subleaf);
+    @Override
+    public Result getRawCPUID(final int leaf, final int subleaf) {
+        return bridgeImpl.executeCPUID(leaf, subleaf);
+    }
 }

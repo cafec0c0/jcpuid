@@ -14,43 +14,43 @@
  * limitations under the License.
  */
 
-package net.adambruce.jcpuid;
+package net.adambruce.jcpuid.vendor.intel;
 
 import net.adambruce.jcpuid.type.Register;
 import org.junit.jupiter.api.Test;
 
-import static net.adambruce.jcpuid.FeatureIdentifiers.fromRegister;
+import static net.adambruce.jcpuid.vendor.intel.IntelFeatureIdentifiers.fromRegister;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FeatureIdentifiersTest {
+public class IntelFeatureIdentifiersTest {
 
     @Test
     public void testHashCode() {
-        FeatureIdentifiers features1 = fromRegister(new Register(123));
-        FeatureIdentifiers features2 = fromRegister(new Register(123));
+        IntelFeatureIdentifiers features1 = fromRegister(new Register(123));
+        IntelFeatureIdentifiers features2 = fromRegister(new Register(123));
         assertEquals(features1.hashCode(), features2.hashCode());
     }
 
     @Test
     public void testEqualsSameObject() {
-        FeatureIdentifiers features = fromRegister(new Register(123));
+        IntelFeatureIdentifiers features = fromRegister(new Register(123));
         assertEquals(features, features);
     }
 
     @Test
     public void testEquals() {
-        FeatureIdentifiers features1 = fromRegister(new Register(123));
-        FeatureIdentifiers features2 = fromRegister(new Register(123));
+        IntelFeatureIdentifiers features1 = fromRegister(new Register(123));
+        IntelFeatureIdentifiers features2 = fromRegister(new Register(123));
         assertEquals(features1, features2);
     }
 
     @Test
     public void testNotEqualDifferentClass() {
-        FeatureIdentifiers features = fromRegister(new Register(123));
+        IntelFeatureIdentifiers features = fromRegister(new Register(123));
         String other = "other";
-        assertNotEquals(other, features);
+        assertNotEquals(features, other);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class FeatureIdentifiersTest {
 
     @Test
     public void testToString() {
-        FeatureIdentifiers features = fromRegister(new Register(0xFFFFFFFF));
+        IntelFeatureIdentifiers features = fromRegister(new Register(0xFFFFFFFF));
 
         String str = features.toString();
         assertTrue(str.contains("RAZ=true"));
@@ -169,7 +169,7 @@ public class FeatureIdentifiersTest {
         assertTrue(getFeaturesWithBitSet(0).hasSSE3());
     }
 
-    private static FeatureIdentifiers getFeaturesWithBitSet(int offset) {
+    private static IntelFeatureIdentifiers getFeaturesWithBitSet(int offset) {
         return fromRegister(new Register(0b1 << offset));
     }
 

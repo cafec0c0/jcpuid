@@ -16,8 +16,13 @@
 
 package net.adambruce.jcpuid;
 
+import net.adambruce.jcpuid.bridge.CPUIDBridge;
 import net.adambruce.jcpuid.bridge.CPUIDBridgeFactory;
 import net.adambruce.jcpuid.exception.InitialisationException;
+import net.adambruce.jcpuid.exception.VendorNotSupportedException;
+import net.adambruce.jcpuid.type.Result;
+import net.adambruce.jcpuid.vendor.amd.AmdCPUID;
+import net.adambruce.jcpuid.vendor.intel.IntelCPUID;
 
 public final class CPUIDFactory {
 
@@ -31,10 +36,33 @@ public final class CPUIDFactory {
      *
      * @return the CPUID implementation for the current platform
      * @throws InitialisationException the platform CPUID implementation failed
+     * @throws VendorNotSupportedException the processor vendor is not supported
      * to initialise.
      */
-    public static CPUID getPlatformCPUID() throws InitialisationException {
-        return new DefaultCPUID(CPUIDBridgeFactory.getPlatformBridge());
+    public static CPUID getPlatformCPUID() throws InitialisationException,
+            VendorNotSupportedException {
+        CPUIDBridge bridge = CPUIDBridgeFactory.getPlatformBridge();
+        Result result = bridge.executeCPUID(Leaf.LEAF_0H);
+        String vendor = getVendorString(result);
+
+        if (Vendors.INTEL.equals(vendor)) {
+            return new IntelCPUID(bridge);
+        }
+
+        if (Vendors.AMD.equals(vendor)) {
+            return new AmdCPUID(bridge);
+        }
+
+        throw new VendorNotSupportedException("The vendor " + vendor
+                + " is not supported. To implement support for this processor "
+                + "vendor, create a class implementing the CPUID interface.");
+
+    }
+
+    private static String getVendorString(final Result result) {
+        return result.getEbx().getStringValue()
+                + result.getEdx().getStringValue()
+                + result.getEcx().getStringValue();
     }
 
 }

@@ -15,6 +15,6 @@
  */
 
 /**
- * Contains types for encapsulating CPUID data.
+ * Contains the AMD CPUID implementation and types.
  */
-package net.adambruce.jcpuid.type;
+package net.adambruce.jcpuid.vendor.amd;
