@@ -24,7 +24,6 @@
         <artifactId>jcpuid-examples</artifactId>
         <version>0.0.18-SNAPSHOT</version>
     </parent>
-    <packaging>pom</packaging>
 
     <artifactId>jcpuid-example-print-all-info</artifactId>
 
