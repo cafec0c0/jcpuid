@@ -28,6 +28,22 @@ import net.adambruce.jcpuid.vendor.intel.type.VersionInformation;
  */
 public class IntelCPUID implements CPUID {
 
+    /** Offset for accessing the brand index from EBX when EAX=1. */
+    private static final int BRAND_INDEX_OFFSET = 0;
+
+    /** Offset for accessing the CLFLUSH size from EBX when EAX=1. */
+    private static final int CLFLUSH_OFFSET = 8;
+
+    /**
+     * Offset for accessing the maximum number of addressable IDs from EBX
+     * when EAX=1.
+     */
+    private static final int MAX_ADDRESSABLE_IDS_OFFSET = 16;
+
+    /** Offset for accessing the initial APIC ID from EBX when EAX=1. */
+    private static final int INITIAL_APIC_ID_OFFSET = 24;
+
+
     /** The bridge used to execute native CPUID instructions. */
     private final CPUIDBridge bridgeImpl;
 
@@ -42,7 +58,7 @@ public class IntelCPUID implements CPUID {
 
     /**
      * Obtains the largest standard function number supported by the processor.
-     * EAX = 0h
+     * This value is obtained from EAX when EAX=0h
      *
      * @return the largest standard function number
      */
@@ -55,7 +71,7 @@ public class IntelCPUID implements CPUID {
 
     /**
      * Obtains the processor vendor string.
-     * EAX = 0h
+     * This value is obtained from EBX,ECX,EDX when EAX=0h
      *
      * @return the processor vendor string
      */
@@ -70,14 +86,76 @@ public class IntelCPUID implements CPUID {
 
     /**
      * Gets the processor version information.
-     * This information is obtained using EAX=01h
+     * This value is obtained from EAX when EAX=01h
      *
      * @return the version information
      * @throws CPUIDException an exception occurred during the CPUID
      * instruction execution.
      */
     public VersionInformation getVersionInformation() throws CPUIDException {
-        return new VersionInformation(getRawCPUID(Leaf.LEAF_01H).getEax());
+        return new VersionInformation(getCheckedCPUID(Leaf.LEAF_01H).getEax());
+    }
+
+    /**
+     * Gets the index for the brand string table stored on the processor.
+     * This value is obtained from EBX when EAX=01h
+     *
+     * @return the index of the brand string table
+     * @throws CPUIDException an exception occurred during the CPUID
+     * instruction execution.
+     */
+    public int getBrandIndex() throws CPUIDException {
+        return getCheckedCPUID(Leaf.LEAF_01H).getEbx()
+                .getByteValue(BRAND_INDEX_OFFSET);
+    }
+
+    /**
+     * Gets the CLFLUSH line size for the processor
+     * (value * 8 = line size in bytes).
+     * This value is obtained from EBX when EAX=01h
+     *
+     * @return the CLFLUSH line size
+     * @throws CPUIDException an exception occurred during the CPUID
+     * instruction execution.
+     */
+    public int getCLFLUSHLineSize() throws CPUIDException {
+        return getCheckedCPUID(Leaf.LEAF_01H).getEbx()
+                .getByteValue(CLFLUSH_OFFSET);
+    }
+
+    /**
+     * Gets the maximum number of addressable IDs for logical processors in this
+     * physical package.
+     *
+     * @return the maximum number of addressable IDs.
+     * @throws CPUIDException an exception occurred during the CPUID
+     * instruction execution.
+     */
+    public int getMaximumNumberOfAddressableIds() throws CPUIDException {
+        return getCheckedCPUID(Leaf.LEAF_01H).getEbx()
+                .getByteValue(MAX_ADDRESSABLE_IDS_OFFSET);
+    }
+
+    /**
+     * Gets the initial APIC ID. This is replaced by the 32-bit x2APIC ID.
+     *
+     * @return the initial APIC ID
+     * @throws CPUIDException an exception occurred during the CPUID
+     * instruction execution.
+     */
+    public int getInitialApicId() throws CPUIDException {
+        return getCheckedCPUID(Leaf.LEAF_01H).getEbx()
+                .getByteValue(INITIAL_APIC_ID_OFFSET);
+    }
+
+    private Result getCheckedCPUID(final int leaf) throws CPUIDException {
+        int largestStandardFunctionNumber = getLargestStandardFunctionNumber();
+        if (Integer.compareUnsigned(leaf, largestStandardFunctionNumber) > 0) {
+            throw new CPUIDException("this function is not supported by this "
+                    + "processor");
+        }
+
+        return getRawCPUID(leaf);
     }
 
     /**

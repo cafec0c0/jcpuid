@@ -31,6 +31,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -88,6 +89,41 @@ class IntelCPUIDTest {
     }
 
     @Test
+    public void testCheckedCPUID() {
+        Result result = mock(Result.class);
+        Register eax = RegisterUtils.intRegister(111);
+        Register ebx = RegisterUtils.intRegister(222);
+        Register ecx = RegisterUtils.intRegister(333);
+        Register edx = RegisterUtils.intRegister(444);
+
+        when(result.getEax()).thenReturn(eax);
+        when(result.getEbx()).thenReturn(ebx);
+        when(result.getEcx()).thenReturn(ecx);
+        when(result.getEdx()).thenReturn(edx);
+
+        when(bridge.executeCPUID(Leaf.LEAF_0H)).thenReturn(result);
+
+        Result rawResult = cpuid.getRawCPUID(Leaf.LEAF_0H);
+        assertEquals(111, rawResult.getEax().getIntValue());
+        assertEquals(222, rawResult.getEbx().getIntValue());
+        assertEquals(333, rawResult.getEcx().getIntValue());
+        assertEquals(444, rawResult.getEdx().getIntValue());
+    }
+
+    @Test
+    public void testCheckedCPUIDWithException() {
+        Result result = mock(Result.class);
+        Register eax = RegisterUtils.intRegister(0);
+
+        when(result.getEax()).thenReturn(eax);
+
+        // Mock max standard function call
+        when(bridge.executeCPUID(Leaf.LEAF_0H)).thenReturn(result);
+
+        assertThrows(CPUIDException.class, () ->  cpuid.getVersionInformation());
+    }
+
+    @Test
     public void testGetLargestStandardFunctionNumber() {
         Result result = mock(Result.class);
         Register eax = RegisterUtils.intRegister(123);
@@ -122,6 +158,8 @@ class IntelCPUIDTest {
 
         when(result.getEax()).thenReturn(eax);
 
+        Result largestStandardFunction = getLargestStandardFunctionResult();
+        when(bridge.executeCPUID(Leaf.LEAF_0H)).thenReturn(largestStandardFunction);
         when(bridge.executeCPUID(Leaf.LEAF_01H)).thenReturn(result);
 
         VersionInformation version = cpuid.getVersionInformation();
@@ -131,6 +169,69 @@ class IntelCPUIDTest {
         assertEquals(ProcessorType.ORIGINAL_OEM_PROCESSOR, version.getType());
         assertEquals(0b1001, version.getExtendedModel());
         assertEquals(0b101, version.getExtendedFamily());
+    }
+
+    @Test
+    void testGetBrandIndex() throws CPUIDException {
+        Result result = mock(Result.class);
+        Register ebx = new Register(0b00001000000100000000100000000010);
+
+        when(result.getEbx()).thenReturn(ebx);
+
+        Result largestStandardFunction = getLargestStandardFunctionResult();
+        when(bridge.executeCPUID(Leaf.LEAF_0H)).thenReturn(largestStandardFunction);
+        when(bridge.executeCPUID(Leaf.LEAF_01H)).thenReturn(result);
+
+        assertEquals(0b10, cpuid.getBrandIndex());
+    }
+
+    @Test
+    void testGetCLFLUSHLineSize() throws CPUIDException {
+        Result result = mock(Result.class);
+        Register ebx = new Register(0b00001000000100000000100000000000);
+
+        when(result.getEbx()).thenReturn(ebx);
+
+        Result largestStandardFunction = getLargestStandardFunctionResult();
+        when(bridge.executeCPUID(Leaf.LEAF_0H)).thenReturn(largestStandardFunction);
+        when(bridge.executeCPUID(Leaf.LEAF_01H)).thenReturn(result);
+
+        assertEquals(0b1000, cpuid.getCLFLUSHLineSize());
+    }
+
+    @Test
+    void testGetMaxNumberOfAddressableIds() throws CPUIDException {
+        Result result = mock(Result.class);
+        Register ebx = new Register(0b00001000001100000000100000000000);
+
+        when(result.getEbx()).thenReturn(ebx);
+
+        Result largestStandardFunction = getLargestStandardFunctionResult();
+        when(bridge.executeCPUID(Leaf.LEAF_0H)).thenReturn(largestStandardFunction);
+        when(bridge.executeCPUID(Leaf.LEAF_01H)).thenReturn(result);
+
+        assertEquals(0b110000, cpuid.getMaximumNumberOfAddressableIds());
+    }
+
+    @Test
+    void testGetInitialApicId() throws CPUIDException {
+        Result result = mock(Result.class);
+        Register ebx = new Register(0b00001001001100000000100000000000);
+
+        when(result.getEbx()).thenReturn(ebx);
+
+        Result largestStandardFunction = getLargestStandardFunctionResult();
+        when(bridge.executeCPUID(Leaf.LEAF_0H)).thenReturn(largestStandardFunction);
+        when(bridge.executeCPUID(Leaf.LEAF_01H)).thenReturn(result);
+
+        assertEquals(0b1001, cpuid.getInitialApicId());
+    }
+
+    private static Result getLargestStandardFunctionResult() {
+        Result result = mock(Result.class);
+        Register eax = RegisterUtils.intRegister(0xFFFFFFFF);
+        when(result.getEax()).thenReturn(eax);
+        return result;
     }
 
 }

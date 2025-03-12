@@ -59,6 +59,10 @@ public class PrintAllCPUIDInformation {
     private static class IntelCPUIDPrinter {
         public static void print(IntelCPUID cpuid) {
             printVersionInformation(cpuid);
+            printBrandIndex(cpuid);
+            printCLFLUSHLineSize(cpuid);
+            printMaxNumberOfAddressableIds(cpuid);
+            printInitialApicId(cpuid);
         }
 
         private static void printVersionInformation(IntelCPUID cpuid) {
@@ -73,6 +77,43 @@ public class PrintAllCPUIDInformation {
                 System.out.println("  Extended Family: " + version.getExtendedFamily());
             } catch (CPUIDException ex) {
                 System.out.println("  Exception: " + ex);
+            }
+        }
+
+        private static void printBrandIndex(IntelCPUID cpuid) {
+            System.out.print("Brand String Index: ");
+            try {
+                System.out.println(cpuid.getBrandIndex());
+            } catch (CPUIDException ex) {
+                System.out.println("Exception: " + ex);
+            }
+        }
+
+        private static void printCLFLUSHLineSize(IntelCPUID cpuid) {
+            System.out.print("CLFLUSH Line Size: ");
+            try {
+                int size = cpuid.getCLFLUSHLineSize();
+                System.out.println(size + " (" + (size * 8) + " bytes)");
+            } catch (CPUIDException ex) {
+                System.out.println("Exception: " + ex);
+            }
+        }
+
+        private static void printMaxNumberOfAddressableIds(IntelCPUID cpuid) {
+            System.out.print("Maximum Number of Addressable IDs: ");
+            try {
+                System.out.println(cpuid.getMaximumNumberOfAddressableIds());
+            } catch (CPUIDException ex) {
+                System.out.println("Exception: " + ex);
+            }
+        }
+
+        private static void printInitialApicId(IntelCPUID cpuid) {
+            System.out.print("Initial APIC ID: ");
+            try {
+                System.out.println(cpuid.getInitialApicId());
+            } catch (CPUIDException ex) {
+                System.out.println("Exception: " + ex);
             }
         }
     }
