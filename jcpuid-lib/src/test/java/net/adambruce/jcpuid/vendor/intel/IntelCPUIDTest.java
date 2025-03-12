@@ -18,9 +18,12 @@ package net.adambruce.jcpuid.vendor.intel;
 
 import net.adambruce.jcpuid.Leaf;
 import net.adambruce.jcpuid.bridge.CPUIDBridge;
+import net.adambruce.jcpuid.exception.CPUIDException;
 import net.adambruce.jcpuid.type.Register;
 import net.adambruce.jcpuid.type.Result;
 import net.adambruce.jcpuid.util.RegisterUtils;
+import net.adambruce.jcpuid.vendor.intel.type.ProcessorType;
+import net.adambruce.jcpuid.vendor.intel.type.VersionInformation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -110,6 +113,24 @@ class IntelCPUIDTest {
         when(bridge.executeCPUID(Leaf.LEAF_0H)).thenReturn(result);
 
         assertEquals("GenuineIntel", cpuid.getProcessorVendor());
+    }
+
+    @Test
+    public void testGetVersionInformation() throws CPUIDException {
+        Result result = mock(Result.class);
+        Register eax = new Register(0b00000000010110010000011011101010);
+
+        when(result.getEax()).thenReturn(eax);
+
+        when(bridge.executeCPUID(Leaf.LEAF_01H)).thenReturn(result);
+
+        VersionInformation version = cpuid.getVersionInformation();
+        assertEquals(0b1010, version.getStepping());
+        assertEquals(0b1110, version.getModel());
+        assertEquals(0b0110, version.getFamily());
+        assertEquals(ProcessorType.ORIGINAL_OEM_PROCESSOR, version.getType());
+        assertEquals(0b1001, version.getExtendedModel());
+        assertEquals(0b101, version.getExtendedFamily());
     }
 
 }

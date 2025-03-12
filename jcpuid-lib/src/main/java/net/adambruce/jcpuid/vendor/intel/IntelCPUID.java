@@ -19,7 +19,9 @@ package net.adambruce.jcpuid.vendor.intel;
 import net.adambruce.jcpuid.CPUID;
 import net.adambruce.jcpuid.Leaf;
 import net.adambruce.jcpuid.bridge.CPUIDBridge;
+import net.adambruce.jcpuid.exception.CPUIDException;
 import net.adambruce.jcpuid.type.Result;
+import net.adambruce.jcpuid.vendor.intel.type.VersionInformation;
 
 /**
  * CPUID implementation to expose Intel CPUID functions.
@@ -40,6 +42,7 @@ public class IntelCPUID implements CPUID {
 
     /**
      * Obtains the largest standard function number supported by the processor.
+     * EAX = 0h
      *
      * @return the largest standard function number
      */
@@ -52,6 +55,7 @@ public class IntelCPUID implements CPUID {
 
     /**
      * Obtains the processor vendor string.
+     * EAX = 0h
      *
      * @return the processor vendor string
      */
@@ -62,6 +66,18 @@ public class IntelCPUID implements CPUID {
         return result.getEbx().getStringValue()
                 + result.getEdx().getStringValue()
                 + result.getEcx().getStringValue();
+    }
+
+    /**
+     * Gets the processor version information.
+     * This information is obtained using EAX=01h
+     *
+     * @return the version information
+     * @throws CPUIDException an exception occurred during the CPUID
+     * instruction execution.
+     */
+    public VersionInformation getVersionInformation() throws CPUIDException {
+        return new VersionInformation(getRawCPUID(Leaf.LEAF_01H).getEax());
     }
 
     /**
