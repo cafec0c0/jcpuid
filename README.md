@@ -84,9 +84,10 @@ mvn clean install -f jcpuid-lib
 
 # Supported CPUID Instructions
 
-| EAX   | Intel | AMD      | 
-|-------|-------|----------|
-| `0H`  | Yes   | Yes      |
+| EAX   | Intel | AMD | 
+|-------|-------|-----|
+| `0H`  | Yes   | Yes |
+| `01H` | Yes   | No  |
 
 ## References
 - [Intel 64 and IA-32 Architectures Software Developer's Manual Volume 2 (2A, 2B, 2C, & 2D):

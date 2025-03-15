@@ -32,17 +32,17 @@ public class RegisterTest {
 
     @Test
     public void testGetShortValue() {
-        assertEquals(0x7800, new Register(0x78000000).getShortValue(1));
+        assertEquals(0x7800, new Register(0x78000000).getShortValue(16));
     }
 
     @Test
     public void testGetByteValue() {
-        assertEquals(0xEA, new Register(0xEA00).getByteValue(1));
+        assertEquals(0xEA, new Register(0xEA00).getByteValue(8));
     }
 
     @Test
     public void testGetNibbleValue() {
-        assertEquals(0xF, new Register(0xF00).getNibbleValue(2));
+        assertEquals(0xF, new Register(0xF00).getNibbleValue(8));
     }
 
     @Test

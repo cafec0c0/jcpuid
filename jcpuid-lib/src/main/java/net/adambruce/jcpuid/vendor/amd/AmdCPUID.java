@@ -39,6 +39,7 @@ public class AmdCPUID implements CPUID {
 
     /**
      * Obtains the largest standard function number supported by the processor.
+     * EAX = 0h
      *
      * @return the largest standard function number
      */
@@ -51,6 +52,7 @@ public class AmdCPUID implements CPUID {
 
     /**
      * Obtains the processor vendor string.
+     * EAX = 0h
      *
      * @return the processor vendor string
      */
