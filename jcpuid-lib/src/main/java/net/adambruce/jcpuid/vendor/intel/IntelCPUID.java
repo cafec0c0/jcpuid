@@ -21,6 +21,7 @@ import net.adambruce.jcpuid.Leaf;
 import net.adambruce.jcpuid.bridge.CPUIDBridge;
 import net.adambruce.jcpuid.exception.CPUIDException;
 import net.adambruce.jcpuid.type.Result;
+import net.adambruce.jcpuid.vendor.intel.type.FeatureInformation;
 import net.adambruce.jcpuid.vendor.intel.type.VersionInformation;
 
 /**
@@ -146,6 +147,18 @@ public class IntelCPUID implements CPUID {
     public int getInitialApicId() throws CPUIDException {
         return getCheckedCPUID(Leaf.LEAF_01H).getEbx()
                 .getByteValue(INITIAL_APIC_ID_OFFSET);
+    }
+
+    /**
+     * Gets the features supported by this processor.
+     *
+     * @return the features
+     * @throws CPUIDException an exception occurred during the CPUID
+     * instruction execution.
+     */
+    public FeatureInformation getFeatureInformation() throws CPUIDException {
+        Result result = getCheckedCPUID(Leaf.LEAF_01H);
+        return new FeatureInformation(result.getEcx(), result.getEdx());
     }
 
     private Result getCheckedCPUID(final int leaf) throws CPUIDException {

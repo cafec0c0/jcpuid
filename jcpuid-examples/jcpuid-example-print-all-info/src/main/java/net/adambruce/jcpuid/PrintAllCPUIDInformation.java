@@ -21,6 +21,7 @@ import net.adambruce.jcpuid.exception.InitialisationException;
 import net.adambruce.jcpuid.exception.VendorNotSupportedException;
 import net.adambruce.jcpuid.vendor.amd.AmdCPUID;
 import net.adambruce.jcpuid.vendor.intel.IntelCPUID;
+import net.adambruce.jcpuid.vendor.intel.type.FeatureInformation;
 import net.adambruce.jcpuid.vendor.intel.type.VersionInformation;
 
 public class PrintAllCPUIDInformation {
@@ -63,6 +64,7 @@ public class PrintAllCPUIDInformation {
             printCLFLUSHLineSize(cpuid);
             printMaxNumberOfAddressableIds(cpuid);
             printInitialApicId(cpuid);
+            printFeatureInformation(cpuid);
         }
 
         private static void printVersionInformation(IntelCPUID cpuid) {
@@ -112,6 +114,16 @@ public class PrintAllCPUIDInformation {
             System.out.print("Initial APIC ID: ");
             try {
                 System.out.println(cpuid.getInitialApicId());
+            } catch (CPUIDException ex) {
+                System.out.println("Exception: " + ex);
+            }
+        }
+
+        private static void printFeatureInformation(IntelCPUID cpuid) {
+            System.out.println("Feature Information: ");
+            try {
+                FeatureInformation info = cpuid.getFeatureInformation();
+                System.out.println("  " + String.join("\n  ", info.toString().split("\\{")[1].split("}")[0].replace("=", ": ").split(",")));
             } catch (CPUIDException ex) {
                 System.out.println("Exception: " + ex);
             }

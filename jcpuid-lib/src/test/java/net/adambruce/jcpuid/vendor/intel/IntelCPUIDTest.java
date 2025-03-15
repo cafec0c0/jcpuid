@@ -22,6 +22,7 @@ import net.adambruce.jcpuid.exception.CPUIDException;
 import net.adambruce.jcpuid.type.Register;
 import net.adambruce.jcpuid.type.Result;
 import net.adambruce.jcpuid.util.RegisterUtils;
+import net.adambruce.jcpuid.vendor.intel.type.FeatureInformation;
 import net.adambruce.jcpuid.vendor.intel.type.ProcessorType;
 import net.adambruce.jcpuid.vendor.intel.type.VersionInformation;
 import org.junit.jupiter.api.Test;
@@ -225,6 +226,28 @@ class IntelCPUIDTest {
         when(bridge.executeCPUID(Leaf.LEAF_01H)).thenReturn(result);
 
         assertEquals(0b1001, cpuid.getInitialApicId());
+    }
+
+    @Test
+    void testGetFeatureInformation() throws CPUIDException {
+        Result result = mock(Result.class);
+        Register ecx = new Register(0b1010);
+        Register edx = new Register(0b0101);
+
+        Result largestStandardFunction = getLargestStandardFunctionResult();
+        when(bridge.executeCPUID(Leaf.LEAF_0H)).thenReturn(largestStandardFunction);
+
+        when(result.getEcx()).thenReturn(ecx);
+        when(result.getEdx()).thenReturn(edx);
+        when(bridge.executeCPUID(Leaf.LEAF_01H)).thenReturn(result);
+
+        FeatureInformation featureInfo = cpuid.getFeatureInformation();
+
+        Register expectedEcx = new Register(0b1010);
+        Register expectedEdx = new Register(0b0101);
+        FeatureInformation expected = new FeatureInformation(expectedEcx, expectedEdx);
+
+        assertEquals(expected, featureInfo);
     }
 
     private static Result getLargestStandardFunctionResult() {
