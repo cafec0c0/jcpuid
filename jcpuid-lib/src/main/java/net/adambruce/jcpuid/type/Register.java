@@ -71,38 +71,45 @@ public class Register {
 
     /**
      * Gets the short value of the register at the given offset. Offsets are
-     * the number of shorts to bit shift (not bits).
+     * the number of bits to shift.
      *
-     * @param shortOffset the offset (number of shorts)
+     * @param offset the offset (number of bits)
      * @return the short value
      */
-    public int getShortValue(final int shortOffset) {
-        int shift = shortOffset * SHORT_WIDTH;
-        return (intValue & (SHORT_MASK << shift)) >> shift;
+    public int getShortValue(final int offset) {
+        return (intValue >> offset) & SHORT_MASK;
     }
 
     /**
      * Gets the byte value of the register at the given offset. Offsets are
-     * the number of bytes to bit shift (not bits).
+     * the number of bits to shift.
      *
-     * @param byteOffset the offset (number of bytes)
+     * @param offset the offset (number of bits)
      * @return the byte value
      */
-    public int getByteValue(final int byteOffset) {
-        int shift = byteOffset * BYTE_WIDTH;
-        return (intValue & (BYTE_MASK << shift)) >> shift;
+    public int getByteValue(final int offset) {
+        return (intValue >> offset) & BYTE_MASK;
     }
 
     /**
      * Gets the nibble value of the register at the given offset. Offsets are
-     * the number of nibbles to bit shift (not bits).
+     * the number of bits to shift.
      *
-     * @param nibbleOffset the offset (number of nibbles)
+     * @param offset the offset (number of bits)
      * @return the nibble value
      */
-    public int getNibbleValue(final int nibbleOffset) {
-        int shift = nibbleOffset * NIBBLE_WIDTH;
-        return (intValue & (NIBBLE_MASK << shift)) >> shift;
+    public int getNibbleValue(final int offset) {
+        return (intValue >> offset) & NIBBLE_MASK;
+    }
+
+    /**
+     * Gets the state of a bit in the register.
+     *
+     * @param offset the offset (number of bits)
+     * @return whether bit value
+     */
+    public int getBitValue(final int offset) {
+        return (intValue >> offset) & BIT_WIDTH;
     }
 
     /**

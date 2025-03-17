@@ -24,7 +24,6 @@
         <artifactId>jcpuid-examples</artifactId>
         <version>0.0.18-SNAPSHOT</version>
     </parent>
-    <packaging>pom</packaging>
 
     <artifactId>jcpuid-example-print-all-info</artifactId>
 
@@ -33,5 +32,13 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.adambruce</groupId>
+            <artifactId>jcpuid</artifactId>
+            <version>0.0.18-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
