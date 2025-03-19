@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package net.adambruce.jcpuid;
+package net.adambruce.jcpuid.exception;
 
-import net.adambruce.jcpuid.bridge.CpuidBridge;
-import net.adambruce.jcpuid.type.CpuidResult;
+/**
+ * Exception for capturing failures in the JCPUID library.
+ */
+public class CpuidException extends Exception {
 
-public class CustomBridge implements CpuidBridge {
-    @Override
-    public CpuidResult executeCPUID(int leaf) {
-        return myNativeCPUID(leaf);
+    /**
+     * Create a new checked exception to capture exceptions that may get thrown
+     * during library initialisation.
+     *
+     * @param message the detail message
+     */
+    public CpuidException(final String message) {
+        super(message);
     }
-
-    @Override
-    public CpuidResult executeCPUID(int leaf, int subleaf) {
-        return myNativeCPUIDWithSubleaf(leaf, subleaf);
-    }
-
-    private native CpuidResult myNativeCPUID(int leaf);
-
-    private native CpuidResult myNativeCPUIDWithSubleaf(int leaf, int subleaf);
 }

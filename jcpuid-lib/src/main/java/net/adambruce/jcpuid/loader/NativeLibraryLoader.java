@@ -16,7 +16,7 @@
 
 package net.adambruce.jcpuid.loader;
 
-import net.adambruce.jcpuid.exception.InitialisationException;
+import net.adambruce.jcpuid.exception.CpuidException;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,12 +39,12 @@ public class NativeLibraryLoader {
      *
      * @param operatingSystem the operating system to load the library for
      * @param architecture the architecture to load the library for
-     * @throws InitialisationException the loader failed to load the library
+     * @throws CpuidException the loader failed to load the library
      */
     public void loadLibrary(
             final OperatingSystem operatingSystem,
             final Architecture architecture)
-            throws InitialisationException {
+            throws CpuidException {
 
         loadNativeLibrary(operatingSystem, architecture);
     }
@@ -52,7 +52,7 @@ public class NativeLibraryLoader {
     private String getLibraryPath(
             final OperatingSystem operatingSystem,
             final Architecture architecture)
-            throws InitialisationException {
+            throws CpuidException {
 
         try (InputStream mappings = getClass().getClassLoader()
                 .getResourceAsStream(MAPPING_PATH)) {
@@ -66,14 +66,14 @@ public class NativeLibraryLoader {
             return properties.getProperty(key);
 
         } catch (IOException ex) {
-            throw new InitialisationException("unable to load library "
+            throw new CpuidException("unable to load library "
                     + "mappings: " + ex);
         }
     }
 
     private void loadNativeLibrary(final OperatingSystem operatingSystem,
                                    final Architecture architecture)
-            throws InitialisationException {
+            throws CpuidException {
 
         String path = getLibraryPath(operatingSystem, architecture);
 
@@ -86,7 +86,7 @@ public class NativeLibraryLoader {
             InputStream libStream = getClass().getResourceAsStream(path);
 
             if (libStream == null) {
-                throw new InitialisationException("unable to locate the "
+                throw new CpuidException("unable to locate the "
                         + "native library on the classpath");
             }
 
@@ -95,7 +95,7 @@ public class NativeLibraryLoader {
 
             System.load(out.getAbsolutePath());
         } catch (IOException ex) {
-            throw new InitialisationException("unable to extract native "
+            throw new CpuidException("unable to extract native "
                     + "library: " + ex);
         }
     }

@@ -19,18 +19,25 @@ package net.adambruce.jcpuid;
 import net.adambruce.jcpuid.bridge.CpuidBridge;
 import net.adambruce.jcpuid.type.CpuidResult;
 
-public class CustomBridge implements CpuidBridge {
-    @Override
-    public CpuidResult executeCPUID(int leaf) {
-        return myNativeCPUID(leaf);
+public class CustomCpuidImpl implements Cpuid {
+
+    private final CpuidBridge bridge;
+
+    public CustomCpuidImpl(CpuidBridge bridge) {
+        this.bridge = bridge;
+    }
+
+    public int myCustomCPUIDFunctionForAVerySpecificProcessor() {
+        return bridge.executeCPUID(0xDEADBEEF).getEdx().getIntValue();
     }
 
     @Override
-    public CpuidResult executeCPUID(int leaf, int subleaf) {
-        return myNativeCPUIDWithSubleaf(leaf, subleaf);
+    public CpuidResult execute(int leaf) {
+        return bridge.executeCPUID(leaf);
     }
 
-    private native CpuidResult myNativeCPUID(int leaf);
-
-    private native CpuidResult myNativeCPUIDWithSubleaf(int leaf, int subleaf);
+    @Override
+    public CpuidResult execute(int leaf, int subleaf) {
+        return bridge.executeCPUID(leaf, subleaf);
+    }
 }

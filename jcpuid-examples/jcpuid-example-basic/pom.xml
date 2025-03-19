@@ -21,18 +21,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.adambruce</groupId>
-        <artifactId>jcpuid-parent</artifactId>
+        <artifactId>jcpuid-examples</artifactId>
         <version>0.0.18-SNAPSHOT</version>
     </parent>
-    <packaging>pom</packaging>
 
-    <artifactId>jcpuid-examples</artifactId>
-
-    <modules>
-        <module>jcpuid-example-custom-bridge</module>
-        <module>jcpuid-example-cpuid-impl</module>
-        <module>jcpuid-example-basic</module>
-    </modules>
+    <artifactId>jcpuid-example-basic</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -40,13 +33,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>tests</id>
-            <properties>
-                <skipTests>false</skipTests>
-            </properties>
-        </profile>
-    </profiles>
+    <dependencies>
+        <dependency>
+            <groupId>net.adambruce</groupId>
+            <artifactId>jcpuid</artifactId>
+            <version>0.0.18-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

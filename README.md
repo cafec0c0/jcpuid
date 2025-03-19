@@ -3,8 +3,19 @@
 JCPUID is a library for executing CPUID instructions from the JVM. 
 
 ## Supported Operating Systems and Architectures
-JCPUID currently supports Linux, Windows and MacOS running on Intel and AMD x86 
-(32 and 64 bit) processors.
+JCPUID currently supports Linux, Windows and MacOS running on x86 and x86_64 
+processors.
+
+## Usage
+```
+Cpuid cpuid = CpuidFactory.getPlatformCpuid();
+
+Result result = cpuid.execute(0x0);
+
+Register eax = result.getEax();
+
+System.out.println("Max standard function number: " + eax.getIntValue());
+```
 
 ## Download
 JCPUID is available on GitHub packages.
@@ -62,8 +73,7 @@ mvn clean install -P<os>-<arch>
 ```
 
 ### Building only the Java classes
-You can also omit the `native-*` profile entirely, which will not compile
-any native code.
+You can also omit the profile entirely, which will not compile any native code.
 ```
 mvn clean install
 ```
@@ -81,13 +91,6 @@ allowing them to be resolved by maven to build the Java library:
 ```
 mvn clean install -f jcpuid-lib
 ```
-
-# Supported CPUID Instructions
-
-| EAX   | Intel | AMD | 
-|-------|-------|-----|
-| `0H`  | Yes   | Yes |
-| `01H` | Yes   | No  |
 
 ## References
 - [Intel 64 and IA-32 Architectures Software Developer's Manual Volume 2 (2A, 2B, 2C, & 2D):

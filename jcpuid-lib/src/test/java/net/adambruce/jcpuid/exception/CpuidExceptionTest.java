@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package net.adambruce.jcpuid;
+package net.adambruce.jcpuid.exception;
 
-import net.adambruce.jcpuid.bridge.CpuidBridge;
-import net.adambruce.jcpuid.type.CpuidResult;
+import org.junit.jupiter.api.Test;
 
-public class CustomBridge implements CpuidBridge {
-    @Override
-    public CpuidResult executeCPUID(int leaf) {
-        return myNativeCPUID(leaf);
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class CpuidExceptionTest {
+
+    @Test
+    public void testInitialisationExceptionTest() {
+        assertEquals("message",
+                new CpuidException("message").getMessage());
     }
 
-    @Override
-    public CpuidResult executeCPUID(int leaf, int subleaf) {
-        return myNativeCPUIDWithSubleaf(leaf, subleaf);
-    }
-
-    private native CpuidResult myNativeCPUID(int leaf);
-
-    private native CpuidResult myNativeCPUIDWithSubleaf(int leaf, int subleaf);
 }

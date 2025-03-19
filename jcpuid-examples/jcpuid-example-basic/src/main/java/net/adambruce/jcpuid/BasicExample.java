@@ -16,21 +16,14 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.bridge.CpuidBridge;
-import net.adambruce.jcpuid.type.CpuidResult;
+import net.adambruce.jcpuid.exception.CpuidException;
 
-public class CustomBridge implements CpuidBridge {
-    @Override
-    public CpuidResult executeCPUID(int leaf) {
-        return myNativeCPUID(leaf);
+public class BasicExample {
+
+    public static void main(String[] args) throws CpuidException {
+        Cpuid cpuid = CpuidFactory.getPlatformCpuid();
+
+        System.out.println(cpuid.execute(0x1));
     }
 
-    @Override
-    public CpuidResult executeCPUID(int leaf, int subleaf) {
-        return myNativeCPUIDWithSubleaf(leaf, subleaf);
-    }
-
-    private native CpuidResult myNativeCPUID(int leaf);
-
-    private native CpuidResult myNativeCPUIDWithSubleaf(int leaf, int subleaf);
 }
