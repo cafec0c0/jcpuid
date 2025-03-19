@@ -23,7 +23,7 @@
     <parent>
         <groupId>net.adambruce</groupId>
         <artifactId>jcpuid-native</artifactId>
-        <version>0.0.18-SNAPSHOT</version>
+        <version>0.1.1-SNAPSHOT</version>
     </parent>
     <packaging>jar</packaging>
 
