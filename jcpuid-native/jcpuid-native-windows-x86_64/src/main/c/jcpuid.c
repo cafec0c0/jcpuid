@@ -16,12 +16,12 @@
 
 #include <intrin.h>
 
-#include "net_adambruce_jcpuid_bridge_DefaultCPUIDBridge.h"
+#include "net_adambruce_jcpuid_bridge_CpuidBridgeImpl.h"
 
-JNIEXPORT jobject JNICALL Java_net_adambruce_jcpuid_bridge_DefaultCPUIDBridge_executeCPUIDNative__I
+JNIEXPORT jobject JNICALL Java_net_adambruce_jcpuid_bridge_CpuidBridgeImpl_executeCPUIDNative__I
   (JNIEnv *env, jobject jobj, jint leaf) {
     // Class of return object
-    jclass clazz = (*env)->FindClass(env, "net/adambruce/jcpuid/type/Result");
+    jclass clazz = (*env)->FindClass(env, "net/adambruce/jcpuid/type/CpuidResult");
 
     // Constructor ID
     jmethodID cid = (*env)->GetMethodID(env, clazz, "<init>", "(IIII)V");
@@ -34,10 +34,10 @@ JNIEXPORT jobject JNICALL Java_net_adambruce_jcpuid_bridge_DefaultCPUIDBridge_ex
     return newobj;
 }
 
-JNIEXPORT jobject JNICALL Java_net_adambruce_jcpuid_bridge_DefaultCPUIDBridge_executeCPUIDNative__II
+JNIEXPORT jobject JNICALL Java_net_adambruce_jcpuid_bridge_CpuidBridgeImpl_executeCPUIDNative__II
   (JNIEnv *env, jobject jobj, jint leaf, jint subleaf) {
     // Class of return object
-    jclass clazz = (*env)->FindClass(env, "net/adambruce/jcpuid/type/Result");
+    jclass clazz = (*env)->FindClass(env, "net/adambruce/jcpuid/type/CpuidResult");
 
     // Constructor ID
     jmethodID cid = (*env)->GetMethodID(env, clazz, "<init>", "(IIII)V");
