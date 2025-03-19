@@ -16,20 +16,17 @@
 
 package net.adambruce.jcpuid;
 
-/**
- * A list of supported vendor identifier strings.
- * These values are returned from all processors using leaf 0h.
- */
-public final class Vendors {
+import net.adambruce.jcpuid.bridge.CPUIDBridgeFactory;
+import net.adambruce.jcpuid.exception.CpuidException;
 
-    /** Vendor string for identifying Intel processors. */
-    public static final String INTEL = "GenuineIntel";
+public class CustomCpuidImplExample {
 
-    /** Vendor string for identifying AMD processors. */
-    public static final String AMD = "AuthenticAMD";
+    public static void main(String[] args) throws CpuidException {
+        // Create a new CPUID implementation wrapping a bridge
+        CustomCpuidImpl cpuid = new CustomCpuidImpl(CPUIDBridgeFactory.getPlatformBridge());
 
-    private Vendors() {
-
+        // Use the custom CPUID functions
+        System.out.println(cpuid.myCustomCPUIDFunctionForAVerySpecificProcessor());
     }
 
 }

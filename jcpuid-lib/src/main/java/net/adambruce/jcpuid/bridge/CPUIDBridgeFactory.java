@@ -16,7 +16,7 @@
 
 package net.adambruce.jcpuid.bridge;
 
-import net.adambruce.jcpuid.exception.InitialisationException;
+import net.adambruce.jcpuid.exception.CpuidException;
 import net.adambruce.jcpuid.loader.Architecture;
 import net.adambruce.jcpuid.loader.NativeLibraryLoader;
 import net.adambruce.jcpuid.loader.OperatingSystem;
@@ -41,10 +41,10 @@ public final class CPUIDBridgeFactory {
      * Returns the correct bridge for the current platform.
      *
      * @return the CPUID bridge for the current platform
-     * @throws InitialisationException no bridged were found for the platform
+     * @throws CpuidException no bridged were found for the platform
      */
     public static CPUIDBridge getPlatformBridge()
-            throws InitialisationException {
+            throws CpuidException {
 
         if (!hasLoadedPlatformLibrary) {
             LOADER.loadLibrary(getOperatingSystem(), getArchitecture());
@@ -55,7 +55,7 @@ public final class CPUIDBridgeFactory {
     }
 
     private static Architecture getArchitecture()
-            throws InitialisationException {
+            throws CpuidException {
 
         String osArch = System.getProperty("os.arch");
         if (osArch.equals("amd64")) {
@@ -66,12 +66,12 @@ public final class CPUIDBridgeFactory {
             return Architecture.I386;
         }
 
-        throw new InitialisationException(
+        throw new CpuidException(
                 "unsupported architecture: " + osArch);
     }
 
     private static OperatingSystem getOperatingSystem()
-            throws InitialisationException {
+            throws CpuidException {
 
         String osName = System.getProperty("os.name");
         if (osName.toLowerCase().contains("linux")) {
@@ -86,7 +86,7 @@ public final class CPUIDBridgeFactory {
             return OperatingSystem.MACOS;
         }
 
-        throw new InitialisationException(
+        throw new CpuidException(
                 "unsupported operating system: " + osName);
     }
 }

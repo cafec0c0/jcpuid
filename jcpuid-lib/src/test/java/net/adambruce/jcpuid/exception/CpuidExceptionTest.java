@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package net.adambruce.jcpuid;
+package net.adambruce.jcpuid.exception;
 
-import net.adambruce.jcpuid.bridge.CPUIDBridgeFactory;
-import net.adambruce.jcpuid.exception.InitialisationException;
+import org.junit.jupiter.api.Test;
 
-public class CustomCPUIDImplExample {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    public static void main(String[] args) throws InitialisationException {
-        // Create a new CPUID implementation wrapping a bridge
-        CustomCPUIDImpl cpuid = new CustomCPUIDImpl(CPUIDBridgeFactory.getPlatformBridge());
+public class CpuidExceptionTest {
 
-        // Use the custom CPUID functions
-        System.out.println(cpuid.myCustomCPUIDFunctionForAVerySpecificProcessor());
+    @Test
+    public void testInitialisationExceptionTest() {
+        assertEquals("message", new CpuidException("message").getMessage());
     }
 
 }

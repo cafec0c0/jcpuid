@@ -96,10 +96,10 @@ public class ResultTest {
     public void testToString() {
         Result result = new Result(1, 2, 3, 4);
         String str = result.toString();
-        assertTrue(str.contains("eax=Register{value=1}"));
-        assertTrue(str.contains("ebx=Register{value=2}"));
-        assertTrue(str.contains("ecx=Register{value=3}"));
-        assertTrue(str.contains("edx=Register{value=4}"));
+        assertTrue(str.contains("eax=" + new Register(1)));
+        assertTrue(str.contains("ebx=" + new Register(2)));
+        assertTrue(str.contains("ecx=" + new Register(3)));
+        assertTrue(str.contains("edx=" + new Register(4)));
     }
 
 }

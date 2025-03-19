@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package net.adambruce.jcpuid.exception;
+package net.adambruce.jcpuid;
 
-/**
- * Exception for capturing failures in native CPUID instruction execution.
- */
-public class CPUIDException extends Exception {
+import net.adambruce.jcpuid.exception.CpuidException;
 
-    /**
-     * Create a new checked exception for CPUID instruction execution
-     * exceptions.
-     *
-     * @param message the detail message
-     */
-    public CPUIDException(final String message) {
-        super(message);
+public class BasicExample {
+
+    public static void main(String[] args) throws CpuidException {
+        Cpuid cpuid = CpuidFactory.getPlatformCpuid();
+
+        System.out.println(cpuid.execute(0x1));
     }
+
 }

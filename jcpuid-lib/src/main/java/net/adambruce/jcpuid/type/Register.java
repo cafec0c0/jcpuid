@@ -23,17 +23,11 @@ import java.util.Objects;
  */
 public class Register {
 
-    /** Width of a short in bits. */
-    private static final int SHORT_WIDTH = 16;
-
     /** Width of a byte in bits. */
     private static final int BYTE_WIDTH = 8;
 
-    /** Width of a nibble in bits. */
-    private static final int NIBBLE_WIDTH = 4;
-
-    /** Width of a bit in bits. */
-    private static final int BIT_WIDTH = 1;
+    /** Bit mask for a bit. */
+    private static final int BIT_MASK = 1;
 
     /** Bit mask for shorts. */
     private static final int SHORT_MASK = 0xFFFF;
@@ -109,7 +103,7 @@ public class Register {
      * @return whether bit value
      */
     public int getBitValue(final int offset) {
-        return (intValue >> offset) & BIT_WIDTH;
+        return (intValue >> offset) & BIT_MASK;
     }
 
     /**
@@ -119,7 +113,7 @@ public class Register {
      * @return whether the bit is set
      */
     public boolean isBitSet(final int bit) {
-        return (intValue & (BIT_WIDTH << bit)) != 0;
+        return (intValue & (BIT_MASK << bit)) != 0;
     }
 
     /**
@@ -174,6 +168,6 @@ public class Register {
      */
     @Override
     public String toString() {
-        return "Register{value=" + intValue + "}";
+        return "Register{value=0x" + Integer.toHexString(intValue) + "}";
     }
 }

@@ -16,11 +16,9 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.exception.VendorNotSupportedException;
-
 public class CustomBridgeExample {
 
-    public static void main(String[] args) throws VendorNotSupportedException {
+    public static void main(String[] args) {
 
         // Load the library for your bridge
         System.load("...");
@@ -29,10 +27,9 @@ public class CustomBridgeExample {
         CustomBridge customBridge = new CustomBridge();
 
         // Get the platform CPUID using our bridge
-        CPUID cpuid = CPUIDFactory.getPlatformCPUID(customBridge);
+        Cpuid cpuid = CpuidFactory.getPlatformCpuid(customBridge);
 
         // Use the JCPUID interfaces and implementations as normal
-        System.out.println(cpuid.getProcessorVendor());
     }
 
 }

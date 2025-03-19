@@ -29,9 +29,9 @@
     <artifactId>jcpuid-examples</artifactId>
 
     <modules>
-        <module>jcpuid-example-print-all-info</module>
         <module>jcpuid-example-custom-bridge</module>
         <module>jcpuid-example-cpuid-impl</module>
+        <module>jcpuid-example-basic</module>
     </modules>
 
     <properties>

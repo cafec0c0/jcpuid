@@ -17,9 +17,9 @@
 package net.adambruce.jcpuid.exception;
 
 /**
- * Exception for capturing failures in the JCPUID library initialisation.
+ * Exception for capturing failures in the JCPUID library.
  */
-public class InitialisationException extends Exception {
+public class CpuidException extends Exception {
 
     /**
      * Create a new checked exception to capture exceptions that may get thrown
@@ -27,7 +27,7 @@ public class InitialisationException extends Exception {
      *
      * @param message the detail message
      */
-    public InitialisationException(final String message) {
+    public CpuidException(final String message) {
         super(message);
     }
 }

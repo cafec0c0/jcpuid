@@ -46,6 +46,11 @@ public class RegisterTest {
     }
 
     @Test
+    public void testGetBitValue() {
+        assertEquals(1, new Register(0b10).getBitValue(1));
+    }
+
+    @Test
     public void testIsBitSet() {
         assertTrue(new Register(0b1000).isBitSet(3));
     }
@@ -97,7 +102,7 @@ public class RegisterTest {
         Register register = new Register(432);
 
         String str = register.toString();
-        assertTrue(str.contains("value=" + register.getIntValue()));
+        assertTrue(str.contains("value=0x" + Integer.toHexString(register.getIntValue())));
     }
 
 }

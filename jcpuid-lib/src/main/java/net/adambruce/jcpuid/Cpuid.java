@@ -19,24 +19,9 @@ package net.adambruce.jcpuid;
 import net.adambruce.jcpuid.type.Result;
 
 /**
- * Interface for basic CPUID instructions supported by both Intel and AMD
- * processors.
+ * Interface for CPUID execution.
  */
-public interface CPUID {
-
-    /**
-     * Obtains the largest standard function number supported by the processor.
-     *
-     * @return the largest standard function number
-     */
-    int getLargestStandardFunctionNumber();
-
-    /**
-     * Obtains the processor vendor string.
-     *
-     * @return the processor vendor string
-     */
-    String getProcessorVendor();
+public interface Cpuid {
 
     /**
      * Executes the CPUID instruction with the given leaf.
@@ -45,7 +30,7 @@ public interface CPUID {
      * @param leaf the leaf of the CPUID instruction
      * @return the result of the CPUID execution
      */
-    Result getRawCPUID(int leaf);
+    Result execute(int leaf);
 
     /**
      * Executes the CPUID instruction with the given leaf and sub-leaf.
@@ -55,5 +40,5 @@ public interface CPUID {
      * @param subleaf the sub-leaf of the CPUID instruction
      * @return the result of the CPUID execution
      */
-    Result getRawCPUID(int leaf, int subleaf);
+    Result execute(int leaf, int subleaf);
 }

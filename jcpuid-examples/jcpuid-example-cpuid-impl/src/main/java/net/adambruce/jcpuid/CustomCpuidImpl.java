@@ -16,22 +16,28 @@
 
 package net.adambruce.jcpuid;
 
-/**
- * CPUID leaf constants.
- */
-public final class Leaf {
+import net.adambruce.jcpuid.bridge.CPUIDBridge;
+import net.adambruce.jcpuid.type.Result;
 
-    /** Leaf 0h (Basic CPUID function information). */
-    public static final int LEAF_0H = 0x0;
+public class CustomCpuidImpl implements Cpuid {
 
-    /** Leaf 01h (Basic CPUID information). */
-    public static final int LEAF_01H = 0x1;
+    private final CPUIDBridge bridge;
 
-    /** Leaf 80000000h (Extended CPUID function information). */
-    public static final int LEAF_80000000H = 0x80000000;
-
-    private Leaf() {
-
+    public CustomCpuidImpl(CPUIDBridge bridge) {
+        this.bridge = bridge;
     }
 
+    public int myCustomCPUIDFunctionForAVerySpecificProcessor() {
+        return bridge.executeCPUID(0xDEADBEEF).getEdx().getIntValue();
+    }
+
+    @Override
+    public Result execute(int leaf) {
+        return bridge.executeCPUID(leaf);
+    }
+
+    @Override
+    public Result execute(int leaf, int subleaf) {
+        return bridge.executeCPUID(leaf, subleaf);
+    }
 }
