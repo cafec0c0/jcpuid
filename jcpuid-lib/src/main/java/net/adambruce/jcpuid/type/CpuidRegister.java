@@ -100,7 +100,7 @@ public class CpuidRegister {
      * Gets the state of a bit in the register.
      *
      * @param offset the offset (number of bits)
-     * @return whether bit value
+     * @return the bit value
      */
     public int getBitValue(final int offset) {
         return (intValue >> offset) & BIT_MASK;
