@@ -38,7 +38,8 @@ public class OperatingSystemTest {
 
     @ParameterizedTest
     @MethodSource("getEnumsAndNames")
-    public void testGetLookupName(OperatingSystem operatingSystem, String name) {
+    public void testGetLookupName(OperatingSystem operatingSystem,
+                                  String name) {
         assertEquals(name, operatingSystem.getLookupName());
     }
 

@@ -16,14 +16,14 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.bridge.CPUIDBridgeFactory;
+import net.adambruce.jcpuid.bridge.CpuidBridgeFactory;
 import net.adambruce.jcpuid.exception.CpuidException;
 
 public class CustomCpuidImplExample {
 
     public static void main(String[] args) throws CpuidException {
         // Create a new CPUID implementation wrapping a bridge
-        CustomCpuidImpl cpuid = new CustomCpuidImpl(CPUIDBridgeFactory.getPlatformBridge());
+        CustomCpuidImpl cpuid = new CustomCpuidImpl(CpuidBridgeFactory.getPlatformBridge());
 
         // Use the custom CPUID functions
         System.out.println(cpuid.myCustomCPUIDFunctionForAVerySpecificProcessor());

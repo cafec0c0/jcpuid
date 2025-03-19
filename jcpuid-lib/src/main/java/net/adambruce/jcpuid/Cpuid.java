@@ -16,7 +16,7 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.type.Result;
+import net.adambruce.jcpuid.type.CpuidResult;
 
 /**
  * Interface for CPUID execution.
@@ -30,7 +30,7 @@ public interface Cpuid {
      * @param leaf the leaf of the CPUID instruction
      * @return the result of the CPUID execution
      */
-    Result execute(int leaf);
+    CpuidResult execute(int leaf);
 
     /**
      * Executes the CPUID instruction with the given leaf and sub-leaf.
@@ -40,5 +40,5 @@ public interface Cpuid {
      * @param subleaf the sub-leaf of the CPUID instruction
      * @return the result of the CPUID execution
      */
-    Result execute(int leaf, int subleaf);
+    CpuidResult execute(int leaf, int subleaf);
 }

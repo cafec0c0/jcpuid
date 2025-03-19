@@ -25,7 +25,7 @@ import net.adambruce.jcpuid.loader.OperatingSystem;
  * Provides utility methods for obtaining the CPUID instance for the current
  * platform.
  */
-public final class CPUIDBridgeFactory {
+public final class CpuidBridgeFactory {
 
     /** The loader that will be used for loading the native library. */
     private static final NativeLibraryLoader LOADER = new NativeLibraryLoader();
@@ -33,7 +33,7 @@ public final class CPUIDBridgeFactory {
     /** Flag to prevent loading the native library more than once. */
     private static boolean hasLoadedPlatformLibrary = false;
 
-    private CPUIDBridgeFactory() {
+    private CpuidBridgeFactory() {
 
     }
 
@@ -43,7 +43,7 @@ public final class CPUIDBridgeFactory {
      * @return the CPUID bridge for the current platform
      * @throws CpuidException no bridged were found for the platform
      */
-    public static CPUIDBridge getPlatformBridge()
+    public static CpuidBridge getPlatformBridge()
             throws CpuidException {
 
         if (!hasLoadedPlatformLibrary) {
@@ -51,7 +51,7 @@ public final class CPUIDBridgeFactory {
             hasLoadedPlatformLibrary = true;
         }
 
-        return new DefaultCPUIDBridge();
+        return new CpuidBridgeImpl();
     }
 
     private static Architecture getArchitecture()

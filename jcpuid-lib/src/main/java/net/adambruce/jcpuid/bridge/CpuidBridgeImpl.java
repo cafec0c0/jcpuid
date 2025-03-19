@@ -16,20 +16,23 @@
 
 package net.adambruce.jcpuid.bridge;
 
-import net.adambruce.jcpuid.type.Result;
+import net.adambruce.jcpuid.type.CpuidResult;
 
 /**
- * Defines the required methods that a bridge must implement.
+ * The default implementation of the CPUIDBridge interface.
  */
-public interface CPUIDBridge {
+public class CpuidBridgeImpl implements CpuidBridge {
 
     /**
-     * Executes the CPUID instruction with the given leaf node.
+     * Executes the CPUID instruction using the given leaf.
      *
      * @param leaf the leaf
-     * @return the result containing register values and return value
+     * @return the result of the CPUID instruction execution
      */
-    Result executeCPUID(int leaf);
+    @Override
+    public CpuidResult executeCPUID(final int leaf) {
+        return executeCPUIDNative(leaf);
+    }
 
     /**
      * Executes the CPUID instruction with the given leaf and sub-leaf nodes.
@@ -38,5 +41,12 @@ public interface CPUIDBridge {
      * @param subleaf the sub-leaf
      * @return the result containing register values and return value
      */
-    Result executeCPUID(int leaf, int subleaf);
+    @Override
+    public CpuidResult executeCPUID(final int leaf, final int subleaf) {
+        return executeCPUIDNative(leaf, subleaf);
+    }
+
+    private native CpuidResult executeCPUIDNative(int leaf);
+
+    private native CpuidResult executeCPUIDNative(int leaf, int subleaf);
 }

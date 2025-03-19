@@ -16,9 +16,9 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.bridge.CPUIDBridge;
-import net.adambruce.jcpuid.type.Register;
-import net.adambruce.jcpuid.type.Result;
+import net.adambruce.jcpuid.bridge.CpuidBridge;
+import net.adambruce.jcpuid.type.CpuidRegister;
+import net.adambruce.jcpuid.type.CpuidResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,10 +32,10 @@ import static org.mockito.Mockito.when;
 public class CpuidImplTest {
 
     @Mock
-    private Result result;
+    private CpuidResult result;
 
     @Mock
-    private CPUIDBridge bridge;
+    private CpuidBridge bridge;
 
     @InjectMocks
     private CpuidImpl cpuid;
@@ -43,35 +43,35 @@ public class CpuidImplTest {
     @Test
     void testExecute() {
 
-        when(result.getEax()).thenReturn(new Register(0xAAAAAAAA));
-        when(result.getEbx()).thenReturn(new Register(0xBBBBBBBB));
-        when(result.getEcx()).thenReturn(new Register(0xCCCCCCCC));
-        when(result.getEdx()).thenReturn(new Register(0xDDDDDDDD));
+        when(result.getEax()).thenReturn(new CpuidRegister(0xAAAAAAAA));
+        when(result.getEbx()).thenReturn(new CpuidRegister(0xBBBBBBBB));
+        when(result.getEcx()).thenReturn(new CpuidRegister(0xCCCCCCCC));
+        when(result.getEdx()).thenReturn(new CpuidRegister(0xDDDDDDDD));
         when(bridge.executeCPUID(0x1)).thenReturn(result);
 
-        Result actual = cpuid.execute(0x1);
+        CpuidResult actual = cpuid.execute(0x1);
 
-        assertEquals(new Register(0xAAAAAAAA), actual.getEax());
-        assertEquals(new Register(0xBBBBBBBB), actual.getEbx());
-        assertEquals(new Register(0xCCCCCCCC), actual.getEcx());
-        assertEquals(new Register(0xDDDDDDDD), actual.getEdx());
+        assertEquals(new CpuidRegister(0xAAAAAAAA), actual.getEax());
+        assertEquals(new CpuidRegister(0xBBBBBBBB), actual.getEbx());
+        assertEquals(new CpuidRegister(0xCCCCCCCC), actual.getEcx());
+        assertEquals(new CpuidRegister(0xDDDDDDDD), actual.getEdx());
     }
 
     @Test
     void testExecuteWithSubleaf() {
 
-        when(result.getEax()).thenReturn(new Register(0xAAAAAAAA));
-        when(result.getEbx()).thenReturn(new Register(0xBBBBBBBB));
-        when(result.getEcx()).thenReturn(new Register(0xCCCCCCCC));
-        when(result.getEdx()).thenReturn(new Register(0xDDDDDDDD));
+        when(result.getEax()).thenReturn(new CpuidRegister(0xAAAAAAAA));
+        when(result.getEbx()).thenReturn(new CpuidRegister(0xBBBBBBBB));
+        when(result.getEcx()).thenReturn(new CpuidRegister(0xCCCCCCCC));
+        when(result.getEdx()).thenReturn(new CpuidRegister(0xDDDDDDDD));
         when(bridge.executeCPUID(0x1, 0x2)).thenReturn(result);
 
-        Result actual = cpuid.execute(0x1, 0x2);
+        CpuidResult actual = cpuid.execute(0x1, 0x2);
 
-        assertEquals(new Register(0xAAAAAAAA), actual.getEax());
-        assertEquals(new Register(0xBBBBBBBB), actual.getEbx());
-        assertEquals(new Register(0xCCCCCCCC), actual.getEcx());
-        assertEquals(new Register(0xDDDDDDDD), actual.getEdx());
+        assertEquals(new CpuidRegister(0xAAAAAAAA), actual.getEax());
+        assertEquals(new CpuidRegister(0xBBBBBBBB), actual.getEbx());
+        assertEquals(new CpuidRegister(0xCCCCCCCC), actual.getEcx());
+        assertEquals(new CpuidRegister(0xDDDDDDDD), actual.getEdx());
     }
 
 }

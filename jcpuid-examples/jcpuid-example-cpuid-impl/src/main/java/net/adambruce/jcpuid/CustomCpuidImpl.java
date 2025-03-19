@@ -16,14 +16,14 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.bridge.CPUIDBridge;
-import net.adambruce.jcpuid.type.Result;
+import net.adambruce.jcpuid.bridge.CpuidBridge;
+import net.adambruce.jcpuid.type.CpuidResult;
 
 public class CustomCpuidImpl implements Cpuid {
 
-    private final CPUIDBridge bridge;
+    private final CpuidBridge bridge;
 
-    public CustomCpuidImpl(CPUIDBridge bridge) {
+    public CustomCpuidImpl(CpuidBridge bridge) {
         this.bridge = bridge;
     }
 
@@ -32,12 +32,12 @@ public class CustomCpuidImpl implements Cpuid {
     }
 
     @Override
-    public Result execute(int leaf) {
+    public CpuidResult execute(int leaf) {
         return bridge.executeCPUID(leaf);
     }
 
     @Override
-    public Result execute(int leaf, int subleaf) {
+    public CpuidResult execute(int leaf, int subleaf) {
         return bridge.executeCPUID(leaf, subleaf);
     }
 }

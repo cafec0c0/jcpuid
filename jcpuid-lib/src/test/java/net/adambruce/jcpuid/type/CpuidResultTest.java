@@ -22,84 +22,84 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ResultTest {
+public class CpuidResultTest {
 
     @Test
     public void testGetEax() {
-        Result result = new Result(1, 0, 0, 0);
-        assertEquals(new Register(1), result.getEax());
+        CpuidResult result = new CpuidResult(1, 0, 0, 0);
+        assertEquals(new CpuidRegister(1), result.getEax());
     }
 
     @Test
     public void testGetEbx() {
-        Result result = new Result(0, 1, 0, 0);
-        assertEquals(new Register(1), result.getEbx());
+        CpuidResult result = new CpuidResult(0, 1, 0, 0);
+        assertEquals(new CpuidRegister(1), result.getEbx());
     }
 
     @Test
     public void testGetEcx() {
-        Result result = new Result(0, 0, 1, 0);
-        assertEquals(new Register(1), result.getEcx());
+        CpuidResult result = new CpuidResult(0, 0, 1, 0);
+        assertEquals(new CpuidRegister(1), result.getEcx());
     }
 
     @Test
     public void testGetEdx() {
-        Result result = new Result(0, 0, 0, 1);
-        assertEquals(new Register(1), result.getEdx());
+        CpuidResult result = new CpuidResult(0, 0, 0, 1);
+        assertEquals(new CpuidRegister(1), result.getEdx());
     }
 
     @Test
     public void testHashCode() {
-        Result result1 = new Result(1, 2, 3, 4);
-        Result result2 = new Result(1, 2, 3, 4);
+        CpuidResult result1 = new CpuidResult(1, 2, 3, 4);
+        CpuidResult result2 = new CpuidResult(1, 2, 3, 4);
         assertEquals(result1.hashCode(), result2.hashCode());
     }
 
     @Test
     public void testEqualsSameObject() {
-        Result result = new Result(1, 2, 3, 4);
+        CpuidResult result = new CpuidResult(1, 2, 3, 4);
         assertEquals(result, result);
     }
 
     @Test
     public void testEquals() {
-        Result result1 = new Result(1, 2, 3, 4);
-        Result result2 = new Result(1, 2, 3, 4);
+        CpuidResult result1 = new CpuidResult(1, 2, 3, 4);
+        CpuidResult result2 = new CpuidResult(1, 2, 3, 4);
         assertEquals(result1, result2);
     }
 
     @Test
     public void testNotEqual() {
-        Result result1 = new Result(1, 2, 3, 4);
-        Result result2 = new Result(2, 2, 3, 4);
+        CpuidResult result1 = new CpuidResult(1, 2, 3, 4);
+        CpuidResult result2 = new CpuidResult(2, 2, 3, 4);
 
         assertNotEquals(result1, result2);
 
-        result2 = new Result(1, 3, 3, 4);
+        result2 = new CpuidResult(1, 3, 3, 4);
         assertNotEquals(result1, result2);
 
-        result2 = new Result(1, 2, 4, 4);
+        result2 = new CpuidResult(1, 2, 4, 4);
         assertNotEquals(result1, result2);
 
-        result2 = new Result(1, 2, 3, 5);
+        result2 = new CpuidResult(1, 2, 3, 5);
         assertNotEquals(result1, result2);
     }
 
     @Test
     public void testNotEqualDifferentClass() {
-        Result result = new Result(1, 2, 3, 4);
+        CpuidResult result = new CpuidResult(1, 2, 3, 4);
         String other = "other";
         assertNotEquals(result, other);
     }
 
     @Test
     public void testToString() {
-        Result result = new Result(1, 2, 3, 4);
+        CpuidResult result = new CpuidResult(1, 2, 3, 4);
         String str = result.toString();
-        assertTrue(str.contains("eax=" + new Register(1)));
-        assertTrue(str.contains("ebx=" + new Register(2)));
-        assertTrue(str.contains("ecx=" + new Register(3)));
-        assertTrue(str.contains("edx=" + new Register(4)));
+        assertTrue(str.contains("eax=" + new CpuidRegister(1)));
+        assertTrue(str.contains("ebx=" + new CpuidRegister(2)));
+        assertTrue(str.contains("ecx=" + new CpuidRegister(3)));
+        assertTrue(str.contains("edx=" + new CpuidRegister(4)));
     }
 
 }

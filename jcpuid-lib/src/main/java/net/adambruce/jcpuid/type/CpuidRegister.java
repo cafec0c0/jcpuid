@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * Holds a register value and provides utility methods for accessing that data.
  */
-public class Register {
+public class CpuidRegister {
 
     /** Width of a byte in bits. */
     private static final int BYTE_WIDTH = 8;
@@ -50,7 +50,7 @@ public class Register {
      *
      * @param value the integer value of the register
      */
-    public Register(final int value) {
+    public CpuidRegister(final int value) {
         this.intValue = value;
     }
 
@@ -143,11 +143,11 @@ public class Register {
             return true;
         }
 
-        if (!(obj instanceof Register)) {
+        if (!(obj instanceof CpuidRegister)) {
             return false;
         }
 
-        Register other = (Register) obj;
+        CpuidRegister other = (CpuidRegister) obj;
         return this.intValue == other.intValue;
     }
 

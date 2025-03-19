@@ -16,8 +16,8 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.bridge.CPUIDBridge;
-import net.adambruce.jcpuid.bridge.CPUIDBridgeFactory;
+import net.adambruce.jcpuid.bridge.CpuidBridge;
+import net.adambruce.jcpuid.bridge.CpuidBridgeFactory;
 import net.adambruce.jcpuid.exception.CpuidException;
 
 public final class CpuidFactory {
@@ -35,7 +35,7 @@ public final class CpuidFactory {
      * to initialise.
      */
     public static Cpuid getPlatformCpuid() throws CpuidException {
-        return getPlatformCpuid(CPUIDBridgeFactory.getPlatformBridge());
+        return getPlatformCpuid(CpuidBridgeFactory.getPlatformBridge());
     }
 
     /**
@@ -46,7 +46,7 @@ public final class CpuidFactory {
      * @return the CPUID implementation for the current platform
      * to initialise.
      */
-    public static Cpuid getPlatformCpuid(final CPUIDBridge bridge) {
+    public static Cpuid getPlatformCpuid(final CpuidBridge bridge) {
         return new CpuidImpl(bridge);
     }
 }

@@ -22,18 +22,18 @@ import java.util.Objects;
  * Holds the result of a CPUID instruction execution the EAX, EBX, ECX and EDX
  * registers.
  */
-public class Result {
+public class CpuidResult {
     /** The value returned in the EAX register. */
-    private final Register eaxRegister;
+    private final CpuidRegister eaxRegister;
 
     /** The value returned in the EBX register. */
-    private final Register ebxRegister;
+    private final CpuidRegister ebxRegister;
 
     /** The value returned in the ECX register. */
-    private final Register ecxRegister;
+    private final CpuidRegister ecxRegister;
 
     /** The value returned in the EDX register. */
-    private final Register edxRegister;
+    private final CpuidRegister edxRegister;
 
     /**
      * Create a new Result to store CPUID data.
@@ -43,11 +43,12 @@ public class Result {
      * @param ecx the value returned in the ECX register
      * @param edx the value returned in the EDX register
      */
-    public Result(final int eax, final int ebx, final int ecx, final int edx) {
-        this.eaxRegister = new Register(eax);
-        this.ebxRegister = new Register(ebx);
-        this.ecxRegister = new Register(ecx);
-        this.edxRegister = new Register(edx);
+    public CpuidResult(final int eax, final int ebx, final int ecx,
+                       final int edx) {
+        this.eaxRegister = new CpuidRegister(eax);
+        this.ebxRegister = new CpuidRegister(ebx);
+        this.ecxRegister = new CpuidRegister(ecx);
+        this.edxRegister = new CpuidRegister(edx);
     }
 
     /**
@@ -55,7 +56,7 @@ public class Result {
      *
      * @return the value returned in the EAX register
      */
-    public Register getEax() {
+    public CpuidRegister getEax() {
         return eaxRegister;
     }
 
@@ -64,7 +65,7 @@ public class Result {
      *
      * @return the value returned in the EBX register
      */
-    public Register getEbx() {
+    public CpuidRegister getEbx() {
         return ebxRegister;
     }
 
@@ -73,7 +74,7 @@ public class Result {
      *
      * @return the value returned in the ECX register
      */
-    public Register getEcx() {
+    public CpuidRegister getEcx() {
         return ecxRegister;
     }
 
@@ -82,7 +83,7 @@ public class Result {
      *
      * @return the value returned in the EDX register
      */
-    public Register getEdx() {
+    public CpuidRegister getEdx() {
         return edxRegister;
     }
 
@@ -114,11 +115,11 @@ public class Result {
             return true;
         }
 
-        if (!(obj instanceof Result)) {
+        if (!(obj instanceof CpuidResult)) {
             return false;
         }
 
-        Result other = (Result) obj;
+        CpuidResult other = (CpuidResult) obj;
 
         return Objects.equals(this.eaxRegister, other.eaxRegister)
                 && Objects.equals(this.ebxRegister, other.ebxRegister)

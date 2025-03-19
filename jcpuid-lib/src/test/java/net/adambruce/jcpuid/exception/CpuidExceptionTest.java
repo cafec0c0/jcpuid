@@ -24,7 +24,8 @@ public class CpuidExceptionTest {
 
     @Test
     public void testInitialisationExceptionTest() {
-        assertEquals("message", new CpuidException("message").getMessage());
+        assertEquals("message",
+                new CpuidException("message").getMessage());
     }
 
 }

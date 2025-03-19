@@ -245,11 +245,11 @@
                             </rules>
                             <excludes>
                                 <!-- Only contains static methods and modifies JVM state. -->
-                                <exclude>net/adambruce/jcpuid/bridge/CPUIDBridgeFactory.class</exclude>
+                                <exclude>net/adambruce/jcpuid/bridge/CpuidBridgeFactory.class</exclude>
                                 <!-- Only contains native method calls, cannot be correctly unit tested. -->
-                                <exclude>net/adambruce/jcpuid/bridge/DefaultCPUIDBridge.class</exclude>
+                                <exclude>net/adambruce/jcpuid/bridge/CpuidBridgeImpl.class</exclude>
                                 <!-- Uses runtime system properties, cannot be correctly unit tested. -->
-                                <exclude>net/adambruce/jcpuid/CPUIDFactory.class</exclude>
+                                <exclude>net/adambruce/jcpuid/CpuidFactory.class</exclude>
                                 <!-- Only one public method, which invokes methods that modify JVM state. -->
                                 <exclude>net/adambruce/jcpuid/loader/NativeLibraryLoader.class</exclude>
                             </excludes>

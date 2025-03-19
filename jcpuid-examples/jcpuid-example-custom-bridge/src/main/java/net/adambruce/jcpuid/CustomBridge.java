@@ -16,21 +16,21 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.bridge.CPUIDBridge;
-import net.adambruce.jcpuid.type.Result;
+import net.adambruce.jcpuid.bridge.CpuidBridge;
+import net.adambruce.jcpuid.type.CpuidResult;
 
-public class CustomBridge implements CPUIDBridge {
+public class CustomBridge implements CpuidBridge {
     @Override
-    public Result executeCPUID(int leaf) {
+    public CpuidResult executeCPUID(int leaf) {
         return myNativeCPUID(leaf);
     }
 
     @Override
-    public Result executeCPUID(int leaf, int subleaf) {
+    public CpuidResult executeCPUID(int leaf, int subleaf) {
         return myNativeCPUIDWithSubleaf(leaf, subleaf);
     }
 
-    private native Result myNativeCPUID(int leaf);
+    private native CpuidResult myNativeCPUID(int leaf);
 
-    private native Result myNativeCPUIDWithSubleaf(int leaf, int subleaf);
+    private native CpuidResult myNativeCPUIDWithSubleaf(int leaf, int subleaf);
 }

@@ -16,8 +16,8 @@
 
 package net.adambruce.jcpuid;
 
-import net.adambruce.jcpuid.bridge.CPUIDBridge;
-import net.adambruce.jcpuid.type.Result;
+import net.adambruce.jcpuid.bridge.CpuidBridge;
+import net.adambruce.jcpuid.type.CpuidResult;
 
 /**
  * Implementation of the CPUID interface.
@@ -25,14 +25,14 @@ import net.adambruce.jcpuid.type.Result;
 public class CpuidImpl implements Cpuid {
 
     /** The native bridge to use for executing CPUID instructions. */
-    private final CPUIDBridge cpuidBridge;
+    private final CpuidBridge cpuidBridge;
 
     /**
      * Creates a new instance using the given bridge.
      *
      * @param bridge the bridge to use for executing CPUID instructions
      */
-    public CpuidImpl(final CPUIDBridge bridge) {
+    public CpuidImpl(final CpuidBridge bridge) {
         this.cpuidBridge = bridge;
     }
 
@@ -44,7 +44,7 @@ public class CpuidImpl implements Cpuid {
      * @return the result of the CPUID execution
      */
     @Override
-    public Result execute(final int leaf) {
+    public CpuidResult execute(final int leaf) {
         return cpuidBridge.executeCPUID(leaf);
     }
 
@@ -57,7 +57,7 @@ public class CpuidImpl implements Cpuid {
      * @return the result of the CPUID execution
      */
     @Override
-    public Result execute(final int leaf, final int subleaf) {
+    public CpuidResult execute(final int leaf, final int subleaf) {
         return cpuidBridge.executeCPUID(leaf, subleaf);
     }
 }
